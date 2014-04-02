@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Solr4R::Response - solr4r Application documentation (v0.0.1)</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">OpenStruct
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-charset">#charset</a>
+    
+    <li ><a href="#method-i-evaluate_count">#evaluate_count</a>
+    
+    <li ><a href="#method-i-evaluate_header">#evaluate_header</a>
+    
+    <li ><a href="#method-i-evaluate_result">#evaluate_result</a>
+    
+    <li ><a href="#method-i-inspect">#inspect</a>
+    
+    <li ><a href="#method-i-num_found">#num_found</a>
+    
+    <li ><a href="#method-i-response_headers">#response_headers</a>
+    
+    <li ><a href="#method-i-result">#result</a>
+    
+    <li ><a href="#method-i-to_s">#to_s</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Solr4R::Response">
+  <h1 id="class-Solr4R::Response" class="class">
+    class Solr4R::Response
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="CHARSET_RE">CHARSET_RE
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_CHARSET">DEFAULT_CHARSET
+        
+        <dd>
+        
+      
+        <dt id="REQUEST_LINE">REQUEST_LINE
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">() { |self| ... }</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+  <span class="ruby-keyword">super</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-charset" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">charset</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="charset-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 56</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">charset</span>
+  <span class="ruby-ivar">@charset</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">response_headers</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;content-type&#39;</span>)[<span class="ruby-value">0</span>][<span class="ruby-constant">CHARSET_RE</span>, <span class="ruby-value">1</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-inspect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inspect</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-string">&#39;#&lt;%s:0x%x @request_url=%p, @request_headers=%p, @response_headers=%p, @response_code=%p&gt;&#39;</span> <span class="ruby-operator">%</span> [
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-identifier">request_url</span>, <span class="ruby-identifier">request_headers</span>, <span class="ruby-identifier">response_headers</span>, <span class="ruby-identifier">response_code</span>
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-num_found" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">num_found</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="num_found-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">num_found</span>
+  <span class="ruby-ivar">@num_found</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_count</span>(<span class="ruby-string">&#39;numFound&#39;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-response_headers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">response_headers</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="response_headers-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">response_headers</span>
+  <span class="ruby-ivar">@response_headers</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_header</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-result" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">result</span><span
+            class="method-args">(options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="result-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">result</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-ivar">@result</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_result</span>(<span class="ruby-identifier">options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-to_s" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-ivar">@to_s</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">response_body</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-identifier">charset</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_CHARSET</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Private Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-evaluate_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">evaluate_count</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="evaluate_count-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_count</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">wt</span> = <span class="ruby-identifier">request_params</span>[<span class="ruby-value">:wt</span>]
+    <span class="ruby-comment"># numFound=&quot;35&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;xml&#39;</span>        <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/\s#{name}=&quot;(\d+)&quot;/</span>, <span class="ruby-value">1</span>])
+    <span class="ruby-comment"># &#39;numFound&#39;=&gt;35</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;ruby&#39;</span>       <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/&#39;#{name}&#39;=&gt;(\d+)/</span>, <span class="ruby-value">1</span>])
+    <span class="ruby-comment"># &quot;numFound&quot;:35</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;json&#39;</span>       <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/&quot;#{name}&quot;:(\d+)/</span>, <span class="ruby-value">1</span>])
+    <span class="ruby-comment"># { &#39;response&#39; =&gt; &#39;numFound&#39; } OR { :response =&gt; :numFound }</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:ruby</span>, <span class="ruby-value">:json</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span> = <span class="ruby-string">&#39;response&#39;</span>) {
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>; <span class="ruby-identifier">result</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>) }.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;The count cannot be extracted: wt=%p not supported.&#39;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">wt</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-evaluate_header" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">evaluate_header</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="evaluate_header-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_header</span>
+  <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPUtils</span>.<span class="ruby-identifier">parse_header</span>(<span class="ruby-identifier">response_header</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-constant">REQUEST_LINE</span>, <span class="ruby-string">&#39;&#39;</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-evaluate_result" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">evaluate_result</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="evaluate_result-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 72</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_result</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">wt</span> = <span class="ruby-identifier">request_params</span>[<span class="ruby-value">:wt</span>]
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">to_s</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:ruby</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:json</span>  <span class="ruby-keyword">then</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;The response cannot be evaluated: wt=%p not supported.&#39;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">wt</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

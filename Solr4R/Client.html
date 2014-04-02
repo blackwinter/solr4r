@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class Solr4R::Client - solr4r Application documentation (v0.0.1)</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Object
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-add">#add</a>
+    
+    <li ><a href="#method-i-amend_options">#amend_options</a>
+    
+    <li ><a href="#method-i-commit">#commit</a>
+    
+    <li ><a href="#method-i-count">#count</a>
+    
+    <li ><a href="#method-i-default_url">#default_url</a>
+    
+    <li ><a href="#method-i-delete">#delete</a>
+    
+    <li ><a href="#method-i-delete_all-21">#delete_all!</a>
+    
+    <li ><a href="#method-i-delete_by_id">#delete_by_id</a>
+    
+    <li ><a href="#method-i-delete_by_query">#delete_by_query</a>
+    
+    <li ><a href="#method-i-get">#get</a>
+    
+    <li ><a href="#method-i-head">#head</a>
+    
+    <li ><a href="#method-i-inspect">#inspect</a>
+    
+    <li ><a href="#method-i-invalid_endpoint-3F">#invalid_endpoint?</a>
+    
+    <li ><a href="#method-i-optimize">#optimize</a>
+    
+    <li ><a href="#method-i-post">#post</a>
+    
+    <li ><a href="#method-i-register_endpoint">#register_endpoint</a>
+    
+    <li ><a href="#method-i-register_endpoints">#register_endpoints</a>
+    
+    <li ><a href="#method-i-rollback">#rollback</a>
+    
+    <li ><a href="#method-i-send_request">#send_request</a>
+    
+    <li ><a href="#method-i-update">#update</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-Solr4R::Client">
+  <h1 id="class-Solr4R::Client" class="class">
+    class Solr4R::Client
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <section class="constants-list">
+      <header>
+        <h3>Constants</h3>
+      </header>
+      <dl>
+      
+        <dt id="DEFAULT_ENDPOINTS">DEFAULT_ENDPOINTS
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_HOST">DEFAULT_HOST
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_PARAMS">DEFAULT_PARAMS
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_PATH">DEFAULT_PATH
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_PORT">DEFAULT_PORT
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_SELECT_PATH">DEFAULT_SELECT_PATH
+        
+        <dd>
+        
+      
+        <dt id="DEFAULT_UPDATE_PATH">DEFAULT_UPDATE_PATH
+        
+        <dd>
+        
+      
+        <dt id="MATCH_ALL_QUERY">MATCH_ALL_QUERY
+        
+        <dd>
+        
+      
+      </dl>
+    </section>
+    
+
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-builder" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">builder</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-default_params" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">default_params</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-options" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">options</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-request" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">request</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-url" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">url</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 49</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+    <span class="ruby-identifier">url</span>, <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>, {}
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:url</span>, <span class="ruby-identifier">default_url</span>(<span class="ruby-identifier">options</span>))
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">url</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">options</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>), <span class="ruby-identifier">options</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">request</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:request</span>, <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">builder</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:builder</span>, <span class="ruby-constant">Builder</span>.<span class="ruby-identifier">new</span>)
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">default_params</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:default_params</span>, <span class="ruby-constant">DEFAULT_PARAMS</span>)
+
+  <span class="ruby-identifier">register_endpoints</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:endpoints</span>, <span class="ruby-constant">DEFAULT_ENDPOINTS</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-add" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add</span><span
+            class="method-args">(doc, attributes = {}, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Builder.html#method-i-add">Solr4R::Builder#add</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="add-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attributes</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">update</span>(<span class="ruby-identifier">builder</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attributes</span>), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-commit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">commit</span><span
+            class="method-args">(attributes = {}, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Builder.html#method-i-commit">Solr4R::Builder#commit</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="commit-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">attributes</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">update</span>(<span class="ruby-identifier">builder</span>.<span class="ruby-identifier">commit</span>(<span class="ruby-identifier">attributes</span>), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">count</span><span
+            class="method-args">(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="count-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 145</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>(<span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_SELECT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">rows</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>)
+  <span class="ruby-identifier">params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">MATCH_ALL_QUERY</span>
+  <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-delete" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete</span><span
+            class="method-args">(hash, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Builder.html#method-i-delete">Solr4R::Builder#delete</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">update</span>(<span class="ruby-identifier">builder</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">hash</span>), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-delete_all-21" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete_all!</span><span
+            class="method-args">(options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Client.html#method-i-delete_by_query">delete_by_query</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete_all-21-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 141</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_all!</span>(<span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">delete_by_query</span>(<span class="ruby-constant">MATCH_ALL_QUERY</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-delete_by_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete_by_id</span><span
+            class="method-args">(id, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Client.html#method-i-delete">delete</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete_by_id-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_by_id</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">delete</span>({ <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">id</span> }, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-delete_by_query" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">delete_by_query</span><span
+            class="method-args">(query, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Client.html#method-i-delete">delete</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="delete_by_query-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_by_query</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">delete</span>({ <span class="ruby-identifier">query</span><span class="ruby-operator">:</span> <span class="ruby-identifier">query</span> }, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-get" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get</span><span
+            class="method-args">(path, params = {}, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">method</span><span class="ruby-operator">:</span> <span class="ruby-value">:get</span>, <span class="ruby-identifier">params</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-head" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">head</span><span
+            class="method-args">(path, params = {}, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="head-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">head</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">method</span><span class="ruby-operator">:</span> <span class="ruby-value">:head</span>, <span class="ruby-identifier">params</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-inspect" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">inspect</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="inspect-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
+  <span class="ruby-string">&#39;#&lt;%s:0x%x @url=%p, @default_params=%p&gt;&#39;</span> <span class="ruby-operator">%</span> [
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-identifier">url</span>, <span class="ruby-identifier">default_params</span>
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-optimize" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">optimize</span><span
+            class="method-args">(attributes = {}, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Builder.html#method-i-optimize">Solr4R::Builder#optimize</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="optimize-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">optimize</span>(<span class="ruby-identifier">attributes</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">update</span>(<span class="ruby-identifier">builder</span>.<span class="ruby-identifier">optimize</span>(<span class="ruby-identifier">attributes</span>), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-post" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">post</span><span
+            class="method-args">(path, data = nil, options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="post-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 92</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">post</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">data</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">method</span><span class="ruby-operator">:</span> <span class="ruby-value">:post</span>, <span class="ruby-identifier">data</span><span class="ruby-operator">:</span> <span class="ruby-identifier">data</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-register_endpoint" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">register_endpoint</span><span
+            class="method-args">(path, options = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="register_endpoint-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 73</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">register_endpoint</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span> = {})
+  <span class="ruby-identifier">name</span>, <span class="ruby-identifier">path</span> = <span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:path</span>, <span class="ruby-identifier">path</span>)
+
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">error</span> = <span class="ruby-identifier">invalid_endpoint?</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;invalid endpoint: #{name} (#{error})&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">define_singleton_method</span>(<span class="ruby-identifier">name</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">_params</span> = {}, <span class="ruby-identifier">_options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">_options</span>.<span class="ruby-identifier">merge</span>(
+        <span class="ruby-identifier">params</span><span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:params</span>, {}).<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">_params</span>))), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-register_endpoints" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">register_endpoints</span><span
+            class="method-args">(endpoints)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="register_endpoints-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">register_endpoints</span>(<span class="ruby-identifier">endpoints</span>)
+  <span class="ruby-identifier">endpoints</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span> <span class="ruby-identifier">register_endpoint</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) } <span class="ruby-keyword">if</span> <span class="ruby-identifier">endpoints</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-rollback" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">rollback</span><span
+            class="method-args">(options = {}, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>See <a href="Builder.html#method-i-rollback">Solr4R::Builder#rollback</a>.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="rollback-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 121</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">rollback</span>(<span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">update</span>(<span class="ruby-identifier">builder</span>.<span class="ruby-identifier">rollback</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-update" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">update</span><span
+            class="method-args">(data, options = {}, path = DEFAULT_UPDATE_PATH, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_UPDATE_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">options</span> = <span class="ruby-identifier">amend_options</span>(<span class="ruby-identifier">options</span>, <span class="ruby-value">:headers</span>, <span class="ruby-string">&#39;Content-Type&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&#39;text/xml&#39;</span>)
+  <span class="ruby-identifier">post</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">data</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Private Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-amend_options" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">amend_options</span><span
+            class="method-args">(options, key, value)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="amend_options-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">amend_options</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>, {})))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-default_url" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">default_url</span><span
+            class="method-args">(options)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="default_url-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">default_url</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-string">&#39;http://%s:%d/%s&#39;</span> <span class="ruby-operator">%</span> [
+    <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:host</span>, <span class="ruby-constant">DEFAULT_HOST</span>),
+    <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:port</span>, <span class="ruby-constant">DEFAULT_PORT</span>),
+    <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:path</span>, <span class="ruby-constant">DEFAULT_PATH</span>)
+  ]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-invalid_endpoint-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">invalid_endpoint?</span><span
+            class="method-args">(name)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="invalid_endpoint-3F-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">invalid_endpoint?</span>(<span class="ruby-identifier">name</span>)
+  <span class="ruby-string">&#39;method already defined&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>) <span class="ruby-operator">||</span> (
+    <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>, <span class="ruby-keyword">true</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">DEFAULT_ENDPOINTS</span>.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">name</span>))
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-send_request" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">send_request</span><span
+            class="method-args">(path, options, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="send_request-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">options</span> = <span class="ruby-identifier">amend_options</span>(<span class="ruby-identifier">options</span>, <span class="ruby-value">:params</span>, <span class="ruby-identifier">default_params</span>)
+  <span class="ruby-identifier">request</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">path</span>), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
