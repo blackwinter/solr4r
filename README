@@ -1,0 +1,40 @@
+= solr4r - A Ruby client for Apache Solr
+
+== VERSION
+
+This documentation refers to solr4r version 0.0.1
+
+
+== DESCRIPTION
+
+TODO
+
+
+== LINKS
+
+Documentation:: http://blackwinter.github.com/solr4r
+Source code::   http://github.com/blackwinter/solr4r
+RubyGem::       http://rubygems.org/gems/solr4r
+
+
+== AUTHORS
+
+* Jens Wille <mailto:jens.wille@gmail.com>
+
+
+== LICENSE AND COPYRIGHT
+
+Copyright (C) 2014 Jens Wille
+
+solr4r is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+solr4r is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with solr4r. If not, see <http://www.gnu.org/licenses/>.
