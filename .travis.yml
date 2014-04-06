@@ -5,7 +5,7 @@ rvm:
   - "2.1.1"
   - ruby-head
 script: rake spec
-install: gem install hen curb nokogiri
+install: gem install hen rspec curb nokogiri
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libcurl4-openssl-dev
