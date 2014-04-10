@@ -29,18 +29,36 @@ require 'webrick'
 
 module Solr4R
 
-  class Response < OpenStruct
-
-    REQUEST_LINE = %r{\AHTTP/.*\r?\n?}
+  class Response
 
     CHARSET_RE = %r{;\s*charset=([\w-]+)}
 
+    REQUEST_LINE = %r{\AHTTP/.*\r?\n?}
+
     DEFAULT_CHARSET = 'UTF-8'
 
-    def initialize
-      super
-      yield self if block_given?
+    ATTRIBUTES = {
+      # request
+      headers:            :request_headers,
+      last_effective_url: :request_url,
+      post_body:          :post_body,
+      params:             :request_params,
+      verb:               :request_verb,
+
+      # response
+      body_str:           :response_body,
+      content_type:       :content_type,
+      header_str:         :response_header,
+      response_code:      :response_code
+    }
+
+    def initialize(request)
+      ATTRIBUTES.each { |attribute, key|
+        send("#{key}=", request.send(attribute))
+      }
     end
+
+    attr_accessor *ATTRIBUTES.values
 
     def result(options = {})
       @result ||= evaluate_result(options)

@@ -33,21 +33,6 @@ module Solr4R
 
     DEFAULT_USER_AGENT = "Solr4R/#{VERSION}"
 
-    RESPONSE_ATTRIBUTES = {
-      # request
-      headers:            :request_headers,
-      last_effective_url: :request_url,
-      post_body:          :post_body,
-      params:             :request_params,
-      verb:               :request_verb,
-
-      # response
-      body_str:           :response_body,
-      content_type:       :content_type,
-      header_str:         :response_header,
-      response_code:      :response_code
-    }
-
     def initialize(options = {})
       if block_given?
         raise ArgumentError,
@@ -67,11 +52,7 @@ module Solr4R
 
       send("http_#{verb}")
 
-      Response.new { |response|
-        RESPONSE_ATTRIBUTES.each { |attribute, key|
-          response.send("#{key}=", send(attribute))
-        }
-      }
+      Response.new(self)
     end
 
     def reset
