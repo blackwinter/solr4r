@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Version - solr4r Application documentation (v0.0.2)</title>
+<title>module Solr4R::HTTPRequestExtension - solr4r Application documentation (v0.0.2)</title>
 
 <link href="../fonts.css" rel="stylesheet">
 <link href="../rdoc.css" rel="stylesheet">
@@ -66,9 +66,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-to_a">#to_a</a>
+    <li ><a href="#method-c-extended">::extended</a>
     
-    <li ><a href="#method-i-to_s">#to_s</a>
+    <li ><a href="#method-i-from_uri">#from_uri</a>
     
   </ul>
 </div>
@@ -76,9 +76,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Solr4R::Version">
-  <h1 id="module-Solr4R::Version" class="module">
-    module Solr4R::Version
+<main role="main" aria-labelledby="module-Solr4R::HTTPRequestExtension">
+  <h1 id="module-Solr4R::HTTPRequestExtension" class="module">
+    module Solr4R::HTTPRequestExtension
   </h1>
 
   <section class="description">
@@ -94,45 +94,21 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="MAJOR">MAJOR
-        
-        <dd>
-        
-      
-        <dt id="MINOR">MINOR
-        
-        <dd>
-        
-      
-        <dt id="TINY">TINY
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
-    
 
     
 
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Instance Methods</h3>
+         <h3>Public Class Methods</h3>
        </header>
 
     
-      <div id="method-i-to_a" class="method-detail ">
+      <div id="method-c-extended" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">to_a</span><span
-            class="method-args">()</span>
+          <span class="method-name">extended</span><span
+            class="method-args">(base)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -141,15 +117,15 @@
 
         <div class="method-description">
           
-          <p>Returns array representation.</p>
+          
           
           
 
           
-          <div class="method-source-code" id="to_a-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_a</span>
-  [<span class="ruby-constant">MAJOR</span>, <span class="ruby-constant">MINOR</span>, <span class="ruby-constant">TINY</span>]
+          <div class="method-source-code" id="extended-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/request_extension.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">extended</span>(<span class="ruby-identifier">base</span>)
+  <span class="ruby-identifier">base</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:attr_accessor</span>, <span class="ruby-value">:params</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -161,11 +137,19 @@
       </div>
 
     
-      <div id="method-i-to_s" class="method-detail ">
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-from_uri" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">to_s</span><span
-            class="method-args">()</span>
+          <span class="method-name">from_uri</span><span
+            class="method-args">(uri)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -174,15 +158,17 @@
 
         <div class="method-description">
           
-          <p>Short-cut for version string.</p>
+          
           
           
 
           
-          <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
-  <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;.&#39;</span>)
+          <div class="method-source-code" id="from_uri-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/request_extension.rb, line 35</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">from_uri</span>(<span class="ruby-identifier">uri</span>)
+  <span class="ruby-identifier">req</span> = <span class="ruby-identifier">new</span>(<span class="ruby-identifier">uri</span>)
+  <span class="ruby-identifier">req</span>.<span class="ruby-identifier">params</span> = <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">params</span>
+  <span class="ruby-identifier">req</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -4,21 +4,21 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R - solr4r Application documentation (v0.0.2)</title>
+<title>module Solr4R::BaseUriExtension - solr4r Application documentation (v0.0.2)</title>
 
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
-  var rdoc_rel_prefix = "./";
+  var rdoc_rel_prefix = "../";
 </script>
 
-<script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
-<script src="./js/darkfish.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
 
 
 <body id="top" role="document" class="module">
@@ -26,13 +26,13 @@
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
   <h2>
-    <a href="./index.html" rel="home">Home</a>
+    <a href="../index.html" rel="home">Home</a>
   </h2>
 
   <div id="table-of-contents-navigation">
-    <a href="./table_of_contents.html#pages">Pages</a>
-    <a href="./table_of_contents.html#classes">Classes</a>
-    <a href="./table_of_contents.html#methods">Methods</a>
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
   </div>
 </div>
 
@@ -66,7 +66,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-connect">#connect</a>
+    <li ><a href="#method-c-extended">::extended</a>
     
   </ul>
 </div>
@@ -74,9 +74,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Solr4R">
-  <h1 id="module-Solr4R" class="module">
-    module Solr4R
+<main role="main" aria-labelledby="module-Solr4R::BaseUriExtension">
+  <h1 id="module-Solr4R::BaseUriExtension" class="module">
+    module Solr4R::BaseUriExtension
   </h1>
 
   <section class="description">
@@ -92,40 +92,21 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="Document">Document
-        
-        <dd>
-        
-      
-        <dt id="VERSION">VERSION
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
-    
 
     
 
     
-     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Instance Methods</h3>
+         <h3>Public Class Methods</h3>
        </header>
 
     
-      <div id="method-i-connect" class="method-detail ">
+      <div id="method-c-extended" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">connect</span><span
-            class="method-args">(*args)</span>
+          <span class="method-name">extended</span><span
+            class="method-args">(uri)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -139,10 +120,10 @@
           
 
           
-          <div class="method-source-code" id="connect-source">
-            <pre><span class="ruby-comment"># File lib/solr4r.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">connect</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-  <span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+          <div class="method-source-code" id="extended-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/uri_extension.rb, line 31</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">extended</span>(<span class="ruby-identifier">uri</span>)
+  <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">&#39;/&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Version - solr4r Application documentation (v0.0.2)</title>
+<title>module Solr4R::RequestUriExtension - solr4r Application documentation (v0.0.2)</title>
 
 <link href="../fonts.css" rel="stylesheet">
 <link href="../rdoc.css" rel="stylesheet">
@@ -66,9 +66,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-to_a">#to_a</a>
-    
-    <li ><a href="#method-i-to_s">#to_s</a>
+    <li ><a href="#method-i-with_params">#with_params</a>
     
   </ul>
 </div>
@@ -76,9 +74,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Solr4R::Version">
-  <h1 id="module-Solr4R::Version" class="module">
-    module Solr4R::Version
+<main role="main" aria-labelledby="module-Solr4R::RequestUriExtension">
+  <h1 id="module-Solr4R::RequestUriExtension" class="module">
+    module Solr4R::RequestUriExtension
   </h1>
 
   <section class="description">
@@ -94,31 +92,28 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="MAJOR">MAJOR
-        
-        <dd>
-        
-      
-        <dt id="MINOR">MINOR
-        
-        <dd>
-        
-      
-        <dt id="TINY">TINY
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
-    
 
+    
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-params" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">params</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
     
 
     
@@ -128,11 +123,11 @@
        </header>
 
     
-      <div id="method-i-to_a" class="method-detail ">
+      <div id="method-i-with_params" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">to_a</span><span
-            class="method-args">()</span>
+          <span class="method-name">with_params</span><span
+            class="method-args">(params)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -141,48 +136,24 @@
 
         <div class="method-description">
           
-          <p>Returns array representation.</p>
           
-          
-
-          
-          <div class="method-source-code" id="to_a-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_a</span>
-  [<span class="ruby-constant">MAJOR</span>, <span class="ruby-constant">MINOR</span>, <span class="ruby-constant">TINY</span>]
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-to_s" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">to_s</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>Short-cut for version string.</p>
           
           
 
           
-          <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
-  <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;.&#39;</span>)
+          <div class="method-source-code" id="with_params-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/uri_extension.rb, line 41</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">with_params</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">params</span>, <span class="ruby-identifier">query</span> = <span class="ruby-identifier">params</span>, [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">query</span>].<span class="ruby-identifier">compact</span>
+
+  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">key</span> = <span class="ruby-constant">URI</span>.<span class="ruby-identifier">escape</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>)
+    <span class="ruby-constant">Array</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span> <span class="ruby-identifier">query</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{key}=#{CGI.escape(val.to_s)}&quot;</span> }
+  }
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">query</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;&amp;&#39;</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">query</span>.<span class="ruby-identifier">empty?</span>
+
+  <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
