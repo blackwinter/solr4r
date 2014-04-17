@@ -23,79 +23,117 @@
 ###############################################################################
 #++
 
-require 'curl'
+require 'net/https'
+
+require_relative 'request_extension'
+require_relative 'uri_extension'
 
 module Solr4R
 
-  class Request < Curl::Easy
+  class Request
 
-    DEFAULT_VERB = :get
+    DEFAULT_METHOD = :get
 
     DEFAULT_USER_AGENT = "Solr4R/#{VERSION}"
 
-    def initialize(options = {})
-      if block_given?
-        raise ArgumentError,
-          'block argument not supported, use options hash instead'
-      end
-
-      super()
-
-      self.options = options.merge(params: nil, verb: nil)
-      set_options
+    def initialize(base_uri, http_options = {})
+      self.base_uri, self.http_options =
+        URI(base_uri).extend(BaseUriExtension), http_options
     end
 
-    attr_accessor :options, :params, :verb
+    def start
+      self.http = Net::HTTP.start(base_uri.hostname, base_uri.port,
+        { use_ssl: base_uri.scheme == 'https' }.merge(http_options))
 
-    def execute(request_url, options = {}, &block)
-      prepare_request(request_url, options, &block)
-
-      send("http_#{verb}")
-
-      Response.new(self)
+      self
     end
 
-    def reset
-      super.tap {
-        set_options
-        headers['User-Agent'] ||= DEFAULT_USER_AGENT
-      }
+    def finish
+      http.finish if started?
+      self
+    end
+
+    def started?
+      http && http.started?
+    end
+
+    def execute(path, options = {}, &block)
+      start unless started?
+
+      self.last_response = nil
+
+      req = prepare_request(path, options, &block)
+      res = http.request(req)
+
+      self.last_response = Response.new(
+        request_body:     req.body,
+        request_headers:  req.to_hash,
+        request_method:   req.method.downcase.to_sym,
+        request_params:   req.params,
+        request_url:      req.uri.to_s,
+
+        response_body:    res.body,
+        response_charset: res.type_params['charset'],
+        response_code:    res.code.to_i,
+        response_headers: res.to_hash
+      )
+    end
+
+    def request_line
+      last_response ? last_response.request_line : "[#{base_uri}]"
     end
 
     def inspect
-      '#<%s:0x%x @options=%p, @verb=%p, @url=%p, @response_code=%p>' % [
-        self.class, object_id, options, verb, url, response_code
-      ]
+      '#<%s:0x%x %s>' % [self.class, object_id, request_line]
     end
 
     private
 
-    def set_options
-      options.each { |key, value| send("#{key}=", value) }
+    attr_accessor :base_uri, :http_options, :http, :last_response
+
+    def prepare_request(path, options)
+      uri = make_uri(path, options.fetch(:params, {}))
+
+      req = make_request(uri,
+        options.fetch(:method, DEFAULT_METHOD),
+        options.fetch(:data, {}))
+
+      set_headers(req, options.fetch(:headers, {}))
+
+      yield req if block_given?
+
+      req
     end
 
-    def prepare_request(request_url, options)
-      reset
+    def make_uri(path, params)
+      base_uri.merge(path).extend(RequestUriExtension).with_params(params)
+    end
 
-      self.url = Curl.urlalize(request_url.to_s,
-        self.params = options.fetch(:params, {}))
-
-      case self.verb = options.fetch(:method, DEFAULT_VERB)
+    def make_request(uri, method, data)
+      case method
         when :get, :head
-          # ok
-        when :post, :delete, :patch
-          self.post_body = Curl.postalize(options[:data])
-        when :put
-          self.put_data = Curl.postalize(options[:data])
+          req = request_for(method, uri)
+        when :post
+          req = request_for(method, uri)
+          req.set_form_data(data)
         else
-          raise ArgumentError, "verb not supported: #{verb}"
+          raise ArgumentError, "method not supported: #{method}"
       end
 
-      headers.update(options[:headers]) if options[:headers]
+      req
+    end
 
-      yield self if block_given?
+    def request_for(method, uri)
+      Net::HTTP.const_get(method.to_s.capitalize)
+        .extend(HTTPRequestExtension).from_uri(uri)
+    end
 
-      self
+    def set_headers(req, headers)
+      req['User-Agent'] = DEFAULT_USER_AGENT
+
+      headers.each { |key, value|
+        Array(value).each { |val| req.add_field(key, val) }
+      }
     end
 
   end

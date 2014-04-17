@@ -24,60 +24,39 @@
 #++
 
 require 'json'
-require 'ostruct'
-require 'webrick'
 
 module Solr4R
 
   class Response
 
-    CHARSET_RE = %r{;\s*charset=([\w-]+)}
-
-    REQUEST_LINE = %r{\AHTTP/.*\r?\n?}
-
     DEFAULT_CHARSET = 'UTF-8'
 
-    ATTRIBUTES = {
-      # request
-      headers:            :request_headers,
-      last_effective_url: :request_url,
-      post_body:          :post_body,
-      params:             :request_params,
-      verb:               :request_verb,
+    EVALUATE_METHODS = [:get, :post]
 
-      # response
-      body_str:           :response_body,
-      content_type:       :content_type,
-      header_str:         :response_header,
-      response_code:      :response_code
-    }
-
-    def initialize(request)
-      ATTRIBUTES.each { |attribute, key|
-        send("#{key}=", request.send(attribute))
-      }
+    def initialize(options)
+      options.each { |key, value| send("#{key}=", value) }
+      @evaluate = EVALUATE_METHODS.include?(request_method)
     end
 
-    attr_accessor *ATTRIBUTES.values
+    attr_accessor :response_body, :response_charset, :response_code, :response_headers,
+      :request_body, :request_method, :request_params, :request_url, :request_headers
+
+    def request_line
+      '"%s %s" %d' % [request_method.upcase, request_url, response_code]
+    end
 
     def result(options = {})
-      @result ||= evaluate_result(options)
-    end
-
-    def response_headers
-      @response_headers ||= evaluate_header
+      @result ||= evaluate_result(options) if @evaluate
     end
 
     def num_found
-      @num_found ||= evaluate_count('numFound')
+      @num_found ||= evaluate_count('numFound') if @evaluate
     end
 
-    def charset
-      @charset ||= response_headers.fetch('content-type')[0][CHARSET_RE, 1]
-    end
+    alias_method :to_i, :num_found
 
     def to_s
-      @to_s ||= response_body.to_s.force_encoding(charset || DEFAULT_CHARSET)
+      @to_s ||= response_body.to_s.force_encoding(response_charset || DEFAULT_CHARSET)
     end
 
     def inspect
@@ -95,10 +74,6 @@ module Solr4R
         when :json  then JSON.parse(to_s, options)
         else raise 'The response cannot be evaluated: wt=%p not supported.' % wt
       end
-    end
-
-    def evaluate_header
-      WEBrick::HTTPUtils.parse_header(response_header.sub(REQUEST_LINE, ''))
     end
 
     def evaluate_count(name)

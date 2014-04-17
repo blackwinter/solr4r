@@ -23,14 +23,12 @@
 ###############################################################################
 #++
 
-require 'uri'
-
 module Solr4R
 
   class Client
 
     DEFAULT_HOST = 'localhost'
-    DEFAULT_PATH = 'solr/'
+    DEFAULT_PATH = 'solr'
     DEFAULT_PORT = 8983
 
     DEFAULT_PARAMS = {
@@ -49,22 +47,22 @@ module Solr4R
 
     def initialize(options = {})
       if options.is_a?(String)
-        url, options = options, {}
+        uri, options = options, {}
       else
-        url = options.fetch(:url, default_url(options))
+        uri = options.fetch(:uri, default_uri(options))
       end
 
-      self.url, self.options = URI.parse(url), options
+      self.options = options
 
-      self.request = options.fetch(:request, Request.new)
       self.builder = options.fetch(:builder, Builder.new)
+      self.request = options.fetch(:request, Request.new(uri))
 
       self.default_params = options.fetch(:default_params, DEFAULT_PARAMS)
 
       register_endpoints(options.fetch(:endpoints, DEFAULT_ENDPOINTS))
     end
 
-    attr_accessor :url, :options, :request, :builder, :default_params
+    attr_accessor :options, :builder, :request, :default_params
 
     def register_endpoints(endpoints)
       endpoints.each { |args| register_endpoint(*args) } if endpoints
@@ -150,14 +148,14 @@ module Solr4R
     end
 
     def inspect
-      '#<%s:0x%x @url=%p, @default_params=%p>' % [
-        self.class, object_id, url, default_params
+      '#<%s:0x%x @default_params=%p %s>' % [
+        self.class, object_id, default_params, request.request_line
       ]
     end
 
     private
 
-    def default_url(options)
+    def default_uri(options)
       'http://%s:%d/%s' % [
         options.fetch(:host, DEFAULT_HOST),
         options.fetch(:port, DEFAULT_PORT),
@@ -170,8 +168,8 @@ module Solr4R
     end
 
     def send_request(path, options, &block)
-      options = amend_options(options, :params, default_params)
-      request.execute(URI.join(url, path), options, &block)
+      request.execute(path,
+        amend_options(options, :params, default_params), &block)
     end
 
     def invalid_endpoint?(name)
