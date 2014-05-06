@@ -84,6 +84,10 @@ module Solr4R
       self
     end
 
+    def json(path, params = {}, options = {}, &block)
+      get(path, params.merge(wt: :json), options, &block).result
+    end
+
     def get(path, params = {}, options = {}, &block)
       send_request(path, options.merge(method: :get, params: params), &block)
     end
