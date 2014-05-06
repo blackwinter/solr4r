@@ -24,6 +24,7 @@
 #++
 
 require 'json'
+require 'nuggets/hash/deep_fetch_mixin'
 
 module Solr4R
 
@@ -45,8 +46,8 @@ module Solr4R
       '"%s %s" %d' % [request_method.upcase, request_url, response_code]
     end
 
-    def result(options = {})
-      @result ||= evaluate_result(options) if @evaluate
+    def result
+      @result ||= evaluate_result if @evaluate
     end
 
     def num_found
@@ -67,28 +68,31 @@ module Solr4R
 
     private
 
-    def evaluate_result(options)
+    def evaluate_result
       case wt = request_params[:wt]
         when String then to_s
-        when :ruby  then eval(to_s)
-        when :json  then JSON.parse(to_s, options)
+        when :ruby  then extend_hash(eval(to_s))
+        when :json  then extend_hash(JSON.parse(to_s))
         else raise 'The response cannot be evaluated: wt=%p not supported.' % wt
       end
     end
 
     def evaluate_count(name)
       case wt = request_params[:wt]
-        # numFound="35"
-        when 'xml'        then Integer(result[/\s#{name}="(\d+)"/, 1])
-        # 'numFound'=>35
-        when 'ruby'       then Integer(result[/'#{name}'=>(\d+)/, 1])
-        # "numFound":35
-        when 'json'       then Integer(result[/"#{name}":(\d+)/, 1])
-        # { 'response' => 'numFound' } OR { :response => :numFound }
-        when :ruby, :json then result.fetch(key = 'response') {
-          name = name.to_sym; result.fetch(key.to_sym) }.fetch(name)
+        when 'xml'  then extract_int(name, '\s%s="%s"')  #  numFound="35"
+        when 'ruby' then extract_int(name, "'%s'=>%s")   # 'numFound'=>35
+        when 'json' then extract_int(name, '"%s":%s')    # "numFound":35
+        when Symbol then result % ['response', name]     # {"response"=>{"numFound"=>35}}
         else raise 'The count cannot be extracted: wt=%p not supported.' % wt
       end
+    end
+
+    def extract_int(name, pattern)
+      Integer(result[Regexp.new(pattern % [name, '(\d+)']), 1])
+    end
+
+    def extend_hash(object)
+      object.is_a?(Hash) ? object.extend(Nuggets::Hash::DeepFetchMixin) : object
     end
 
   end
