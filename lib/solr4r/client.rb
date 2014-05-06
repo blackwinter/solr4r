@@ -43,6 +43,8 @@ module Solr4R
 
     DEFAULT_UPDATE_PATH = 'update'
 
+    SYSTEM_INFO_PATH = 'admin/info/system'
+
     MATCH_ALL_QUERY = '*:*'
 
     def initialize(options = {})
@@ -149,6 +151,10 @@ module Solr4R
       params = params.merge(rows: 0)
       params[:q] ||= MATCH_ALL_QUERY
       get(path, params, options, &block)
+    end
+
+    def solr_version(type = :spec)
+      json(SYSTEM_INFO_PATH) % "lucene/solr-#{type}-version"
     end
 
     def inspect
