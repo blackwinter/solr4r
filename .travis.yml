@@ -23,4 +23,4 @@ script:
   rake spec
 
 install:
-  gem install --development solr4r
+  gem install --prerelease --development solr4r
