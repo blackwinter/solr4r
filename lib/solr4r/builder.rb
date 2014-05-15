@@ -27,9 +27,15 @@ require 'nokogiri'
 
 module Solr4R
 
-  Document = Nokogiri::XML::Document
-
   class Builder < Nokogiri::XML::Builder
+
+    class Document < Nokogiri::XML::Document
+
+      def document
+        self
+      end
+
+    end
 
     DEFAULT_OPTIONS = {
       encoding: 'UTF-8'
@@ -41,9 +47,10 @@ module Solr4R
           'block argument not supported, use options hash instead'
       end
 
-      super(@options = DEFAULT_OPTIONS.merge(options))
-
-      @_solr_doc = @doc
+      super(
+        @_solr_opt = DEFAULT_OPTIONS.merge(options),
+        @_solr_doc = Document.new
+      )
     end
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#add.2Freplace_documents].
@@ -122,21 +129,14 @@ module Solr4R
     #       </doc>
     #     </add>
     def add(doc, attributes = {})
-      to_xml(:add, attributes) { |add_node|
-        doc = [doc] unless doc.is_a?(Array)
-        doc.each { |hash, doc_attributes|
-          doc_(doc_attributes) { |doc_node|
-            hash.each { |key, values|
-              values = values.is_a?(Array) ? values.dup : [values]
+      to_xml(:add, attributes) { |add_node| _each(doc) { |hash, doc_attributes|
+        add_node.doc_(doc_attributes) { |doc_node| hash.each { |key, values|
+          field_attributes = (values.is_a?(Array) && values.last.is_a?(Hash) ?
+            (values = values.dup).pop : {}).merge(name: key)
 
-              field_attributes = values.last.is_a?(Hash) ? values.pop : {}
-              field_attributes = field_attributes.merge(name: key)
-
-              values.each { |value| doc_node.field_(value, field_attributes) }
-            }
-          }
-        }
-      }
+          _each(values) { |value| doc_node.field_(value, field_attributes) }
+        } }
+      } }
     end
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
@@ -252,38 +252,28 @@ module Solr4R
     #       <query>office:Osaka</query>
     #     </delete>
     def delete(hash)
-      to_xml(:delete) { |delete_node|
-        hash.each { |key, values|
-          values = [values] unless values.is_a?(Array)
-          values.each { |value|
-            ary = []
+      to_xml(:delete) { |delete_node| hash.each { |key, values|
+        delete = lambda { |value| delete_node.method_missing(key, value) }
 
-            if value.is_a?(Hash)
-              value.each { |k, v| Array(v).each { |w| ary << "#{k}:#{w}" } }
-            else
-              ary << value
-            end
-
-            ary.each { |v| delete_node.method_missing(key, v) }
-          }
-        }
-      }
+        _each(values) { |value| !value.is_a?(Hash) ? delete[value] :
+          value.each { |k, v| Array(v).each { |w| delete["#{k}:#{w}"] } } }
+      } }
     end
 
     def inspect
-      '#<%s:0x%x @options=%p>' % [
-        self.class, object_id, @options
-      ]
+      '#<%s:0x%x %p>' % [self.class, object_id, @_solr_opt]
     end
 
     private
 
     def to_xml(name, attributes = {}, &block)
       self.parent = self.doc = @_solr_doc.dup
-
       method_missing(name, attributes, &block)
-
       super(&nil)
+    end
+
+    def _each(values, &block)
+      (values.is_a?(Array) ? values : [values]).each(&block)
     end
 
   end
