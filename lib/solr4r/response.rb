@@ -24,7 +24,7 @@
 #++
 
 require 'json'
-require 'nuggets/hash/deep_fetch_mixin'
+require_relative 'result'
 
 module Solr4R
 
@@ -92,7 +92,7 @@ module Solr4R
     end
 
     def extend_hash(object)
-      object.is_a?(Hash) ? object.extend(Nuggets::Hash::DeepFetchMixin) : object
+      object.is_a?(Hash) ? Result.new(self, object) : object
     end
 
   end
