@@ -153,6 +153,10 @@ module Solr4R
       get(path, params, options, &block)
     end
 
+    def json_query(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
+      json(path, params, options, &block)
+    end
+
     def solr_version(type = :spec)
       json(SYSTEM_INFO_PATH) % "lucene/solr-#{type}-version"
     end
