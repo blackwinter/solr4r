@@ -43,7 +43,7 @@ module Solr4R
       self.params, query = params, [self.query].compact
 
       params.each { |key, value|
-        key = URI.escape(key.to_s)
+        key = CGI.escape(key.to_s)
         Array(value).each { |val| query << "#{key}=#{CGI.escape(val.to_s)}" }
       }
 
