@@ -115,7 +115,7 @@ module Solr4R
           req = request_for(method, uri)
         when :post
           req = request_for(method, uri)
-          req.set_form_data(data)
+          req.set_form_data(Array(data))
         else
           raise ArgumentError, "method not supported: #{method}"
       end
