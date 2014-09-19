@@ -2,6 +2,15 @@
 
 = Revision history for solr4r
 
+== 0.0.3 [2014-09-19]
+
+* Added Solr4R::Client#json.
+* Added Solr4R::Client#json_query.
+* Added Solr4R::Client#solr_version.
+* Updated Solr4R::Request with some fixes.
+* Refactored Solr4R::Response to use wrapper object.
+* Refactored Solr4R::Builder to use custom document class.
+
 == 0.0.2 [2014-04-17]
 
 * Refactored Solr4R::Request away from curb.
