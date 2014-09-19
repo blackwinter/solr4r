@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Response - solr4r Application documentation (v0.0.2)</title>
+<title>class Solr4R::Response - solr4r Application documentation (v0.0.3)</title>
 
 <link href="../fonts.css" rel="stylesheet">
 <link href="../rdoc.css" rel="stylesheet">
@@ -78,6 +78,10 @@
     <li ><a href="#method-i-evaluate_count">#evaluate_count</a>
     
     <li ><a href="#method-i-evaluate_result">#evaluate_result</a>
+    
+    <li ><a href="#method-i-extend_hash">#extend_hash</a>
+    
+    <li ><a href="#method-i-extract_int">#extract_int</a>
     
     <li ><a href="#method-i-inspect">#inspect</a>
     
@@ -288,7 +292,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 35</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">options</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{key}=&quot;</span>, <span class="ruby-identifier">value</span>) }
   <span class="ruby-ivar">@evaluate</span> = <span class="ruby-constant">EVALUATE_METHODS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">request_method</span>)
@@ -330,7 +334,7 @@
 
           
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-string">&#39;#&lt;%s:0x%x @request_url=%p, @request_headers=%p, @response_headers=%p, @response_code=%p&gt;&#39;</span> <span class="ruby-operator">%</span> [
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-identifier">request_url</span>, <span class="ruby-identifier">request_headers</span>, <span class="ruby-identifier">response_headers</span>, <span class="ruby-identifier">response_code</span>
@@ -365,7 +369,7 @@
 
           
           <div class="method-source-code" id="num_found-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 51</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 52</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">num_found</span>
   <span class="ruby-ivar">@num_found</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_count</span>(<span class="ruby-string">&#39;numFound&#39;</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@evaluate</span>
 <span class="ruby-keyword">end</span></pre>
@@ -402,7 +406,7 @@
 
           
           <div class="method-source-code" id="request_line-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 43</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request_line</span>
   <span class="ruby-string">&#39;&quot;%s %s&quot; %d&#39;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">request_method</span>.<span class="ruby-identifier">upcase</span>, <span class="ruby-identifier">request_url</span>, <span class="ruby-identifier">response_code</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -420,7 +424,7 @@
         
         <div class="method-heading">
           <span class="method-name">result</span><span
-            class="method-args">(options = {})</span>
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -435,9 +439,9 @@
 
           
           <div class="method-source-code" id="result-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 47</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">result</span>(<span class="ruby-identifier">options</span> = {})
-  <span class="ruby-ivar">@result</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_result</span>(<span class="ruby-identifier">options</span>) <span class="ruby-keyword">if</span> <span class="ruby-ivar">@evaluate</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 48</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">result</span>
+  <span class="ruby-ivar">@result</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">evaluate_result</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@evaluate</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -496,7 +500,7 @@
 
           
           <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
   <span class="ruby-ivar">@to_s</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">response_body</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">force_encoding</span>(<span class="ruby-identifier">response_charset</span> <span class="ruby-operator">||</span> <span class="ruby-constant">DEFAULT_CHARSET</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -537,18 +541,13 @@
 
           
           <div class="method-source-code" id="evaluate_count-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 78</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 79</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_count</span>(<span class="ruby-identifier">name</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">wt</span> = <span class="ruby-identifier">request_params</span>[<span class="ruby-value">:wt</span>]
-    <span class="ruby-comment"># numFound=&quot;35&quot;</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;xml&#39;</span>        <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/\s#{name}=&quot;(\d+)&quot;/</span>, <span class="ruby-value">1</span>])
-    <span class="ruby-comment"># &#39;numFound&#39;=&gt;35</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;ruby&#39;</span>       <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/&#39;#{name}&#39;=&gt;(\d+)/</span>, <span class="ruby-value">1</span>])
-    <span class="ruby-comment"># &quot;numFound&quot;:35</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;json&#39;</span>       <span class="ruby-keyword">then</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-node">/&quot;#{name}&quot;:(\d+)/</span>, <span class="ruby-value">1</span>])
-    <span class="ruby-comment"># { &#39;response&#39; =&gt; &#39;numFound&#39; } OR { :response =&gt; :numFound }</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:ruby</span>, <span class="ruby-value">:json</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span> = <span class="ruby-string">&#39;response&#39;</span>) {
-      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>; <span class="ruby-identifier">result</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>) }.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;xml&#39;</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">extract_int</span>(<span class="ruby-identifier">name</span>, <span class="ruby-string">&#39;\s%s=&quot;%s&quot;&#39;</span>)  <span class="ruby-comment">#  numFound=&quot;35&quot;</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;ruby&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">extract_int</span>(<span class="ruby-identifier">name</span>, <span class="ruby-string">&quot;&#39;%s&#39;=&gt;%s&quot;</span>)   <span class="ruby-comment"># &#39;numFound&#39;=&gt;35</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;json&#39;</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">extract_int</span>(<span class="ruby-identifier">name</span>, <span class="ruby-string">&#39;&quot;%s&quot;:%s&#39;</span>)    <span class="ruby-comment"># &quot;numFound&quot;:35</span>
+    <span class="ruby-keyword">when</span> <span class="ruby-constant">Symbol</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">result</span> <span class="ruby-operator">%</span> [<span class="ruby-string">&#39;response&#39;</span>, <span class="ruby-identifier">name</span>]     <span class="ruby-comment"># {&quot;response&quot;=&gt;{&quot;numFound&quot;=&gt;35}}</span>
     <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;The count cannot be extracted: wt=%p not supported.&#39;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">wt</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -566,7 +565,7 @@
         
         <div class="method-heading">
           <span class="method-name">evaluate_result</span><span
-            class="method-args">(options)</span>
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -581,14 +580,80 @@
 
           
           <div class="method-source-code" id="evaluate_result-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 69</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_result</span>(<span class="ruby-identifier">options</span>)
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">evaluate_result</span>
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">wt</span> = <span class="ruby-identifier">request_params</span>[<span class="ruby-value">:wt</span>]
     <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span> <span class="ruby-keyword">then</span> <span class="ruby-identifier">to_s</span>
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:ruby</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">to_s</span>)
-    <span class="ruby-keyword">when</span> <span class="ruby-value">:json</span>  <span class="ruby-keyword">then</span> <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:ruby</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">extend_hash</span>(<span class="ruby-identifier">eval</span>(<span class="ruby-identifier">to_s</span>))
+    <span class="ruby-keyword">when</span> <span class="ruby-value">:json</span>  <span class="ruby-keyword">then</span> <span class="ruby-identifier">extend_hash</span>(<span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">to_s</span>))
     <span class="ruby-keyword">else</span> <span class="ruby-identifier">raise</span> <span class="ruby-string">&#39;The response cannot be evaluated: wt=%p not supported.&#39;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">wt</span>
   <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-extend_hash" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">extend_hash</span><span
+            class="method-args">(object)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="extend_hash-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 93</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">extend_hash</span>(<span class="ruby-identifier">object</span>)
+  <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Result</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">object</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">object</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-extract_int" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">extract_int</span><span
+            class="method-args">(name, pattern)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="extract_int-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/response.rb, line 89</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">extract_int</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">pattern</span>)
+  <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">result</span>[<span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pattern</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">name</span>, <span class="ruby-string">&#39;(\d+)&#39;</span>]), <span class="ruby-value">1</span>])
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -608,7 +673,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.1.
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

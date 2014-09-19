@@ -4,35 +4,35 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::BaseUriExtension - solr4r Application documentation (v0.0.3)</title>
+<title>class Solr4R::Builder::Document - solr4r Application documentation (v0.0.3)</title>
 
-<link href="../fonts.css" rel="stylesheet">
-<link href="../rdoc.css" rel="stylesheet">
+<link href="../../fonts.css" rel="stylesheet">
+<link href="../../rdoc.css" rel="stylesheet">
 
 <script type="text/javascript">
-  var rdoc_rel_prefix = "../";
+  var rdoc_rel_prefix = "../../";
 </script>
 
-<script src="../js/jquery.js"></script>
-<script src="../js/navigation.js"></script>
-<script src="../js/search_index.js"></script>
-<script src="../js/search.js"></script>
-<script src="../js/searcher.js"></script>
-<script src="../js/darkfish.js"></script>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/navigation.js"></script>
+<script src="../../js/search_index.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/searcher.js"></script>
+<script src="../../js/darkfish.js"></script>
 
 
-<body id="top" role="document" class="module">
+<body id="top" role="document" class="class">
 <nav role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
   <h2>
-    <a href="../index.html" rel="home">Home</a>
+    <a href="../../index.html" rel="home">Home</a>
   </h2>
 
   <div id="table-of-contents-navigation">
-    <a href="../table_of_contents.html#pages">Pages</a>
-    <a href="../table_of_contents.html#classes">Classes</a>
-    <a href="../table_of_contents.html#methods">Methods</a>
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
   </div>
 </div>
 
@@ -57,7 +57,14 @@
 
   <div id="class-metadata">
     
-    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Nokogiri::XML::Document
+  
+</div>
+
     
     
     <!-- Method Quickref -->
@@ -66,7 +73,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-extended">::extended</a>
+    <li ><a href="#method-i-document">#document</a>
     
   </ul>
 </div>
@@ -74,9 +81,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Solr4R::BaseUriExtension">
-  <h1 id="module-Solr4R::BaseUriExtension" class="module">
-    module Solr4R::BaseUriExtension
+<main role="main" aria-labelledby="class-Solr4R::Builder::Document">
+  <h1 id="class-Solr4R::Builder::Document" class="class">
+    class Solr4R::Builder::Document
   </h1>
 
   <section class="description">
@@ -96,17 +103,17 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-extended" class="method-detail ">
+      <div id="method-i-document" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">extended</span><span
-            class="method-args">(uri)</span>
+          <span class="method-name">document</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -120,10 +127,10 @@
           
 
           
-          <div class="method-source-code" id="extended-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/uri_extension.rb, line 31</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">extended</span>(<span class="ruby-identifier">uri</span>)
-  <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39;/&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">uri</span>.<span class="ruby-identifier">path</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">&#39;/&#39;</span>)
+          <div class="method-source-code" id="document-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">document</span>
+  <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
