@@ -169,7 +169,7 @@ module Solr4R
     end
 
     def json_query(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
-      json(path, params, options, &block)
+      json(path, params.merge(q: query_string(params[:q])), options, &block)
     end
 
     def query_string(query)
