@@ -1,4 +1,4 @@
-require File.expand_path(%q{../lib/solr4r/version}, __FILE__)
+require_relative 'lib/solr4r/version'
 
 begin
   require 'hen'

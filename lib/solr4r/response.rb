@@ -46,6 +46,10 @@ module Solr4R
       '"%s %s" %d' % [request_method.upcase, request_url, response_code]
     end
 
+    def success?
+      response_code / 100 == 2
+    end
+
     def result
       @result ||= evaluate_result if @evaluate
     end
