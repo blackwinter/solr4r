@@ -269,7 +269,11 @@ module Solr4R
     def to_xml(name, attributes = {}, &block)
       self.parent = self.doc = @_solr_doc.dup
       method_missing(name, attributes, &block)
-      super(&nil)
+      replace_illegal_characters(super(&nil))
+    end
+
+    def replace_illegal_characters(string)
+      string.gsub(/[\x00-\x08\x0B\x0C\x0E-\x1F]/, '')
     end
 
     def _each(values, &block)

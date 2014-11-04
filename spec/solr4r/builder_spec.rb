@@ -84,6 +84,20 @@ describe Solr4R::Builder do
       EOT
     end
 
+    example do
+      @builder.add(employeeId: '05991', office: "\fBridgew\ate\r", skills: %w[Perl Java]).should == <<-EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="employeeId">05991</field>
+    <field name="office">Bridgewte&#13;</field>
+    <field name="skills">Perl</field>
+    <field name="skills">Java</field>
+  </doc>
+</add>
+      EOT
+    end
+
   end
 
   describe '#commit' do
@@ -201,6 +215,15 @@ describe Solr4R::Builder do
   <id>06000</id>
   <query>office:Bridgewater</query>
   <query>office:Osaka</query>
+</delete>
+      EOT
+    end
+
+    example do
+      @builder.delete(query: "office:\fBridgew\ate\r").should == <<-EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridgewte&#13;</query>
 </delete>
       EOT
     end
