@@ -172,6 +172,23 @@ module Solr4R
       json(path, params, options, &block)
     end
 
+    def query_string(query)
+      case query
+        when nil
+          # ignore
+        when String
+          query.gsub('&', '%26')
+        when Array, Hash
+          query.flat_map { |key, values|
+            Array(values).map { |value|
+              query_string("#{key}:#{value}")
+            }
+          }.join(' ')
+        else
+          query_string(query.to_s)
+      end
+    end
+
     def solr_version(type = :spec)
       json(SYSTEM_INFO_PATH) % "lucene/solr-#{type}-version"
     end
