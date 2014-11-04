@@ -35,6 +35,8 @@ module Solr4R
       wt: :json
     }
 
+    DEFAULT_BATCH_SIZE = 1000
+
     DEFAULT_ENDPOINTS = %w[select query spell suggest terms] <<
       ['ping', path: 'admin/ping', method: :head] <<
       ['dump', path: 'debug/dump']
@@ -110,6 +112,19 @@ module Solr4R
     # See Builder#add.
     def add(doc, attributes = {}, options = {}, &block)
       update(builder.add(doc, attributes), options, &block)
+    end
+
+    def add_batch(docs, attributes = {}, options = {}, batch_size = DEFAULT_BATCH_SIZE, &block)
+      failed = []
+
+      docs.each_slice(batch_size) { |batch|
+        unless add(batch, attributes, options, &block).success?
+          failed.concat(batch_size == 1 ? batch : add_batch(
+            batch, attributes, options, batch_size / 10, &block))
+        end
+      }
+
+      failed
     end
 
     # See Builder#commit.
