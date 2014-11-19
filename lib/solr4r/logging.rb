@@ -23,21 +23,49 @@
 ###############################################################################
 #++
 
+require 'logger'
+require 'nuggets/module/lazy_attr'
+
 module Solr4R
 
-  class << self
+  module Logging
 
-    def connect(*args)
-      Client.new(*args)
+    DEFAULT_LOG_DEVICE = $stderr
+    DEFAULT_LOG_LEVEL  = Logger::WARN
+    DEFAULT_LOG_NAME   = "Solr4R/#{VERSION}"
+
+    NULL_LOGGER = Logger.new(nil)
+
+    class << self
+
+      def set_log_level(logger, level = nil, default_level = nil)
+        level ||= begin
+          value = ENV.fetch('SOLR4R_LOG_LEVEL', '')
+          value.empty? ? default_level || DEFAULT_LOG_LEVEL : value
+        end
+
+        logger.level = level.respond_to?(:upcase) ?
+          Logger.const_get(level.upcase) : level
+      end
+
+    end
+
+    lazy_accessor(:logger) { NULL_LOGGER }
+
+    def default_logger(options = options(), mod = self.class)
+      logger = Logger.new(options.fetch(:log_device, mod::DEFAULT_LOG_DEVICE))
+      logger.progname = options.fetch(:log_name, mod::DEFAULT_LOG_NAME)
+
+      Logging.set_log_level(logger, options[:log_level], mod::DEFAULT_LOG_LEVEL)
+
+      logger
+    end
+
+    def forward_logger(object)
+      object.logger = logger
+      object
     end
 
   end
 
 end
-
-require_relative 'solr4r/version'
-require_relative 'solr4r/logging'
-require_relative 'solr4r/builder'
-require_relative 'solr4r/request'
-require_relative 'solr4r/response'
-require_relative 'solr4r/client'

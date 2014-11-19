@@ -27,6 +27,8 @@ module Solr4R
 
   class Client
 
+    include Logging
+
     DEFAULT_HOST = 'localhost'
     DEFAULT_PATH = 'solr'
     DEFAULT_PORT = 8983
@@ -56,8 +58,10 @@ module Solr4R
 
       uri ||= options.fetch(:uri, default_uri)
 
-      self.builder = options.fetch(:builder, Builder.new)
-      self.request = options.fetch(:request, Request.new(uri))
+      self.logger = options.fetch(:logger, default_logger)
+
+      self.builder = options.fetch(:builder) { forward_logger(Builder.new) }
+      self.request = options.fetch(:request) { forward_logger(Request.new(uri)) }
 
       self.default_params = options.fetch(:default_params, DEFAULT_PARAMS)
 

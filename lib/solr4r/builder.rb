@@ -29,6 +29,8 @@ module Solr4R
 
   class Builder < Nokogiri::XML::Builder
 
+    include Logging
+
     class Document < Nokogiri::XML::Document
 
       def document

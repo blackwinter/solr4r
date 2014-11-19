@@ -32,6 +32,8 @@ module Solr4R
 
   class Request
 
+    include Logging
+
     DEFAULT_METHOD = :get
 
     DEFAULT_USER_AGENT = "Solr4R/#{VERSION}"
