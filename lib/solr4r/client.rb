@@ -50,13 +50,11 @@ module Solr4R
     MATCH_ALL_QUERY = '*:*'
 
     def initialize(options = {})
-      if options.is_a?(String)
-        uri, options = options, {}
-      else
-        uri = options.fetch(:uri, default_uri(options))
-      end
+      uri, options = options, {} unless options.is_a?(Hash)
 
       self.options = options
+
+      uri ||= options.fetch(:uri, default_uri)
 
       self.builder = options.fetch(:builder, Builder.new)
       self.request = options.fetch(:request, Request.new(uri))
@@ -201,7 +199,7 @@ module Solr4R
 
     private
 
-    def default_uri(options)
+    def default_uri
       'http://%s:%d/%s' % [
         options.fetch(:host, DEFAULT_HOST),
         options.fetch(:port, DEFAULT_PORT),
