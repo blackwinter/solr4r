@@ -35,13 +35,22 @@ module Solr4R
     include Enumerable
 
     extend Forwardable
+    def_delegators :to_hash, :fetch, :deep_fetch, :%
 
-    def_delegators :response, :to_i
-    def_delegators :to_hash,  :%, :deep_fetch
+    def self.type_for(hash)
+      constants.find { |const|
+        if hash.key?(const.to_s.downcase)
+          mod = const_get(const)
+          return mod if mod.is_a?(Module)
+        end
+      }
+
+      raise TypeError, "could not find supported type: #{hash.keys.join(', ')}"
+    end
 
     def initialize(response, hash)
+      extend(self.class.type_for(hash))
       @response, @hash = response, hash.extend(Nuggets::Hash::DeepFetchMixin)
-      extend(Error) if hash.key?('error')
     end
 
     attr_reader :response
@@ -50,26 +59,59 @@ module Solr4R
       @hash
     end
 
-    def each
-      return enum_for(:each) unless block_given?
+    def to_i
+      0
+    end
 
-      deep_fetch('response/docs').each { |hash|
-        yield Document.new(self, hash)
-      }
+    def each(&block)
+      block ? _each(&block) : enum_for(:each)
+    end
+
+    def empty?
+      to_i.zero?
     end
 
     def error?
       is_a?(Error)
     end
 
+    private
+
+    def _each
+      []
+    end
+
     module Error
+    end
+
+    module Response
 
       def to_i
-        0
+        response.to_i
       end
 
-      def each
-        []
+      private
+
+      def _each
+        deep_fetch('response/docs').each { |hash|
+          yield Document.new(self, hash)
+        }
+      end
+
+    end
+
+    module Terms
+
+      def to_i
+        fetch('terms').size
+      end
+
+      private
+
+      def _each
+        fetch('terms').each { |key, value|
+          yield key, Hash[*value]
+        }
       end
 
     end
