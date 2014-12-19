@@ -4,17 +4,17 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Version - solr4r Application documentation (v0.0.4)</title>
+<title>module Solr4R::Result::Terms - solr4r Application documentation (v0.0.4)</title>
 
 <script type="text/javascript">
-  var rdoc_rel_prefix = "../";
+  var rdoc_rel_prefix = "../../";
 </script>
 
-<script src="../js/jquery.js"></script>
-<script src="../js/darkfish.js"></script>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/darkfish.js"></script>
 
-<link href="../css/fonts.css" rel="stylesheet">
-<link href="../css/rdoc.css" rel="stylesheet">
+<link href="../../css/fonts.css" rel="stylesheet">
+<link href="../../css/rdoc.css" rel="stylesheet">
 
 
 
@@ -23,13 +23,13 @@
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
   <h2>
-    <a href="../index.html" rel="home">Home</a>
+    <a href="../../index.html" rel="home">Home</a>
   </h2>
 
   <div id="table-of-contents-navigation">
-    <a href="../table_of_contents.html#pages">Pages</a>
-    <a href="../table_of_contents.html#classes">Classes</a>
-    <a href="../table_of_contents.html#methods">Methods</a>
+    <a href="../../table_of_contents.html#pages">Pages</a>
+    <a href="../../table_of_contents.html#classes">Classes</a>
+    <a href="../../table_of_contents.html#methods">Methods</a>
   </div>
 </div>
 
@@ -63,9 +63,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-to_a">::to_a</a>
+    <li ><a href="#method-i-_each">#_each</a>
     
-    <li ><a href="#method-c-to_s">::to_s</a>
+    <li ><a href="#method-i-to_i">#to_i</a>
     
   </ul>
 </div>
@@ -73,9 +73,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="module-Solr4R::Version">
-  <h1 id="module-Solr4R::Version" class="module">
-    module Solr4R::Version
+<main role="main" aria-labelledby="module-Solr4R::Result::Terms">
+  <h1 id="module-Solr4R::Result::Terms" class="module">
+    module Solr4R::Result::Terms
   </h1>
 
   <section class="description">
@@ -91,44 +91,20 @@
     
 
     
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="MAJOR">MAJOR
-        
-        <dd>
-        
-      
-        <dt id="MINOR">MINOR
-        
-        <dd>
-        
-      
-        <dt id="TINY">TINY
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
-    
 
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-to_a" class="method-detail ">
+      <div id="method-i-to_i" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">to_a</span><span
+          <span class="method-name">to_i</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -138,15 +114,15 @@
 
         <div class="method-description">
           
-          <p>Returns array representation.</p>
+          
           
           
 
           
-          <div class="method-source-code" id="to_a-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 12</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_a</span>
-  [<span class="ruby-constant">MAJOR</span>, <span class="ruby-constant">MINOR</span>, <span class="ruby-constant">TINY</span>]
+          <div class="method-source-code" id="to_i-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 104</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_i</span>
+  <span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;terms&#39;</span>).<span class="ruby-identifier">size</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -158,11 +134,19 @@
       </div>
 
     
-      <div id="method-c-to_s" class="method-detail ">
+    </section>
+  
+     <section id="private-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Private Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-_each" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">to_s</span><span
-            class="method-args">()</span>
+          <span class="method-name">_each</span><span
+            class="method-args">() { |key, Hash| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -171,15 +155,17 @@
 
         <div class="method-description">
           
-          <p>Short-cut for version string.</p>
+          
           
           
 
           
-          <div class="method-source-code" id="to_s-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/version.rb, line 17</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
-  <span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;.&#39;</span>)
+          <div class="method-source-code" id="_each-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">_each</span>
+  <span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;terms&#39;</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">yield</span> <span class="ruby-identifier">key</span>, <span class="ruby-constant">Hash</span>[<span class="ruby-operator">*</span><span class="ruby-identifier">value</span>]
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           

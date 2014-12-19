@@ -1,14 +1,15 @@
-Fri, 19 Sep 2014 15:37:20 +0200
-README	Fri, 19 Sep 2014 15:36:04 +0200
+Fri, 19 Dec 2014 12:47:33 +0100
+README	Fri, 19 Dec 2014 12:46:54 +0100
 COPYING	Wed, 02 Apr 2014 12:50:37 +0200
-ChangeLog	Fri, 19 Sep 2014 15:35:45 +0200
-lib/solr4r.rb	Wed, 02 Apr 2014 12:56:59 +0200
-lib/solr4r/client.rb	Wed, 14 May 2014 16:10:47 +0200
-lib/solr4r/result.rb	Thu, 26 Jun 2014 10:23:30 +0200
-lib/solr4r/builder.rb	Thu, 15 May 2014 11:45:55 +0200
-lib/solr4r/request.rb	Tue, 19 Aug 2014 10:00:08 +0200
-lib/solr4r/version.rb	Fri, 19 Sep 2014 15:36:11 +0200
+ChangeLog	Fri, 19 Dec 2014 12:46:07 +0100
+lib/solr4r.rb	Wed, 19 Nov 2014 15:19:18 +0100
+lib/solr4r/client.rb	Wed, 19 Nov 2014 15:51:50 +0100
+lib/solr4r/result.rb	Thu, 18 Dec 2014 15:11:16 +0100
+lib/solr4r/builder.rb	Wed, 19 Nov 2014 15:51:41 +0100
+lib/solr4r/logging.rb	Wed, 19 Nov 2014 15:58:02 +0100
+lib/solr4r/request.rb	Wed, 19 Nov 2014 15:51:44 +0100
+lib/solr4r/version.rb	Fri, 19 Dec 2014 12:37:52 +0100
 lib/solr4r/document.rb	Thu, 15 May 2014 12:25:02 +0200
-lib/solr4r/response.rb	Thu, 15 May 2014 13:20:01 +0200
+lib/solr4r/response.rb	Tue, 04 Nov 2014 13:05:08 +0100
 lib/solr4r/uri_extension.rb	Mon, 07 Jul 2014 15:30:33 +0200
 lib/solr4r/request_extension.rb	Thu, 17 Apr 2014 12:08:02 +0200

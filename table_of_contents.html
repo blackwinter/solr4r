@@ -4,26 +4,23 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Table of Contents - solr4r Application documentation (v0.0.3)</title>
-
-<link href="./fonts.css" rel="stylesheet">
-<link href="./rdoc.css" rel="stylesheet">
+<title>Table of Contents - solr4r Application documentation (v0.0.4)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
-<script src="./js/navigation.js"></script>
-<script src="./js/search_index.js"></script>
-<script src="./js/search.js"></script>
-<script src="./js/searcher.js"></script>
 <script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
 
 
 <body id="top" class="table-of-contents">
 <main role="main">
-<h1 class="class">Table of Contents - solr4r Application documentation (v0.0.3)</h1>
+<h1 class="class">Table of Contents - solr4r Application documentation (v0.0.4)</h1>
 
 <h2 id="pages">Pages</h2>
 <ul>
@@ -39,9 +36,10 @@
 
     <ul>
       <li><a href="ChangeLog.html#label-Revision+history+for+solr4r">Revision history for solr4r</a>
-      <li><a href="ChangeLog.html#label-0.0.3+%5B2014-09-19%5D">0.0.3 [2014-09-19]</a>
-      <li><a href="ChangeLog.html#label-0.0.2+%5B2014-04-17%5D">0.0.2 [2014-04-17]</a>
-      <li><a href="ChangeLog.html#label-0.0.1+%5B2014-03-28%5D">0.0.1 [2014-03-28]</a>
+      <li><a href="ChangeLog.html#label-0.0.4+-5B2014-12-19-5D">0.0.4 [2014-12-19]</a>
+      <li><a href="ChangeLog.html#label-0.0.3+-5B2014-09-19-5D">0.0.3 [2014-09-19]</a>
+      <li><a href="ChangeLog.html#label-0.0.2+-5B2014-04-17-5D">0.0.2 [2014-04-17]</a>
+      <li><a href="ChangeLog.html#label-0.0.1+-5B2014-03-28-5D">0.0.1 [2014-03-28]</a>
     </ul>
   </li>
     <li class="file">
@@ -82,6 +80,9 @@
   <li class="module">
     <a href="Solr4R/HTTPRequestExtension.html">Solr4R::HTTPRequestExtension</a>
   </li>
+  <li class="module">
+    <a href="Solr4R/Logging.html">Solr4R::Logging</a>
+  </li>
   <li class="class">
     <a href="Solr4R/Request.html">Solr4R::Request</a>
   </li>
@@ -98,12 +99,23 @@
     <a href="Solr4R/Result/Error.html">Solr4R::Result::Error</a>
   </li>
   <li class="module">
+    <a href="Solr4R/Result/Response.html">Solr4R::Result::Response</a>
+  </li>
+  <li class="module">
+    <a href="Solr4R/Result/Terms.html">Solr4R::Result::Terms</a>
+  </li>
+  <li class="module">
     <a href="Solr4R/Version.html">Solr4R::Version</a>
   </li>
 </ul>
 
 <h2 id="methods">Methods</h2>
 <ul>
+
+  <li class="method">
+    <a href="Solr4R.html#method-c-connect">::connect</a>
+    &mdash;
+    <span class="container">Solr4R</span>
 
   <li class="method">
     <a href="Solr4R/HTTPRequestExtension.html#method-c-extended">::extended</a>
@@ -126,14 +138,14 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Result.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Solr4R::Result</span>
-
-  <li class="method">
     <a href="Solr4R/Document.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Solr4R::Document</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
 
   <li class="method">
     <a href="Solr4R/Request.html#method-c-new">::new</a>
@@ -146,9 +158,49 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
+    <a href="Solr4R/Logging.html#method-c-set_log_level">::set_log_level</a>
+    &mdash;
+    <span class="container">Solr4R::Logging</span>
+
+  <li class="method">
+    <a href="Solr4R/Version.html#method-c-to_a">::to_a</a>
+    &mdash;
+    <span class="container">Solr4R::Version</span>
+
+  <li class="method">
+    <a href="Solr4R/Version.html#method-c-to_s">::to_s</a>
+    &mdash;
+    <span class="container">Solr4R::Version</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-c-type_for">::type_for</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Terms.html#method-i-_each">#_each</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Terms</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Response.html#method-i-_each">#_each</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Response</span>
+
+  <li class="method">
     <a href="Solr4R/Builder.html#method-i-_each">#_each</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-i-_each">#_each</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
+
+  <li class="method">
+    <a href="Solr4R/Client.html#method-i-add">#add</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-add">#add</a>
@@ -156,7 +208,7 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-i-add">#add</a>
+    <a href="Solr4R/Client.html#method-i-add_batch">#add_batch</a>
     &mdash;
     <span class="container">Solr4R::Client</span>
 
@@ -176,14 +228,14 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R.html#method-i-connect">#connect</a>
-    &mdash;
-    <span class="container">Solr4R</span>
-
-  <li class="method">
     <a href="Solr4R/Client.html#method-i-count">#count</a>
     &mdash;
     <span class="container">Solr4R::Client</span>
+
+  <li class="method">
+    <a href="Solr4R/Logging.html#method-i-default_logger">#default_logger</a>
+    &mdash;
+    <span class="container">Solr4R::Logging</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-default_uri">#default_uri</a>
@@ -226,9 +278,9 @@
     <span class="container">Solr4R::Result</span>
 
   <li class="method">
-    <a href="Solr4R/Result/Error.html#method-i-each">#each</a>
+    <a href="Solr4R/Result.html#method-i-empty-3F">#empty?</a>
     &mdash;
-    <span class="container">Solr4R::Result::Error</span>
+    <span class="container">Solr4R::Result</span>
 
   <li class="method">
     <a href="Solr4R/Result.html#method-i-error-3F">#error?</a>
@@ -266,6 +318,11 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
+    <a href="Solr4R/Logging.html#method-i-forward_logger">#forward_logger</a>
+    &mdash;
+    <span class="container">Solr4R::Logging</span>
+
+  <li class="method">
     <a href="Solr4R/HTTPRequestExtension.html#method-i-from_uri">#from_uri</a>
     &mdash;
     <span class="container">Solr4R::HTTPRequestExtension</span>
@@ -281,6 +338,11 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
+    <a href="Solr4R/Request.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Solr4R::Request</span>
+
+  <li class="method">
     <a href="Solr4R/Builder.html#method-i-inspect">#inspect</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
@@ -289,11 +351,6 @@
     <a href="Solr4R/Response.html#method-i-inspect">#inspect</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
-
-  <li class="method">
-    <a href="Solr4R/Request.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Solr4R::Request</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-inspect">#inspect</a>
@@ -331,14 +388,14 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-i-optimize">#optimize</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
     <a href="Solr4R/Builder.html#method-i-optimize">#optimize</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Client.html#method-i-optimize">#optimize</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-post">#post</a>
@@ -351,6 +408,11 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
+    <a href="Solr4R/Client.html#method-i-query_string">#query_string</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
+
+  <li class="method">
     <a href="Solr4R/Client.html#method-i-register_endpoint">#register_endpoint</a>
     &mdash;
     <span class="container">Solr4R::Client</span>
@@ -361,7 +423,17 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
+    <a href="Solr4R/Builder.html#method-i-replace_illegal_characters">#replace_illegal_characters</a>
+    &mdash;
+    <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
     <a href="Solr4R/Request.html#method-i-request_for">#request_for</a>
+    &mdash;
+    <span class="container">Solr4R::Request</span>
+
+  <li class="method">
+    <a href="Solr4R/Request.html#method-i-request_line">#request_line</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
 
@@ -369,11 +441,6 @@
     <a href="Solr4R/Response.html#method-i-request_line">#request_line</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
-
-  <li class="method">
-    <a href="Solr4R/Request.html#method-i-request_line">#request_line</a>
-    &mdash;
-    <span class="container">Solr4R::Request</span>
 
   <li class="method">
     <a href="Solr4R/Response.html#method-i-result">#result</a>
@@ -396,6 +463,11 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
+    <a href="Solr4R/Request.html#method-i-set_data">#set_data</a>
+    &mdash;
+    <span class="container">Solr4R::Request</span>
+
+  <li class="method">
     <a href="Solr4R/Request.html#method-i-set_headers">#set_headers</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
@@ -416,9 +488,9 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
-    <a href="Solr4R/Version.html#method-i-to_a">#to_a</a>
+    <a href="Solr4R/Response.html#method-i-success-3F">#success?</a>
     &mdash;
-    <span class="container">Solr4R::Version</span>
+    <span class="container">Solr4R::Response</span>
 
   <li class="method">
     <a href="Solr4R/Result.html#method-i-to_hash">#to_hash</a>
@@ -431,24 +503,29 @@
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
+    <a href="Solr4R/Result/Response.html#method-i-to_i">#to_i</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Response</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-i-to_i">#to_i</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
+
+  <li class="method">
     <a href="Solr4R/Response.html#method-i-to_i">#to_i</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
-    <a href="Solr4R/Result/Error.html#method-i-to_i">#to_i</a>
+    <a href="Solr4R/Result/Terms.html#method-i-to_i">#to_i</a>
     &mdash;
-    <span class="container">Solr4R::Result::Error</span>
+    <span class="container">Solr4R::Result::Terms</span>
 
   <li class="method">
     <a href="Solr4R/Response.html#method-i-to_s">#to_s</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
-
-  <li class="method">
-    <a href="Solr4R/Version.html#method-i-to_s">#to_s</a>
-    &mdash;
-    <span class="container">Solr4R::Version</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-to_xml">#to_xml</a>
@@ -470,7 +547,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
-  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
