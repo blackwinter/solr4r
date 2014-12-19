@@ -2,6 +2,18 @@
 
 = Revision history for solr4r
 
+== 0.0.4 [2014-12-19]
+
+* Fixed Solr4R::Request#make_request to set request body if string (XML).
+* Fixed Solr4R::Builder#to_xml to replace illegal characters.
+* Added Solr4R::Response#success?.
+* Added Solr4R::Client#add_batch.
+* Added Solr4R::Client#query_string.
+* Added basic logging infrastructure.
+* Extended Solr4R::Result for
+  terms[https://wiki.apache.org/solr/TermsComponent] response.
+* Updated Solr4R::Client#json_query to use Solr4R::Client#query_string.
+
 == 0.0.3 [2014-09-19]
 
 * Added Solr4R::Client#json.
