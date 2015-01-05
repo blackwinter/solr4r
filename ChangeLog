@@ -2,6 +2,10 @@
 
 = Revision history for solr4r
 
+== 0.0.5 [unreleased]
+
+* Fixed Solr4R::Result for unsupported types.
+
 == 0.0.4 [2014-12-19]
 
 * Fixed Solr4R::Request#make_request to set request body if string (XML).
