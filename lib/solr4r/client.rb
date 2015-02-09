@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014 Jens Wille                                               #
+# Copyright (C) 2014-2015 Jens Wille                                          #
 #                                                                             #
 # Mir is free software: you can redistribute it and/or modify it under the    #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -46,6 +46,8 @@ module Solr4R
     DEFAULT_SELECT_PATH = 'select'
 
     DEFAULT_UPDATE_PATH = 'update'
+
+    DEFAULT_MLT_PATH = 'mlt'
 
     SYSTEM_INFO_PATH = 'admin/info/system'
 
@@ -175,6 +177,10 @@ module Solr4R
 
     def json_query(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
       json(path, params.merge(q: query_string(params[:q])), options, &block)
+    end
+
+    def more_like_this(params = {}, options = {}, path = DEFAULT_MLT_PATH, &block)
+      json_query(params, options, path, &block)
     end
 
     def query_string(query)
