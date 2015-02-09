@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014 Jens Wille                                               #
+# Copyright (C) 2014-2015 Jens Wille                                          #
 #                                                                             #
 # Mir is free software: you can redistribute it and/or modify it under the    #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -31,6 +31,12 @@ module Solr4R
 
     extend Forwardable
 
+    UNIQUE_KEY = 'id'
+
+    MLT_DEFAULT_FL = '*,score'
+
+    MLT_DEFAULT_ROWS = 5
+
     def initialize(result, hash)
       @result, @hash = result, hash
     end
@@ -43,6 +49,14 @@ module Solr4R
 
     def to_hash
       @hash
+    end
+
+    def more_like_this(fl = nil, params = {}, *args, &block)
+      client.more_like_this(params.merge(
+        q:    { id: self[UNIQUE_KEY] },
+        fl:   params.fetch(:fl,   MLT_DEFAULT_FL),
+        rows: params.fetch(:rows, MLT_DEFAULT_ROWS),
+        'mlt.fl' => Array(fl).join(',')), *args, &block)
     end
 
   end
