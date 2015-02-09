@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014 Jens Wille                                               #
+# Copyright (C) 2014-2015 Jens Wille                                          #
 #                                                                             #
 # Mir is free software: you can redistribute it and/or modify it under the    #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -38,10 +38,12 @@ module Solr4R
 
     DEFAULT_USER_AGENT = "Solr4R/#{VERSION}"
 
-    def initialize(base_uri, http_options = {})
-      self.base_uri, self.http_options =
+    def initialize(client, base_uri, http_options = {})
+      @client, self.base_uri, self.http_options = client,
         URI(base_uri).extend(BaseUriExtension), http_options
     end
+
+    attr_reader :client
 
     def start
       self.http = Net::HTTP.start(base_uri.hostname, base_uri.port,
@@ -67,7 +69,7 @@ module Solr4R
       req = prepare_request(path, options, &block)
       res = http.request(req)
 
-      self.last_response = Response.new(
+      self.last_response = Response.new(self,
         request_body:     req.body,
         request_headers:  req.to_hash,
         request_method:   req.method.downcase.to_sym,

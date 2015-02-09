@@ -35,7 +35,6 @@ module Solr4R
     include Enumerable
 
     extend Forwardable
-    def_delegators :to_hash, :fetch, :deep_fetch, :%
 
     def self.types_for(hash)
       constants.map { |const|
@@ -52,6 +51,10 @@ module Solr4R
     end
 
     attr_reader :response
+
+    def_delegators :response, :client
+
+    def_delegators :to_hash, :fetch, :deep_fetch, :%
 
     def to_hash
       @hash

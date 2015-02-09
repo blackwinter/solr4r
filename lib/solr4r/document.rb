@@ -30,13 +30,16 @@ module Solr4R
   class Document
 
     extend Forwardable
-    def_delegators :to_hash, :[], :each
 
     def initialize(result, hash)
       @result, @hash = result, hash
     end
 
     attr_reader :result
+
+    def_delegators :result, :client
+
+    def_delegators :to_hash, :[], :each, :to_json
 
     def to_hash
       @hash

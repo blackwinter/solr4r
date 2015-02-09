@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014 Jens Wille                                               #
+# Copyright (C) 2014-2015 Jens Wille                                          #
 #                                                                             #
 # Mir is free software: you can redistribute it and/or modify it under the    #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -30,17 +30,24 @@ module Solr4R
 
   class Response
 
+    extend Forwardable
+
     DEFAULT_CHARSET = 'UTF-8'
 
     EVALUATE_METHODS = [:get, :post]
 
-    def initialize(options)
+    def initialize(request, options)
+      @request = request
       options.each { |key, value| send("#{key}=", value) }
       @evaluate = EVALUATE_METHODS.include?(request_method)
     end
 
+    attr_reader :request
+
     attr_accessor :response_body, :response_charset, :response_code, :response_headers,
       :request_body, :request_method, :request_params, :request_url, :request_headers
+
+    def_delegators :request, :client
 
     def request_line
       '"%s %s" %d' % [request_method.upcase, request_url, response_code]
