@@ -37,14 +37,17 @@ module Solr4R
     extend Forwardable
     def_delegators :to_hash, :fetch, :deep_fetch, :%
 
-    def initialize(response, hash)
-      self.class.constants.find { |const|
+    def self.types_for(hash)
+      constants.map { |const|
         if hash.key?(const.to_s.downcase)
-          mod = self.class.const_get(const)
-          break extend(mod) if mod.is_a?(Module)
+          mod = const_get(const)
+          mod if mod.is_a?(Module)
         end
-      }
+      }.compact
+    end
 
+    def initialize(response, hash)
+      types = self.class.types_for(hash); extend(*types) unless types.empty?
       @response, @hash = response, hash.extend(Nuggets::Hash::DeepFetchMixin)
     end
 
