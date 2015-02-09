@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014 Jens Wille                                               #
+# Copyright (C) 2014-2015 Jens Wille                                          #
 #                                                                             #
 # Mir is free software: you can redistribute it and/or modify it under the    #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -42,14 +42,28 @@ module Solr4R
     def with_params(params)
       self.params, query = params, [self.query].compact
 
-      params.each { |key, value|
-        key = CGI.escape(key.to_s)
-        Array(value).each { |val| query << "#{key}=#{CGI.escape(val.to_s)}" }
-      }
+      params.each { |key, value| query_pairs(key, value).each { |k, v|
+        query << "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
+      } }
 
       self.query = query.join('&') unless query.empty?
 
       self
+    end
+
+    private
+
+    def query_pairs(key, value, pairs = [])
+      if value.is_a?(Hash)
+        pairs << [key, true]
+
+        value.each { |sub, val|
+          query_pairs("#{key}.#{sub}", val, pairs) }
+      else
+        Array(value).each { |val| pairs << [key, val] }
+      end
+
+      pairs
     end
 
   end
