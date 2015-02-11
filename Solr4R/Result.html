@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Result - solr4r Application documentation (v0.0.4)</title>
+<title>class Solr4R::Result - solr4r Application documentation (v0.0.5)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -98,7 +98,7 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-c-type_for">::type_for</a>
+    <li ><a href="#method-c-types_for">::types_for</a>
     
     <li ><a href="#method-i-_each">#_each</a>
     
@@ -186,9 +186,9 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 50</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">response</span>, <span class="ruby-identifier">hash</span>)
-  <span class="ruby-identifier">extend</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">type_for</span>(<span class="ruby-identifier">hash</span>))
+  <span class="ruby-identifier">types</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">types_for</span>(<span class="ruby-identifier">hash</span>); <span class="ruby-identifier">extend</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">types</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">types</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-ivar">@response</span>, <span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">response</span>, <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">Hash</span><span class="ruby-operator">::</span><span class="ruby-constant">DeepFetchMixin</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -201,11 +201,11 @@
       </div>
 
     
-      <div id="method-c-type_for" class="method-detail ">
+      <div id="method-c-types_for" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">type_for</span><span
-            class="method-args">(hash)</span>
+          <span class="method-name">types_for</span><span
+            class="method-args">(hash, mix = Nuggets::String::CamelscoreMixin)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -219,17 +219,15 @@
           
 
           
-          <div class="method-source-code" id="type_for-source">
+          <div class="method-source-code" id="types_for-source">
             <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 39</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">type_for</span>(<span class="ruby-identifier">hash</span>)
-  <span class="ruby-identifier">constants</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">const</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">const</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">types_for</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">mix</span> = <span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">String</span><span class="ruby-operator">::</span><span class="ruby-constant">CamelscoreMixin</span>)
+  <span class="ruby-identifier">constants</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">const</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">const</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-identifier">mix</span>).<span class="ruby-identifier">underscore!</span>)
       <span class="ruby-identifier">mod</span> = <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">const</span>)
-      <span class="ruby-keyword">return</span> <span class="ruby-identifier">mod</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
+      <span class="ruby-identifier">mod</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
     <span class="ruby-keyword">end</span>
-  }
-
-  <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;could not find supported type: #{hash.keys.join(&#39;, &#39;)}&quot;</span>
+  }.<span class="ruby-identifier">compact</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -268,9 +266,9 @@
 
           
           <div class="method-source-code" id="each-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-  <span class="ruby-identifier">block</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">_each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-value">:each</span>)
+  <span class="ruby-identifier">block</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">_each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">__method__</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -301,7 +299,7 @@
 
           
           <div class="method-source-code" id="empty-3F-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 69</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
   <span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">zero?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -334,7 +332,7 @@
 
           
           <div class="method-source-code" id="error-3F-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">error?</span>
   <span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Error</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -367,7 +365,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>
   <span class="ruby-ivar">@hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -400,7 +398,7 @@
 
           
           <div class="method-source-code" id="to_i-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_i</span>
   <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -441,7 +439,7 @@
 
           
           <div class="method-source-code" id="_each-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_each</span>
   []
 <span class="ruby-keyword">end</span></pre>

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Request - solr4r Application documentation (v0.0.4)</title>
+<title>class Solr4R::Request - solr4r Application documentation (v0.0.5)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -190,6 +190,19 @@
         </div>
       </div>
       
+      <div id="attribute-i-client" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">client</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-http" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">http</span><span
@@ -243,7 +256,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(base_uri, http_options = {})</span>
+            class="method-args">(client, base_uri, http_options = {})</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -259,8 +272,8 @@
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 40</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">base_uri</span>, <span class="ruby-identifier">http_options</span> = {})
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">base_uri</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">http_options</span> =
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">client</span>, <span class="ruby-identifier">base_uri</span>, <span class="ruby-identifier">http_options</span> = {})
+  <span class="ruby-ivar">@client</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">base_uri</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">http_options</span> = <span class="ruby-identifier">client</span>,
     <span class="ruby-constant">URI</span>(<span class="ruby-identifier">base_uri</span>).<span class="ruby-identifier">extend</span>(<span class="ruby-constant">BaseUriExtension</span>), <span class="ruby-identifier">http_options</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -300,7 +313,7 @@
 
           
           <div class="method-source-code" id="execute-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 61</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">execute</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">start</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">started?</span>
 
@@ -309,7 +322,7 @@
   <span class="ruby-identifier">req</span> = <span class="ruby-identifier">prepare_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">res</span> = <span class="ruby-identifier">http</span>.<span class="ruby-identifier">request</span>(<span class="ruby-identifier">req</span>)
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_response</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>(
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">last_response</span> = <span class="ruby-constant">Response</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>,
     <span class="ruby-identifier">request_body</span><span class="ruby-operator">:</span>     <span class="ruby-identifier">req</span>.<span class="ruby-identifier">body</span>,
     <span class="ruby-identifier">request_headers</span><span class="ruby-operator">:</span>  <span class="ruby-identifier">req</span>.<span class="ruby-identifier">to_hash</span>,
     <span class="ruby-identifier">request_method</span><span class="ruby-operator">:</span>   <span class="ruby-identifier">req</span>.<span class="ruby-identifier">method</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">to_sym</span>,
@@ -351,7 +364,7 @@
 
           
           <div class="method-source-code" id="finish-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 52</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">finish</span>
   <span class="ruby-identifier">http</span>.<span class="ruby-identifier">finish</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">started?</span>
   <span class="ruby-keyword">self</span>
@@ -385,7 +398,7 @@
 
           
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 87</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 89</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-string">&#39;#&lt;%s:0x%x %s&gt;&#39;</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-identifier">request_line</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -418,7 +431,7 @@
 
           
           <div class="method-source-code" id="request_line-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 83</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request_line</span>
   <span class="ruby-identifier">last_response</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">last_response</span>.<span class="ruby-identifier">request_line</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;[#{base_uri}]&quot;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -451,7 +464,7 @@
 
           
           <div class="method-source-code" id="start-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 47</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">start</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">http</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">start</span>(<span class="ruby-identifier">base_uri</span>.<span class="ruby-identifier">hostname</span>, <span class="ruby-identifier">base_uri</span>.<span class="ruby-identifier">port</span>,
     { <span class="ruby-identifier">use_ssl</span><span class="ruby-operator">:</span> <span class="ruby-identifier">base_uri</span>.<span class="ruby-identifier">scheme</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;https&#39;</span> }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">http_options</span>))
@@ -487,7 +500,7 @@
 
           
           <div class="method-source-code" id="started-3F-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 57</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">started?</span>
   <span class="ruby-identifier">http</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">http</span>.<span class="ruby-identifier">started?</span>
 <span class="ruby-keyword">end</span></pre>
@@ -528,7 +541,7 @@
 
           
           <div class="method-source-code" id="make_request-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">make_request</span>(<span class="ruby-identifier">uri</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">data</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">method</span>
     <span class="ruby-keyword">when</span> <span class="ruby-value">:get</span>, <span class="ruby-value">:head</span>
@@ -571,7 +584,7 @@
 
           
           <div class="method-source-code" id="make_uri-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">make_uri</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>)
   <span class="ruby-identifier">base_uri</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">extend</span>(<span class="ruby-constant">RequestUriExtension</span>).<span class="ruby-identifier">with_params</span>(<span class="ruby-identifier">params</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -604,7 +617,7 @@
 
           
           <div class="method-source-code" id="prepare_request-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 95</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">prepare_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>)
   <span class="ruby-identifier">uri</span> = <span class="ruby-identifier">make_uri</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:params</span>, {}))
 
@@ -647,7 +660,7 @@
 
           
           <div class="method-source-code" id="request_for-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 127</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">request_for</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">uri</span>)
   <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">method</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">capitalize</span>)
     .<span class="ruby-identifier">extend</span>(<span class="ruby-constant">HTTPRequestExtension</span>).<span class="ruby-identifier">from_uri</span>(<span class="ruby-identifier">uri</span>)
@@ -681,7 +694,7 @@
 
           
           <div class="method-source-code" id="set_data-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 140</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 142</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_data</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">data</span>)
   <span class="ruby-identifier">data</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">data</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">req</span>.<span class="ruby-identifier">form_data</span> = <span class="ruby-identifier">data</span>
 <span class="ruby-keyword">end</span></pre>
@@ -714,7 +727,7 @@
 
           
           <div class="method-source-code" id="set_headers-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 132</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/request.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_headers</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">headers</span>)
   <span class="ruby-identifier">req</span>[<span class="ruby-string">&#39;User-Agent&#39;</span>] = <span class="ruby-constant">DEFAULT_USER_AGENT</span>
 

@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Table of Contents - solr4r Application documentation (v0.0.4)</title>
+<title>Table of Contents - solr4r Application documentation (v0.0.5)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -20,7 +20,7 @@
 
 <body id="top" class="table-of-contents">
 <main role="main">
-<h1 class="class">Table of Contents - solr4r Application documentation (v0.0.4)</h1>
+<h1 class="class">Table of Contents - solr4r Application documentation (v0.0.5)</h1>
 
 <h2 id="pages">Pages</h2>
 <ul>
@@ -36,6 +36,7 @@
 
     <ul>
       <li><a href="ChangeLog.html#label-Revision+history+for+solr4r">Revision history for solr4r</a>
+      <li><a href="ChangeLog.html#label-0.0.5+-5B2015-02-11-5D">0.0.5 [2015-02-11]</a>
       <li><a href="ChangeLog.html#label-0.0.4+-5B2014-12-19-5D">0.0.4 [2014-12-19]</a>
       <li><a href="ChangeLog.html#label-0.0.3+-5B2014-09-19-5D">0.0.3 [2014-09-19]</a>
       <li><a href="ChangeLog.html#label-0.0.2+-5B2014-04-17-5D">0.0.2 [2014-04-17]</a>
@@ -99,6 +100,9 @@
     <a href="Solr4R/Result/Error.html">Solr4R::Result::Error</a>
   </li>
   <li class="module">
+    <a href="Solr4R/Result/FacetCounts.html">Solr4R::Result::FacetCounts</a>
+  </li>
+  <li class="module">
     <a href="Solr4R/Result/Response.html">Solr4R::Result::Response</a>
   </li>
   <li class="module">
@@ -143,11 +147,6 @@
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
-    <a href="Solr4R/Result.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">Solr4R::Result</span>
-
-  <li class="method">
     <a href="Solr4R/Request.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
@@ -156,6 +155,11 @@
     <a href="Solr4R/Response.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
 
   <li class="method">
     <a href="Solr4R/Logging.html#method-c-set_log_level">::set_log_level</a>
@@ -173,19 +177,9 @@
     <span class="container">Solr4R::Version</span>
 
   <li class="method">
-    <a href="Solr4R/Result.html#method-c-type_for">::type_for</a>
+    <a href="Solr4R/Result.html#method-c-types_for">::types_for</a>
     &mdash;
     <span class="container">Solr4R::Result</span>
-
-  <li class="method">
-    <a href="Solr4R/Result/Terms.html#method-i-_each">#_each</a>
-    &mdash;
-    <span class="container">Solr4R::Result::Terms</span>
-
-  <li class="method">
-    <a href="Solr4R/Result/Response.html#method-i-_each">#_each</a>
-    &mdash;
-    <span class="container">Solr4R::Result::Response</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-_each">#_each</a>
@@ -198,14 +192,24 @@
     <span class="container">Solr4R::Result</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-i-add">#add</a>
+    <a href="Solr4R/Result/Response.html#method-i-_each">#_each</a>
     &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Result::Response</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Terms.html#method-i-_each">#_each</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Terms</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-add">#add</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Client.html#method-i-add">#add</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-add_batch">#add_batch</a>
@@ -243,14 +247,14 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-i-delete">#delete</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
     <a href="Solr4R/Builder.html#method-i-delete">#delete</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Client.html#method-i-delete">#delete</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-delete_all-21">#delete_all!</a>
@@ -313,6 +317,21 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
+    <a href="Solr4R/Result/FacetCounts.html#method-i-facet_counts">#facet_counts</a>
+    &mdash;
+    <span class="container">Solr4R::Result::FacetCounts</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/FacetCounts.html#method-i-facet_fields">#facet_fields</a>
+    &mdash;
+    <span class="container">Solr4R::Result::FacetCounts</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/FacetCounts.html#method-i-facet_ranges">#facet_ranges</a>
+    &mdash;
+    <span class="container">Solr4R::Result::FacetCounts</span>
+
+  <li class="method">
     <a href="Solr4R/Request.html#method-i-finish">#finish</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
@@ -338,24 +357,24 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Request.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Solr4R::Request</span>
-
-  <li class="method">
     <a href="Solr4R/Builder.html#method-i-inspect">#inspect</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Response.html#method-i-inspect">#inspect</a>
-    &mdash;
-    <span class="container">Solr4R::Response</span>
-
-  <li class="method">
     <a href="Solr4R/Client.html#method-i-inspect">#inspect</a>
     &mdash;
     <span class="container">Solr4R::Client</span>
+
+  <li class="method">
+    <a href="Solr4R/Request.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Solr4R::Request</span>
+
+  <li class="method">
+    <a href="Solr4R/Response.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Solr4R::Response</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-invalid_endpoint-3F">#invalid_endpoint?</a>
@@ -383,6 +402,16 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
+    <a href="Solr4R/Client.html#method-i-more_like_this">#more_like_this</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
+
+  <li class="method">
+    <a href="Solr4R/Document.html#method-i-more_like_this">#more_like_this</a>
+    &mdash;
+    <span class="container">Solr4R::Document</span>
+
+  <li class="method">
     <a href="Solr4R/Response.html#method-i-num_found">#num_found</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
@@ -406,6 +435,11 @@
     <a href="Solr4R/Request.html#method-i-prepare_request">#prepare_request</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
+
+  <li class="method">
+    <a href="Solr4R/RequestUriExtension.html#method-i-query_pairs">#query_pairs</a>
+    &mdash;
+    <span class="container">Solr4R::RequestUriExtension</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-query_string">#query_string</a>
@@ -448,14 +482,14 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-i-rollback">#rollback</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
     <a href="Solr4R/Builder.html#method-i-rollback">#rollback</a>
     &mdash;
     <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Client.html#method-i-rollback">#rollback</a>
+    &mdash;
+    <span class="container">Solr4R::Client</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-send_request">#send_request</a>
@@ -493,22 +527,12 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
-    <a href="Solr4R/Result.html#method-i-to_hash">#to_hash</a>
-    &mdash;
-    <span class="container">Solr4R::Result</span>
-
-  <li class="method">
     <a href="Solr4R/Document.html#method-i-to_hash">#to_hash</a>
     &mdash;
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
-    <a href="Solr4R/Result/Response.html#method-i-to_i">#to_i</a>
-    &mdash;
-    <span class="container">Solr4R::Result::Response</span>
-
-  <li class="method">
-    <a href="Solr4R/Result.html#method-i-to_i">#to_i</a>
+    <a href="Solr4R/Result.html#method-i-to_hash">#to_hash</a>
     &mdash;
     <span class="container">Solr4R::Result</span>
 
@@ -516,6 +540,16 @@
     <a href="Solr4R/Response.html#method-i-to_i">#to_i</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
+
+  <li class="method">
+    <a href="Solr4R/Result.html#method-i-to_i">#to_i</a>
+    &mdash;
+    <span class="container">Solr4R::Result</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Response.html#method-i-to_i">#to_i</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Response</span>
 
   <li class="method">
     <a href="Solr4R/Result/Terms.html#method-i-to_i">#to_i</a>
