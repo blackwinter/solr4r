@@ -25,6 +25,7 @@
 
 require 'forwardable'
 require 'nuggets/hash/deep_fetch_mixin'
+require 'nuggets/string/camelscore_mixin'
 
 require_relative 'document'
 
@@ -36,9 +37,9 @@ module Solr4R
 
     extend Forwardable
 
-    def self.types_for(hash)
+    def self.types_for(hash, mix = Nuggets::String::CamelscoreMixin)
       constants.map { |const|
-        if hash.key?(const.to_s.downcase)
+        if hash.key?(const.to_s.extend(mix).underscore!)
           mod = const_get(const)
           mod if mod.is_a?(Module)
         end
@@ -65,7 +66,7 @@ module Solr4R
     end
 
     def each(&block)
-      block ? _each(&block) : enum_for(:each)
+      block ? _each(&block) : enum_for(__method__)
     end
 
     def empty?
@@ -112,6 +113,30 @@ module Solr4R
       def _each
         fetch('terms').each { |key, value|
           yield key, Hash[*value]
+        }
+      end
+
+    end
+
+    module FacetCounts
+
+      def facet_counts
+        fetch(__method__.to_s)
+      end
+
+      def facet_fields
+        return enum_for(__method__) unless block_given?
+
+        facet_counts.fetch(__method__.to_s).each { |key, value|
+          yield key, Hash[*value]
+        }
+      end
+
+      def facet_ranges
+        return enum_for(__method__) unless block_given?
+
+        facet_counts.fetch(__method__.to_s).each { |key, value|
+          yield key, value.merge('counts' => Hash[*value['counts']])
         }
       end
 
