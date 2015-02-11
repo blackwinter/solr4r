@@ -2,9 +2,14 @@
 
 = Revision history for solr4r
 
-== 0.0.5 [unreleased]
+== 0.0.5 [2015-02-11]
 
 * Fixed Solr4R::Result for unsupported types.
+* Extended Solr4R::Result for
+  {facet counts}[https://wiki.apache.org/solr/SolrFacetingOverview].
+* Extended Solr4R::Client and Solr4R::Document for
+  MoreLikeThis[https://wiki.apache.org/solr/MoreLikeThis] queries.
+* Extended Solr4R::RequestUriExtension for nested params (via hashes).
 
 == 0.0.4 [2014-12-19]
 

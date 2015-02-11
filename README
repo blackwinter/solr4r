@@ -2,7 +2,7 @@
 
 == VERSION
 
-This documentation refers to solr4r version 0.0.4
+This documentation refers to solr4r version 0.0.5
 
 
 == DESCRIPTION
@@ -25,7 +25,7 @@ Travis CI::     https://travis-ci.org/blackwinter/solr4r
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2014 Jens Wille
+Copyright (C) 2014-2015 Jens Wille
 
 solr4r is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by
