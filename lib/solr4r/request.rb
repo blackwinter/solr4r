@@ -69,18 +69,7 @@ module Solr4R
       req = prepare_request(path, options, &block)
       res = http.request(req)
 
-      self.last_response = Response.new(self,
-        request_body:     req.body,
-        request_headers:  req.to_hash,
-        request_method:   req.method.downcase.to_sym,
-        request_params:   req.params,
-        request_url:      req.uri.to_s,
-
-        response_body:    res.body,
-        response_charset: res.type_params['charset'],
-        response_code:    res.code.to_i,
-        response_headers: res.to_hash
-      )
+      self.last_response = Response.new(self, req, res)
     end
 
     def request_line

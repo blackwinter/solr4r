@@ -34,18 +34,29 @@ module Solr4R
 
     DEFAULT_CHARSET = 'UTF-8'
 
-    EVALUATE_METHODS = [:get, :post]
+    def initialize(request, req = nil, res = nil)
+      @request, @evaluate = request, req.response_body_permitted?
 
-    def initialize(request, options)
-      @request = request
-      options.each { |key, value| send("#{key}=", value) }
-      @evaluate = EVALUATE_METHODS.include?(request_method)
+      if req
+        self.request_body    = req.body
+        self.request_headers = req.to_hash
+        self.request_method  = req.method.downcase.to_sym
+        self.request_params  = req.uri.params
+        self.request_url     = req.uri.to_s
+      end
+
+      if res
+        self.response_body    = res.body
+        self.response_headers = res.to_hash
+        self.response_charset = res.type_params['charset']
+        self.response_code    = res.code.to_i
+      end
     end
 
     attr_reader :request
 
-    attr_accessor :response_body, :response_charset, :response_code, :response_headers,
-      :request_body, :request_method, :request_params, :request_url, :request_headers
+    attr_accessor :response_body, :response_headers, :response_charset, :response_code,
+      :request_body, :request_headers, :request_method, :request_params, :request_url
 
     def_delegators :request, :client
 
