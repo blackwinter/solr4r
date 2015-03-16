@@ -25,7 +25,6 @@
 
 require 'net/https'
 
-require_relative 'request_extension'
 require_relative 'uri_extension'
 
 module Solr4R
@@ -44,6 +43,8 @@ module Solr4R
     end
 
     attr_reader :client
+
+    attr_accessor :base_uri, :http_options, :http, :last_response
 
     def start
       self.http = Net::HTTP.start(base_uri.hostname, base_uri.port,
@@ -82,15 +83,11 @@ module Solr4R
 
     private
 
-    attr_accessor :base_uri, :http_options, :http, :last_response
-
     def prepare_request(path, options)
       uri = make_uri(path, options.fetch(:params, {}))
+      req = make_request(uri, options.fetch(:method, DEFAULT_METHOD))
 
-      req = make_request(uri,
-        options.fetch(:method, DEFAULT_METHOD),
-        options.fetch(:data, {}))
-
+      set_data(req, options.fetch(:data, {})) if req.request_body_permitted?
       set_headers(req, options.fetch(:headers, {}))
 
       yield req if block_given?
@@ -102,31 +99,17 @@ module Solr4R
       base_uri.merge(path).extend(RequestUriExtension).with_params(params)
     end
 
-    def make_request(uri, method, data)
-      case method
-        when :get, :head
-          req = request_for(method, uri)
-        when :post
-          req = request_for(method, uri)
-          set_data(req, data)
-        else
-          raise ArgumentError, "method not supported: #{method}"
-      end
-
+    def make_request(uri, method)
+      req = Net::HTTP.const_get(method.to_s.capitalize).new(uri)
+      req.uri.extend(RequestUriExtension).params = uri.params
       req
-    end
-
-    def request_for(method, uri)
-      Net::HTTP.const_get(method.to_s.capitalize)
-        .extend(HTTPRequestExtension).from_uri(uri)
     end
 
     def set_headers(req, headers)
       req['User-Agent'] = DEFAULT_USER_AGENT
 
       headers.each { |key, value|
-        Array(value).each { |val| req.add_field(key, val) }
-      }
+        Array(value).each { |val| req.add_field(key, val) } }
     end
 
     def set_data(req, data)
