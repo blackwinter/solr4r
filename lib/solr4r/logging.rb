@@ -24,11 +24,13 @@
 #++
 
 require 'logger'
-require 'nuggets/module/lazy_attr'
+require 'nuggets/module/lazy_attr_mixin'
 
 module Solr4R
 
   module Logging
+
+    extend Nuggets::Module::LazyAttrMixin
 
     DEFAULT_LOG_DEVICE = $stderr
     DEFAULT_LOG_LEVEL  = Logger::WARN
