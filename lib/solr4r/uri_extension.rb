@@ -60,7 +60,7 @@ module Solr4R
         value.each { |sub, val|
           query_pairs("#{key}.#{sub}", val, pairs) }
       else
-        Array(value).each { |val| pairs << [key, val] }
+        Array(value).each { |val| pairs << [key, val] unless val.nil? }
       end
 
       pairs
