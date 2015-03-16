@@ -1,13 +1,9 @@
 describe Solr4R::Builder do
 
-  before :all do
-    @builder = Solr4R::Builder.new
-  end
-
   describe '#add' do
 
     example do
-      @builder.add(employeeId: '05991', office: 'Bridgewater', skills: %w[Perl Java]).should == <<-EOT
+      expect(subject.add(employeeId: '05991', office: 'Bridgewater', skills: %w[Perl Java])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add>
   <doc>
@@ -21,7 +17,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add([{ employeeId: '05992', office: 'Blackwater' }, { employeeId: '05993', skills: 'Ruby' }]).should == <<-EOT
+      expect(subject.add([{ employeeId: '05992', office: 'Blackwater' }, { employeeId: '05993', skills: 'Ruby' }])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add>
   <doc>
@@ -37,7 +33,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add([id: 42, text: 'blah'], commitWithin: 23).should == <<-EOT
+      expect(subject.add([id: 42, text: 'blah'], commitWithin: 23)).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add commitWithin="23">
   <doc>
@@ -49,7 +45,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add([[{ id: 42, text: 'blah' }, { boost: 10.0 }]]).should == <<-EOT
+      expect(subject.add([[{ id: 42, text: 'blah' }, boost: 10.0]])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add>
   <doc boost="10.0">
@@ -61,7 +57,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add(id: 42, text: ['blah', boost: 2.0]).should == <<-EOT
+      expect(subject.add(id: 42, text: ['blah', boost: 2.0])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add>
   <doc>
@@ -73,7 +69,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add([[{ id: 42, text: ['blah', boost: 2.0] }, { boost: 10.0 }]], commitWithin: 23).should == <<-EOT
+      expect(subject.add([[{ id: 42, text: ['blah', boost: 2.0] }, boost: 10.0]], commitWithin: 23)).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add commitWithin="23">
   <doc boost="10.0">
@@ -85,7 +81,7 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.add(employeeId: '05991', office: "\fBridgew\ate\r", skills: %w[Perl Java]).should == <<-EOT
+      expect(subject.add(employeeId: '05991', office: "\fBridgew\ate\r", skills: %w[Perl Java])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <add>
   <doc>
@@ -103,14 +99,14 @@ describe Solr4R::Builder do
   describe '#commit' do
 
     example do
-      @builder.commit.should == <<-EOT
+      expect(subject.commit).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <commit/>
       EOT
     end
 
     example do
-      @builder.commit(softCommit: true).should == <<-EOT
+      expect(subject.commit(softCommit: true)).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <commit softCommit="true"/>
       EOT
@@ -121,14 +117,14 @@ describe Solr4R::Builder do
   describe '#optimize' do
 
     example do
-      @builder.optimize.should == <<-EOT
+      expect(subject.optimize).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <optimize/>
       EOT
     end
 
     example do
-      @builder.optimize(maxSegments: 42).should == <<-EOT
+      expect(subject.optimize(maxSegments: 42)).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <optimize maxSegments="42"/>
       EOT
@@ -139,7 +135,7 @@ describe Solr4R::Builder do
   describe '#rollback' do
 
     example do
-      @builder.rollback.should == <<-EOT
+      expect(subject.rollback).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <rollback/>
       EOT
@@ -150,7 +146,7 @@ describe Solr4R::Builder do
   describe '#delete' do
 
     example do
-      @builder.delete(id: '05991').should == <<-EOT
+      expect(subject.delete(id: '05991')).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <delete>
   <id>05991</id>
@@ -159,60 +155,28 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.delete(id: %w[05991 06000]).should == <<-EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<delete>
-  <id>05991</id>
-  <id>06000</id>
-</delete>
-      EOT
-    end
-
-    example do
-      @builder.delete(query: 'office:Bridgewater').should == <<-EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<delete>
-  <query>office:Bridgewater</query>
-</delete>
-      EOT
-    end
-
-    example do
-      @builder.delete(query: %w[office:Bridgewater office:Osaka]).should == <<-EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<delete>
-  <query>office:Bridgewater</query>
-  <query>office:Osaka</query>
-</delete>
-      EOT
-    end
-
-    example do
-      @builder.delete(query: { office: 'Bridgewater', skills: 'Perl' }).should == <<-EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<delete>
-  <query>office:Bridgewater</query>
-  <query>skills:Perl</query>
-</delete>
-      EOT
-    end
-
-    example do
-      @builder.delete(query: { office: %w[Bridgewater Osaka] }).should == <<-EOT
-<?xml version="1.0" encoding="UTF-8"?>
-<delete>
-  <query>office:Bridgewater</query>
-  <query>office:Osaka</query>
-</delete>
-      EOT
-    end
-
-    example do
-      @builder.delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] }).should == <<-EOT
+      expect(subject.delete(id: %w[05991 06000])).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <delete>
   <id>05991</id>
   <id>06000</id>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: 'office:Bridgewater')).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridgewater</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: %w[office:Bridgewater office:Osaka])).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
   <query>office:Bridgewater</query>
   <query>office:Osaka</query>
 </delete>
@@ -220,10 +184,66 @@ describe Solr4R::Builder do
     end
 
     example do
-      @builder.delete(query: "office:\fBridgew\ate\r").should == <<-EOT
+      expect(subject.delete(query: { office: 'Bridgewater', skills: 'Perl' })).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridgewater skills:Perl</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: { office: %w[Bridgewater Osaka] })).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridgewater office:Osaka</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: { office: 'Bridgewater', _: { type: :edismax } })).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>{!type=edismax}office:Bridgewater</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] })).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <id>05991</id>
+  <id>06000</id>
+  <query>office:Bridgewater office:Osaka</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: "office:\fBridgew\ate\r")).to eq(<<-EOT)
 <?xml version="1.0" encoding="UTF-8"?>
 <delete>
   <query>office:Bridgewte&#13;</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: 'office:Bridge&water')).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridge&amp;water</query>
+</delete>
+      EOT
+    end
+
+    example do
+      expect(subject.delete(query: { office: 'Bridge&water' })).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<delete>
+  <query>office:Bridge&amp;water</query>
 </delete>
       EOT
     end

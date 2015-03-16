@@ -39,15 +39,11 @@ module Solr4R
 
     end
 
-    DEFAULT_OPTIONS = {
-      encoding: 'UTF-8'
-    }
+    DEFAULT_OPTIONS = { encoding: 'UTF-8' }
 
     def initialize(options = {})
-      if block_given?
-        raise ArgumentError,
-          'block argument not supported, use options hash instead'
-      end
+      raise ArgumentError,
+        'block argument not supported, use options hash instead' if block_given?
 
       super(
         @_solr_opt = DEFAULT_OPTIONS.merge(options),
@@ -99,7 +95,7 @@ module Solr4R
     #     </add>
     #
     #   # document attributes
-    #   add([[{ id: 42, text: 'blah' }, { boost: 10.0 }]])
+    #   add([[{ id: 42, text: 'blah' }, boost: 10.0]])
     #
     #     <?xml version="1.0" encoding="UTF-8"?>
     #     <add>
@@ -121,7 +117,7 @@ module Solr4R
     #     </add>
     #
     #   # all attributes together
-    #   add([[{ id: 42, text: ['blah', boost: 2.0] }, { boost: 10.0 }]], commitWithin: 23)
+    #   add([[{ id: 42, text: ['blah', boost: 2.0] }, boost: 10.0]], commitWithin: 23)
     #
     #     <?xml version="1.0" encoding="UTF-8"?>
     #     <add commitWithin="23">
@@ -140,6 +136,8 @@ module Solr4R
         } }
       } }
     end
+
+    alias_method :doc, :add
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
     #
@@ -189,6 +187,8 @@ module Solr4R
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22delete.22_documents_by_ID_and_by_Query].
     #
+    # See Client.query_string for handling of query hashes.
+    #
     # Examples:
     #
     #   # single ID
@@ -230,8 +230,7 @@ module Solr4R
     #
     #     <?xml version="1.0" encoding="UTF-8"?>
     #     <delete>
-    #       <query>office:Bridgewater</query>
-    #       <query>skills:Perl</query>
+    #       <query>office:Bridgewater skills:Perl</query>
     #     </delete>
     #
     #   # query hash with array
@@ -239,8 +238,15 @@ module Solr4R
     #
     #     <?xml version="1.0" encoding="UTF-8"?>
     #     <delete>
-    #       <query>office:Bridgewater</query>
-    #       <query>office:Osaka</query>
+    #       <query>office:Bridgewater office:Osaka</query>
+    #     </delete>
+    #
+    #   # query hash with LocalParams
+    #   delete(query: { office: 'Bridgewater', _: { type: :edismax } })
+    #
+    #     <?xml version="1.0" encoding="UTF-8"?>
+    #     <delete>
+    #       <query>{!type=edismax}office:Bridgewater</query>
     #     </delete>
     #
     #   # both IDs and queries
@@ -250,15 +256,19 @@ module Solr4R
     #     <delete>
     #       <id>05991</id>
     #       <id>06000</id>
-    #       <query>office:Bridgewater</query>
-    #       <query>office:Osaka</query>
+    #       <query>office:Bridgewater office:Osaka</query>
     #     </delete>
     def delete(hash)
       to_xml(:delete) { |delete_node| hash.each { |key, values|
-        delete = lambda { |value| delete_node.method_missing(key, value) }
-
-        _each(values) { |value| !value.is_a?(Hash) ? delete[value] :
-          value.each { |k, v| Array(v).each { |w| delete["#{k}:#{w}"] } } }
+        case key.to_s
+          when 'id'
+            _each(values) { |id| delete_node.id_(id) }
+          when 'query'
+            _each(values) { |query|
+              delete_node.query_(Client.query_string(query, false)) }
+          else
+            raise ArgumentError, "`id' or `query' expected, got %p" % key
+        end
       } }
     end
 
