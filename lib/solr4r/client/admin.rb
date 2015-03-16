@@ -25,20 +25,59 @@
 
 module Solr4R
 
-  class << self
+  class Client
 
-    def connect(*args)
-      Client.new(*args)
+    DEFAULT_PING_PATH             = 'admin/ping'
+    DEFAULT_CORES_PATH            = '../admin/cores'
+    DEFAULT_FIELDS_PATH           = 'schema/fields'
+    DEFAULT_SYSTEM_PATH           = '../admin/info/system'
+    DEFAULT_ANALYZE_DOCUMENT_PATH = 'analysis/document'
+    DEFAULT_ANALYZE_FIELD_PATH    = 'analysis/field'
+
+    module Admin
+
+      def solr_version(type = :spec,
+          params = {}, options = {}, path = DEFAULT_SYSTEM_PATH, &block)
+
+        json(path, params, options, &block) % "lucene/solr-#{type}-version"
+      end
+
+      def ping(
+          params = {}, options = {}, path = DEFAULT_PING_PATH, &block)
+
+        json(path, params, options, &block) % 'status'
+      end
+
+      def cores(
+          params = {}, options = {}, path = DEFAULT_CORES_PATH, &block)
+
+        json(path, params, options, &block) % 'status'
+      end
+
+      def fields(
+          params = {}, options = {}, path = DEFAULT_FIELDS_PATH, &block)
+
+        json(path, params, options, &block) % 'fields'
+      end
+
+      def analyze_document(doc,
+          params = {}, options = {}, path = DEFAULT_ANALYZE_DOCUMENT_PATH, &block)
+
+        doc = builder.doc(doc) unless doc.is_a?(String)
+        update(doc, amend_options_hash(
+          options, :params, wt: :json), path, &block).result % 'analysis'
+      end
+
+      def analyze_field(analysis,
+          params = {}, options = {}, path = DEFAULT_ANALYZE_FIELD_PATH, &block)
+
+        json(path, params.merge(analysis: analysis), options, &block) % 'analysis'
+      end
+
     end
+
+    include Admin
 
   end
 
 end
-
-require_relative 'solr4r/version'
-require_relative 'solr4r/logging'
-require_relative 'solr4r/builder'
-require_relative 'solr4r/request'
-require_relative 'solr4r/response'
-require_relative 'solr4r/endpoints'
-require_relative 'solr4r/client'

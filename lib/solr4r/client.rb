@@ -30,178 +30,143 @@ module Solr4R
     include Logging
 
     DEFAULT_HOST = 'localhost'
-    DEFAULT_PATH = 'solr'
     DEFAULT_PORT = 8983
+    DEFAULT_PATH = 'solr'
+    DEFAULT_CORE = 'collection1'
 
-    DEFAULT_PARAMS = {
-      wt: :json
-    }
+    DEFAULT_PARAMS = { wt: :json }
 
-    DEFAULT_BATCH_SIZE = 1000
+    class << self
 
-    DEFAULT_ENDPOINTS = %w[select query spell suggest terms] <<
-      ['ping', path: 'admin/ping', method: :head] <<
-      ['dump', path: 'debug/dump']
+      def default_uri(options = {})
+        'http://%s:%d/%s/%s' % [
+          options.fetch(:host, DEFAULT_HOST),
+          options.fetch(:port, DEFAULT_PORT),
+          options.fetch(:path, DEFAULT_PATH),
+          options.fetch(:core, DEFAULT_CORE)
+        ]
+      end
 
-    DEFAULT_SELECT_PATH = 'select'
+      def query_string(query, escape = true)
+        case query
+          when nil
+            # ignore
+          when String
+            escape(query, escape) unless query.empty?
+          when Array
+            if query.last.is_a?(Hash)
+              lp, qs = query_from_hash((query = query.dup).pop, escape)
+              query << qs if qs
+            end
 
-    DEFAULT_UPDATE_PATH = 'update'
+            query_with_params(lp, query_string(query.join(' '), escape))
+          when Hash
+            query_with_params(*query_from_hash(query, escape))
+          else
+            type_error(query)
+        end
+      end
 
-    DEFAULT_MLT_PATH = 'mlt'
+      def local_params_string(local_params, hash = {}, escape = true)
+        case local_params = expand_local_params(local_params, hash)
+          when nil
+            # ignore
+          when String
+            escape("{!#{local_params}}", escape) unless local_params.empty?
+          when Array
+            local_params_string(local_params.join(' '), {}, escape)
+          when Hash
+            local_params_string(local_params.map { |key, value|
+              "#{key}=#{value =~ /\s/ ? %Q{"#{value}"} : value}" }, {}, escape)
+          else
+            type_error(local_params)
+        end
+      end
 
-    SYSTEM_INFO_PATH = 'admin/info/system'
+      def escape(string, escape = true)
+        escape ? string.gsub('&', '%26') : string
+      end
 
-    MATCH_ALL_QUERY = '*:*'
+      private
+
+      def query_from_hash(query, escape)
+        local_params = query.key?(lp = :_) &&
+          local_params_string((query = query.dup).delete(lp), {}, escape)
+
+        [local_params, query_string(query.flat_map { |key, values|
+          Array(values).map { |value| "#{key}:#{value}" } }, escape)]
+      end
+
+      def query_with_params(local_params, query_string)
+        local_params ? local_params + query_string : query_string
+      end
+
+      def expand_local_params(local_params, hash)
+        case type = hash[:type]
+          when nil
+            local_params
+          when String, Symbol
+            type_error(local_params, :Array) unless local_params.is_a?(Array)
+
+            local_params.each { |param| hash[param] = "$#{type}.#{param}" }
+            hash
+          else
+            type_error(type, %w[String Symbol])
+        end
+      end
+
+      def type_error(obj, types = %w[String Array Hash])
+        types = Array(types).join(' or ')
+        raise TypeError, "#{types} expected, got #{obj.class}", caller(1)
+      end
+
+    end
 
     def initialize(options = {})
       uri, options = options, {} unless options.is_a?(Hash)
 
-      self.options = options
+      self.options, self.default_params =
+        options, options.fetch(:default_params, DEFAULT_PARAMS)
 
-      uri ||= options.fetch(:uri, default_uri)
+      self.logger  = options.fetch(:logger)  { default_logger }
 
-      self.logger = options.fetch(:logger, default_logger)
+      self.builder = options.fetch(:builder) { forward_logger(Builder.new) }
 
-      self.builder = options.fetch(:builder) {
-        forward_logger(Builder.new) }
+      self.request = options.fetch(:request) { forward_logger(Request.new(
+        self, uri || options.fetch(:uri) { default_uri })) }
 
-      self.request = options.fetch(:request) {
-        forward_logger(Request.new(self, uri)) }
-
-      self.default_params = options.fetch(:default_params, DEFAULT_PARAMS)
-
-      register_endpoints(options.fetch(:endpoints, DEFAULT_ENDPOINTS))
+      self.endpoints = forward_logger(Endpoints.new(self))
     end
 
-    attr_accessor :options, :builder, :request, :default_params
+    attr_accessor :options, :builder, :request, :default_params, :endpoints
 
-    def register_endpoints(endpoints)
-      endpoints.each { |args| register_endpoint(*args) } if endpoints
-      self
-    end
+    alias_method :ep, :endpoints
 
-    def register_endpoint(path, options = {})
-      name, path = path, options.fetch(:path, path)
+    def json(path,
+        params = {}, options = {}, &block)
 
-      if error = invalid_endpoint?(name.to_s)
-        raise ArgumentError, "invalid endpoint: #{name} (#{error})"
-      else
-        define_singleton_method(name) { |_params = {}, _options = {}, &block|
-          send_request(path, options.merge(_options.merge(
-            params: options.fetch(:params, {}).merge(_params))), &block)
-        }
-      end
-
-      self
-    end
-
-    def json(path, params = {}, options = {}, &block)
       get(path, params.merge(wt: :json), options, &block).result
     end
 
-    def get(path, params = {}, options = {}, &block)
-      send_request(path, options.merge(method: :get, params: params), &block)
+    def get(path,
+        params = {}, options = {}, &block)
+
+      send_request(path, options.merge(
+        method: :get, params: params), &block)
     end
 
-    def post(path, data = nil, options = {}, &block)
-      send_request(path, options.merge(method: :post, data: data), &block)
+    def post(path, data = nil,
+        params = {}, options = {}, &block)
+
+      send_request(path, options.merge(
+        method: :post, params: params, data: data), &block)
     end
 
-    def head(path, params = {}, options = {}, &block)
-      send_request(path, options.merge(method: :head, params: params), &block)
-    end
+    def head(path,
+        params = {}, options = {}, &block)
 
-    def update(data, options = {}, path = DEFAULT_UPDATE_PATH, &block)
-      options = amend_options(options, :headers, 'Content-Type' => 'text/xml')
-      post(path, data, options, &block)
-    end
-
-    # See Builder#add.
-    def add(doc, attributes = {}, options = {}, &block)
-      update(builder.add(doc, attributes), options, &block)
-    end
-
-    def add_batch(docs, attributes = {}, options = {}, batch_size = DEFAULT_BATCH_SIZE, &block)
-      failed = []
-
-      docs.each_slice(batch_size) { |batch|
-        unless add(batch, attributes, options, &block).success?
-          failed.concat(batch_size == 1 ? batch : add_batch(
-            batch, attributes, options, batch_size / 10, &block))
-        end
-      }
-
-      failed
-    end
-
-    # See Builder#commit.
-    def commit(attributes = {}, options = {}, &block)
-      update(builder.commit(attributes), options, &block)
-    end
-
-    # See Builder#optimize.
-    def optimize(attributes = {}, options = {}, &block)
-      update(builder.optimize(attributes), options, &block)
-    end
-
-    # See Builder#rollback.
-    def rollback(options = {}, &block)
-      update(builder.rollback, options, &block)
-    end
-
-    # See Builder#delete.
-    def delete(hash, options = {}, &block)
-      update(builder.delete(hash), options, &block)
-    end
-
-    # See #delete.
-    def delete_by_id(id, options = {}, &block)
-      delete({ id: id }, options, &block)
-    end
-
-    # See #delete.
-    def delete_by_query(query, options = {}, &block)
-      delete({ query: query }, options, &block)
-    end
-
-    # See #delete_by_query.
-    def delete_all!(options = {}, &block)
-      delete_by_query(MATCH_ALL_QUERY, options, &block)
-    end
-
-    def count(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
-      params = params.merge(rows: 0)
-      params[:q] ||= MATCH_ALL_QUERY
-      get(path, params, options, &block)
-    end
-
-    def json_query(params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
-      json(path, params.merge(q: query_string(params[:q])), options, &block)
-    end
-
-    def more_like_this(params = {}, options = {}, path = DEFAULT_MLT_PATH, &block)
-      json_query(params, options, path, &block)
-    end
-
-    def query_string(query)
-      case query
-        when nil
-          # ignore
-        when String
-          query.gsub('&', '%26')
-        when Array, Hash
-          query.flat_map { |key, values|
-            Array(values).map { |value|
-              query_string("#{key}:#{value}")
-            }
-          }.join(' ')
-        else
-          query_string(query.to_s)
-      end
-    end
-
-    def solr_version(type = :spec)
-      json(SYSTEM_INFO_PATH) % "lucene/solr-#{type}-version"
+      send_request(path, options.merge(
+        method: :head, params: params), &block)
     end
 
     def inspect
@@ -213,27 +178,26 @@ module Solr4R
     private
 
     def default_uri
-      'http://%s:%d/%s' % [
-        options.fetch(:host, DEFAULT_HOST),
-        options.fetch(:port, DEFAULT_PORT),
-        options.fetch(:path, DEFAULT_PATH)
-      ]
+      self.class.default_uri(options)
     end
 
-    def amend_options(options, key, value)
+    def amend_options_hash(options, key, value)
       options.merge(key => value.merge(options.fetch(key, {})))
     end
 
-    def send_request(path, options, &block)
-      request.execute(path,
-        amend_options(options, :params, default_params), &block)
+    def amend_options_array(options, key, *value)
+      options.merge(key => Array(options[key]).dup.concat(value))
     end
 
-    def invalid_endpoint?(name)
-      'method already defined' if respond_to?(name) || (
-        respond_to?(name, true) && !DEFAULT_ENDPOINTS.flatten.include?(name))
+    def send_request(path, options, &block)
+      request.execute(path, amend_options_hash(
+        options, :params, default_params), &block)
     end
 
   end
 
 end
+
+require_relative 'client/update'
+require_relative 'client/query'
+require_relative 'client/admin'
