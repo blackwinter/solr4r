@@ -31,12 +31,6 @@ module Solr4R
 
     extend Forwardable
 
-    UNIQUE_KEY = 'id'
-
-    MLT_DEFAULT_FL = '*,score'
-
-    MLT_DEFAULT_ROWS = 5
-
     def initialize(result, hash)
       @result, @hash = result, hash
     end
@@ -45,19 +39,25 @@ module Solr4R
 
     def_delegators :result, :client
 
-    def_delegators :to_hash, :[], :each, :to_json
+    def_delegators :to_hash, :[], :each, :fetch, :to_json
 
     def to_hash
       @hash
     end
 
-    def more_like_this(fl = nil, params = {}, *args, &block)
-      client.more_like_this(params.merge(
-        q:    { id: self[UNIQUE_KEY] },
-        fl:   params.fetch(:fl,   MLT_DEFAULT_FL),
-        rows: params.fetch(:rows, MLT_DEFAULT_ROWS),
-        'mlt.fl' => Array(fl).join(',')), *args, &block)
+    def id
+      fetch('id')
     end
+
+    def more_like_this_h(*args, &block)
+      client.more_like_this_h(id, *args, &block)
+    end
+
+    def more_like_this_q(*args, &block)
+      client.more_like_this_q(id, *args, &block)
+    end
+
+    alias_method :more_like_this, :more_like_this_q
 
   end
 
