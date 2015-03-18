@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::RequestUriExtension - solr4r Application documentation (v0.0.5)</title>
+<title>module Solr4R::RequestUriExtension - solr4r Application documentation (v0.0.6)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -193,12 +193,13 @@
             <pre><span class="ruby-comment"># File lib/solr4r/uri_extension.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">query_pairs</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">pairs</span> = [])
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
-    <span class="ruby-identifier">pairs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">key</span>, <span class="ruby-keyword">true</span>]
+    <span class="ruby-identifier">kv</span> = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">vk</span> = <span class="ruby-value">:_</span>, <span class="ruby-keyword">true</span>)
+    <span class="ruby-identifier">pairs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">key</span>, <span class="ruby-identifier">kv</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">kv</span>.<span class="ruby-identifier">nil?</span>
 
     <span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sub</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">query_pairs</span>(<span class="ruby-node">&quot;#{key}.#{sub}&quot;</span>, <span class="ruby-identifier">val</span>, <span class="ruby-identifier">pairs</span>) }
+      <span class="ruby-identifier">query_pairs</span>(<span class="ruby-node">&quot;#{key}.#{sub}&quot;</span>, <span class="ruby-identifier">val</span>, <span class="ruby-identifier">pairs</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">sub</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">vk</span> }
   <span class="ruby-keyword">else</span>
-    <span class="ruby-constant">Array</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pairs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span>] }
+    <span class="ruby-constant">Array</span>(<span class="ruby-identifier">value</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">val</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pairs</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span>] <span class="ruby-keyword">unless</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">nil?</span> }
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">pairs</span>

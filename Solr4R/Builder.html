@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Builder - solr4r Application documentation (v0.0.5)</title>
+<title>class Solr4R::Builder - solr4r Application documentation (v0.0.6)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -91,6 +91,8 @@
     
     <li ><a href="#method-i-delete">#delete</a>
     
+    <li ><a href="#method-i-doc">#doc</a>
+    
     <li ><a href="#method-i-inspect">#inspect</a>
     
     <li ><a href="#method-i-optimize">#optimize</a>
@@ -173,12 +175,10 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 45</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
-      <span class="ruby-string">&#39;block argument not supported, use options hash instead&#39;</span>
-  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>,
+    <span class="ruby-string">&#39;block argument not supported, use options hash instead&#39;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
 
   <span class="ruby-keyword">super</span>(
     <span class="ruby-ivar">@_solr_opt</span> = <span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>),
@@ -261,7 +261,7 @@ add([id: 42, text: &#39;blah&#39;], commitWithin: 23)
   &lt;/add&gt;
 
 # document attributes
-add([[{ id: 42, text: &#39;blah&#39; }, { boost: 10.0 }]])
+add([[{ id: 42, text: &#39;blah&#39; }, boost: 10.0]])
 
   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
   &lt;add&gt;
@@ -283,7 +283,7 @@ add(id: 42, text: [&#39;blah&#39;, boost: 2.0])
   &lt;/add&gt;
 
 # all attributes together
-add([[{ id: 42, text: [&#39;blah&#39;, boost: 2.0] }, { boost: 10.0 }]], commitWithin: 23)
+add([[{ id: 42, text: [&#39;blah&#39;, boost: 2.0] }, boost: 10.0]], commitWithin: 23)
 
   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
   &lt;add commitWithin=&quot;23&quot;&gt;
@@ -297,7 +297,7 @@ add([[{ id: 42, text: [&#39;blah&#39;, boost: 2.0] }, { boost: 10.0 }]], commitW
 
           
           <div class="method-source-code" id="add-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 132</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 128</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">attributes</span> = {})
   <span class="ruby-identifier">to_xml</span>(<span class="ruby-value">:add</span>, <span class="ruby-identifier">attributes</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">add_node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">_each</span>(<span class="ruby-identifier">doc</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">doc_attributes</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">add_node</span>.<span class="ruby-identifier">doc_</span>(<span class="ruby-identifier">doc_attributes</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">doc_node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">|</span>
@@ -312,6 +312,10 @@ add([[{ id: 42, text: [&#39;blah&#39;, boost: 2.0] }, { boost: 10.0 }]], commitW
           
         </div>
 
+        
+        <div class="aliases">
+          Also aliased as: <a href="Builder.html#method-i-doc">doc</a>
+        </div>
         
 
         
@@ -350,7 +354,7 @@ commit(softCommit: true)
 
           
           <div class="method-source-code" id="commit-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 156</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">commit</span>(<span class="ruby-identifier">attributes</span> = {})
   <span class="ruby-identifier">to_xml</span>(<span class="ruby-value">:commit</span>, <span class="ruby-identifier">attributes</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -379,6 +383,10 @@ commit(softCommit: true)
           
           <p>See <a
 href="http://wiki.apache.org/solr/UpdateXmlMessages#A.22delete.22_documents_by_ID_and_by_Query">Schema</a>.</p>
+
+<p>See <a
+href="Client.html#method-c-query_string">Solr4R::Client.query_string</a>
+for handling of query hashes.</p>
 
 <p>Examples:</p>
 
@@ -421,8 +429,7 @@ delete(query: { office: &#39;Bridgewater&#39;, skills: &#39;Perl&#39; })
 
   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
   &lt;delete&gt;
-    &lt;query&gt;office:Bridgewater&lt;/query&gt;
-    &lt;query&gt;skills:Perl&lt;/query&gt;
+    &lt;query&gt;office:Bridgewater skills:Perl&lt;/query&gt;
   &lt;/delete&gt;
 
 # query hash with array
@@ -430,8 +437,15 @@ delete(query: { office: %w[Bridgewater Osaka] })
 
   &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
   &lt;delete&gt;
-    &lt;query&gt;office:Bridgewater&lt;/query&gt;
-    &lt;query&gt;office:Osaka&lt;/query&gt;
+    &lt;query&gt;office:Bridgewater office:Osaka&lt;/query&gt;
+  &lt;/delete&gt;
+
+# query hash with LocalParams
+delete(query: { office: &#39;Bridgewater&#39;, _: { type: :edismax } })
+
+  &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+  &lt;delete&gt;
+    &lt;query&gt;{!type=edismax}office:Bridgewater&lt;/query&gt;
   &lt;/delete&gt;
 
 # both IDs and queries
@@ -441,21 +455,25 @@ delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] })
   &lt;delete&gt;
     &lt;id&gt;05991&lt;/id&gt;
     &lt;id&gt;06000&lt;/id&gt;
-    &lt;query&gt;office:Bridgewater&lt;/query&gt;
-    &lt;query&gt;office:Osaka&lt;/query&gt;
+    &lt;query&gt;office:Bridgewater office:Osaka&lt;/query&gt;
   &lt;/delete&gt;</pre>
           
           
 
           
           <div class="method-source-code" id="delete-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 255</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 260</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">hash</span>)
   <span class="ruby-identifier">to_xml</span>(<span class="ruby-value">:delete</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">delete_node</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">values</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">delete</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-identifier">delete_node</span>.<span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>) }
-
-    <span class="ruby-identifier">_each</span>(<span class="ruby-identifier">values</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">value</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">value</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">delete</span>[<span class="ruby-identifier">value</span>] <span class="ruby-operator">:</span>
-      <span class="ruby-identifier">value</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">v</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">w</span><span class="ruby-operator">|</span> <span class="ruby-identifier">delete</span>[<span class="ruby-node">&quot;#{k}:#{w}&quot;</span>] } } }
+    <span class="ruby-keyword">case</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;id&#39;</span>
+        <span class="ruby-identifier">_each</span>(<span class="ruby-identifier">values</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span> <span class="ruby-identifier">delete_node</span>.<span class="ruby-identifier">id_</span>(<span class="ruby-identifier">id</span>) }
+      <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;query&#39;</span>
+        <span class="ruby-identifier">_each</span>(<span class="ruby-identifier">values</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">query</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">delete_node</span>.<span class="ruby-identifier">query_</span>(<span class="ruby-constant">Client</span>.<span class="ruby-identifier">query_string</span>(<span class="ruby-identifier">query</span>, <span class="ruby-keyword">false</span>)) }
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&quot;`id&#39; or `query&#39; expected, got %p&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-identifier">key</span>
+    <span class="ruby-keyword">end</span>
   } }
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -464,6 +482,34 @@ delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] })
 
         
 
+        
+      </div>
+
+    
+      <div id="method-i-doc" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">doc</span><span
+            class="method-args">(doc, attributes = {})</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Builder.html#method-i-add">add</a>
+        </div>
         
       </div>
 
@@ -487,7 +533,7 @@ delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] })
 
           
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 264</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 274</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-string">&#39;#&lt;%s:0x%x %p&gt;&#39;</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-ivar">@_solr_opt</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -533,7 +579,7 @@ optimize(maxSegments: 42)
 
           
           <div class="method-source-code" id="optimize-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 173</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 171</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">optimize</span>(<span class="ruby-identifier">attributes</span> = {})
   <span class="ruby-identifier">to_xml</span>(<span class="ruby-value">:optimize</span>, <span class="ruby-identifier">attributes</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -574,7 +620,7 @@ href="http://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22">Schema</a>.
 
           
           <div class="method-source-code" id="rollback-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 185</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 183</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">rollback</span>
   <span class="ruby-identifier">to_xml</span>(<span class="ruby-value">:rollback</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -615,7 +661,7 @@ href="http://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22">Schema</a>.
 
           
           <div class="method-source-code" id="_each-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 280</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 290</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_each</span>(<span class="ruby-identifier">values</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   (<span class="ruby-identifier">values</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">values</span> <span class="ruby-operator">:</span> [<span class="ruby-identifier">values</span>]).<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -648,7 +694,7 @@ href="http://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22">Schema</a>.
 
           
           <div class="method-source-code" id="replace_illegal_characters-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 276</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 286</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">replace_illegal_characters</span>(<span class="ruby-identifier">string</span>)
   <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp">/[\x00-\x08\x0B\x0C\x0E-\x1F]/</span>, <span class="ruby-string">&#39;&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -686,7 +732,7 @@ href="http://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22">Schema</a>.
 
           
           <div class="method-source-code" id="to_xml-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 270</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 280</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_xml</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attributes</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parent</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">doc</span> = <span class="ruby-ivar">@_solr_doc</span>.<span class="ruby-identifier">dup</span>
   <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">attributes</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)

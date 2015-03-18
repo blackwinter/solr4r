@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Document - solr4r Application documentation (v0.0.5)</title>
+<title>class Solr4R::Document - solr4r Application documentation (v0.0.6)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -83,7 +83,13 @@
     
     <li ><a href="#method-c-new">::new</a>
     
+    <li ><a href="#method-i-id">#id</a>
+    
     <li ><a href="#method-i-more_like_this">#more_like_this</a>
+    
+    <li ><a href="#method-i-more_like_this_h">#more_like_this_h</a>
+    
+    <li ><a href="#method-i-more_like_this_q">#more_like_this_q</a>
     
     <li ><a href="#method-i-to_hash">#to_hash</a>
     
@@ -110,30 +116,6 @@
 
     
 
-    
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-      
-        <dt id="MLT_DEFAULT_FL">MLT_DEFAULT_FL
-        
-        <dd>
-        
-      
-        <dt id="MLT_DEFAULT_ROWS">MLT_DEFAULT_ROWS
-        
-        <dd>
-        
-      
-        <dt id="UNIQUE_KEY">UNIQUE_KEY
-        
-        <dd>
-        
-      
-      </dl>
-    </section>
     
 
     
@@ -185,7 +167,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 39</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">result</span>, <span class="ruby-identifier">hash</span>)
   <span class="ruby-ivar">@result</span>, <span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">result</span>, <span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -207,11 +189,11 @@
        </header>
 
     
-      <div id="method-i-more_like_this" class="method-detail ">
+      <div id="method-i-id" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">more_like_this</span><span
-            class="method-args">(fl = nil, params = {}, *args, &block)</span>
+          <span class="method-name">id</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -225,19 +207,113 @@
           
 
           
-          <div class="method-source-code" id="more_like_this-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 53</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">more_like_this</span>(<span class="ruby-identifier">fl</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">params</span> = {}, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-  <span class="ruby-identifier">client</span>.<span class="ruby-identifier">more_like_this</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(
-    <span class="ruby-identifier">q</span><span class="ruby-operator">:</span>    { <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>[<span class="ruby-constant">UNIQUE_KEY</span>] },
-    <span class="ruby-identifier">fl</span><span class="ruby-operator">:</span>   <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:fl</span>,   <span class="ruby-constant">MLT_DEFAULT_FL</span>),
-    <span class="ruby-identifier">rows</span><span class="ruby-operator">:</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:rows</span>, <span class="ruby-constant">MLT_DEFAULT_ROWS</span>),
-    <span class="ruby-string">&#39;mlt.fl&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">fl</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;,&#39;</span>)), <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+          <div class="method-source-code" id="id-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">id</span>
+  <span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;id&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
 
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-more_like_this" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">more_like_this</span><span
+            class="method-args">(*args, &block)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Document.html#method-i-more_like_this_q">more_like_this_q</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-more_like_this_h" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">more_like_this_h</span><span
+            class="method-args">(*args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="more_like_this_h-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">more_like_this_h</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">client</span>.<span class="ruby-identifier">more_like_this_h</span>(<span class="ruby-identifier">id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-more_like_this_q" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">more_like_this_q</span><span
+            class="method-args">(*args, &block)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="more_like_this_q-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">more_like_this_q</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">client</span>.<span class="ruby-identifier">more_like_this_q</span>(<span class="ruby-identifier">id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Document.html#method-i-more_like_this">more_like_this</a>
+        </div>
         
 
         
@@ -263,7 +339,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/document.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>
   <span class="ruby-ivar">@hash</span>
 <span class="ruby-keyword">end</span></pre>

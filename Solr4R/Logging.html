@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Logging - solr4r Application documentation (v0.0.5)</title>
+<title>module Solr4R::Logging - solr4r Application documentation (v0.0.6)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -56,7 +56,18 @@
     
     
     
+    <div id="extends-section" class="nav-section">
+  <h3>Extended With Modules</h3>
+
+  <ul class="link-list">
     
+  
+    <li><span class="extend">Nuggets::Module::LazyAttrMixin</span>
+  
+  
+  </ul>
+</div>
+
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
@@ -151,7 +162,7 @@
 
           
           <div class="method-source-code" id="set_log_level-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 40</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">set_log_level</span>(<span class="ruby-identifier">logger</span>, <span class="ruby-identifier">level</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">default_level</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">level</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword">begin</span>
     <span class="ruby-identifier">value</span> = <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;SOLR4R_LOG_LEVEL&#39;</span>, <span class="ruby-string">&#39;&#39;</span>)
@@ -198,7 +209,7 @@
 
           
           <div class="method-source-code" id="default_logger-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 54</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">default_logger</span>(<span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>(), <span class="ruby-identifier">mod</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>)
   <span class="ruby-identifier">logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:log_device</span>, <span class="ruby-identifier">mod</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_LOG_DEVICE</span>))
   <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">progname</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:log_name</span>, <span class="ruby-identifier">mod</span><span class="ruby-operator">::</span><span class="ruby-constant">DEFAULT_LOG_NAME</span>)
@@ -236,7 +247,7 @@
 
           
           <div class="method-source-code" id="forward_logger-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 63</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/logging.rb, line 65</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">forward_logger</span>(<span class="ruby-identifier">object</span>)
   <span class="ruby-identifier">object</span>.<span class="ruby-identifier">logger</span> = <span class="ruby-identifier">logger</span>
   <span class="ruby-identifier">object</span>
