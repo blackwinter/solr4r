@@ -4,7 +4,7 @@ module Solr4R
 
     MAJOR = 0
     MINOR = 0
-    TINY  = 5
+    TINY  = 6
 
     class << self
 

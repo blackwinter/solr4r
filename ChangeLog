@@ -2,6 +2,36 @@
 
 = Revision history for solr4r
 
+== 0.0.6 [2015-03-18]
+
+* Extracted Solr4R::Endpoints from Solr4R::Client.
+* Extracted Solr4R::Client::Admin, Solr4R::Client::Query and
+  Solr4R::Client::Update from Solr4R::Client.
+* Added core to Solr4R::Client.default_uri and adjusted
+  Solr4R::Client::DEFAULT_SYSTEM_PATH.
+* Added Solr4R::Client::Admin#cores.
+* Added Solr4R::Client::Admin#fields.
+* Added Solr4R::Client::Admin#analyze_document.
+* Added Solr4R::Client::Admin#analyze_field.
+* Added Solr4R::Client::Query#json_document.
+* Added Solr4R::Client::Query#more_like_this_h (using the {request
+  handler}[https://cwiki.apache.org/confluence/display/solr/MoreLikeThis]).
+* Added Solr4R::Client::Query#more_like_this_q (using the {query
+  parser}[https://cwiki.apache.org/confluence/display/solr/Other+Parsers#OtherParsers-MoreLikeThisQueryParser]).
+* Added support for {local
+  params}[https://cwiki.apache.org/confluence/display/solr/Local+Parameters+in+Queries]
+  to Solr4R::Client.query_string.
+* Extended Solr4R::RequestUriExtension#query_pairs to skip +nil+ values.
+* Extended Solr4R::RequestUriExtension#query_pairs to allow control over
+  nested key's value (via +:_+).
+* Refactored Solr4R::Document#more_like_this to use
+  Solr4R::Client#more_like_this.
+* Refactored Solr4R::Builder#delete to use Solr4R::Client.query_string for
+  query hashes.
+* Refactored Solr4R::Request preparation; dropped
+  Solr4R::HTTPRequestExtension.
+* Refactored Solr4R::Response initialization.
+
 == 0.0.5 [2015-02-11]
 
 * Fixed Solr4R::Result for unsupported types.
