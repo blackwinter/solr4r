@@ -35,7 +35,7 @@ module Solr4R
     DEFAULT_CHARSET = 'UTF-8'
 
     def initialize(request, req = nil, res = nil)
-      @request, @evaluate = request, req.response_body_permitted?
+      @request, @evaluate = request, req && req.response_body_permitted?
 
       if req
         self.request_body    = req.body
@@ -93,8 +93,8 @@ module Solr4R
     def evaluate_result
       case wt = request_params[:wt]
         when String then to_s
-        when :ruby  then extend_hash(eval(to_s))
-        when :json  then extend_hash(JSON.parse(to_s))
+        when :ruby  then result_object(eval(to_s))
+        when :json  then result_object(JSON.parse(to_s))
         else raise 'The response cannot be evaluated: wt=%p not supported.' % wt
       end
     end
@@ -113,7 +113,7 @@ module Solr4R
       Integer(result[Regexp.new(pattern % [name, '(\d+)']), 1])
     end
 
-    def extend_hash(object)
+    def result_object(object)
       object.is_a?(Hash) ? Result.new(self, object) : object
     end
 
