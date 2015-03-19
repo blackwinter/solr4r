@@ -55,8 +55,7 @@ module Solr4R
 
     def query_pairs(key, value, pairs = [])
       if value.is_a?(Hash)
-        kv = value.fetch(vk = :_, true)
-        pairs << [key, kv] unless kv.nil?
+        kv = value.fetch(vk = :_, true) and pairs << [key, kv]
 
         value.each { |sub, val|
           query_pairs("#{key}.#{sub}", val, pairs) unless sub == vk }
