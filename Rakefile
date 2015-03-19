@@ -13,7 +13,7 @@ begin
       email:        %q{jens.wille@gmail.com},
       license:      %q{AGPL-3.0},
       homepage:     :blackwinter,
-      dependencies: { nokogiri: '~> 1.6', 'nuggets' => ['~> 1.0', '>= 1.0.1'] },
+      dependencies: { nokogiri: '~> 1.6', 'nuggets' => '~> 1.3' },
 
       required_ruby_version: '>= 1.9.3'
     }
