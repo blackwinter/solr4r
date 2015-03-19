@@ -44,6 +44,7 @@ module Solr4R
 
         params = params.merge(rows: 0)
         params[:q] ||= MATCH_ALL_QUERY
+
         get(path, params, options, &block)
       end
 
@@ -51,7 +52,7 @@ module Solr4R
           params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
 
         json(path, params.merge(Hash[[:q, :fq].map { |key|
-          [key, self.class.query_string(params[key])] }]), options, &block)
+          [key, query_string(params[key])] }]), options, &block)
       end
 
       def json_document(id,
