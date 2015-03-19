@@ -2,6 +2,12 @@
 
 = Revision history for solr4r
 
+== 0.0.7 [unreleased]
+
+* Added Solr4R::Client#escape.
+* Added Solr4R::Client#query_string.
+* Added Solr4R::Client#local_params_string.
+
 == 0.0.6 [2015-03-18]
 
 * Extracted Solr4R::Endpoints from Solr4R::Client.

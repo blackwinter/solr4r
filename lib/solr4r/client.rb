@@ -23,11 +23,17 @@
 ###############################################################################
 #++
 
+require 'forwardable'
+
 module Solr4R
 
   class Client
 
     include Logging
+
+    extend Forwardable
+
+    DEFAULT_URI = 'http://%s:%d/%s/%s'
 
     DEFAULT_HOST = 'localhost'
     DEFAULT_PORT = 8983
@@ -39,7 +45,7 @@ module Solr4R
     class << self
 
       def default_uri(options = {})
-        'http://%s:%d/%s/%s' % [
+        DEFAULT_URI % [
           options.fetch(:host, DEFAULT_HOST),
           options.fetch(:port, DEFAULT_PORT),
           options.fetch(:path, DEFAULT_PATH),
@@ -68,7 +74,7 @@ module Solr4R
       end
 
       def local_params_string(local_params, hash = {}, escape = true)
-        case local_params = expand_local_params(local_params, hash)
+        case local_params = expand_local_params(local_params, hash.dup)
           when nil
             # ignore
           when String
@@ -106,7 +112,7 @@ module Solr4R
           when nil
             local_params
           when String, Symbol
-            type_error(local_params, :Array) unless local_params.is_a?(Array)
+            type_error(local_params, Array) unless local_params.is_a?(Array)
 
             local_params.each { |param| hash[param] = "$#{type}.#{param}" }
             hash
@@ -141,6 +147,8 @@ module Solr4R
     attr_accessor :options, :builder, :request, :default_params, :endpoints
 
     alias_method :ep, :endpoints
+
+    def_delegators 'self.class', :query_string, :local_params_string, :escape
 
     def json(path,
         params = {}, options = {}, &block)
@@ -186,7 +194,7 @@ module Solr4R
     end
 
     def amend_options_array(options, key, *value)
-      options.merge(key => Array(options[key]).dup.concat(value))
+      options.merge(key => Array(options[key]) + value)
     end
 
     def send_request(path, options, &block)
