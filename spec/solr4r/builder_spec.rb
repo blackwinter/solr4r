@@ -1,5 +1,7 @@
 describe Solr4R::Builder do
 
+  subject { described_class.new(Solr4R::Client.new) }
+
   describe '#add' do
 
     example do
@@ -62,7 +64,7 @@ describe Solr4R::Builder do
 <add>
   <doc>
     <field name="id">42</field>
-    <field boost="2.0" name="text">blah</field>
+    <field name="text" boost="2.0">blah</field>
   </doc>
 </add>
       EOT
@@ -74,7 +76,7 @@ describe Solr4R::Builder do
 <add commitWithin="23">
   <doc boost="10.0">
     <field name="id">42</field>
-    <field boost="2.0" name="text">blah</field>
+    <field name="text" boost="2.0">blah</field>
   </doc>
 </add>
       EOT

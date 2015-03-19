@@ -136,12 +136,14 @@ module Solr4R
 
       self.logger  = options.fetch(:logger)  { default_logger }
 
-      self.builder = options.fetch(:builder) { forward_logger(Builder.new) }
+      self.builder = options.fetch(:builder) { forward_logger(
+        Builder.new(self)) }
 
-      self.request = options.fetch(:request) { forward_logger(Request.new(
-        self, uri || options.fetch(:uri) { default_uri })) }
+      self.request = options.fetch(:request) { forward_logger(
+        Request.new(self, uri || options.fetch(:uri) { default_uri })) }
 
-      self.endpoints = forward_logger(Endpoints.new(self))
+      self.endpoints = forward_logger(
+        Endpoints.new(self))
     end
 
     attr_accessor :options, :builder, :request, :default_params, :endpoints

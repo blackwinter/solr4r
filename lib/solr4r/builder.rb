@@ -41,15 +41,21 @@ module Solr4R
 
     DEFAULT_OPTIONS = { encoding: 'UTF-8' }
 
-    def initialize(options = {})
+    ILLEGAL_CHAR_RE = /[\x00-\x08\x0B\x0C\x0E-\x1F]/
+
+    def initialize(client, options = client.options)
       raise ArgumentError,
         'block argument not supported, use options hash instead' if block_given?
 
+      @client = client
+
       super(
-        @_solr_opt = DEFAULT_OPTIONS.merge(options),
-        @_solr_doc = Document.new
+        @solr4r_opt = DEFAULT_OPTIONS.merge(options),
+        @solr4r_doc = Document.new
       )
     end
+
+    attr_reader :client
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#add.2Freplace_documents].
     #
@@ -112,7 +118,7 @@ module Solr4R
     #     <add>
     #       <doc>
     #         <field name="id">42</field>
-    #         <field boost="2.0" name="text">blah</field>
+    #         <field name="text" boost="2.0">blah</field>
     #       </doc>
     #     </add>
     #
@@ -123,14 +129,17 @@ module Solr4R
     #     <add commitWithin="23">
     #       <doc boost="10.0">
     #         <field name="id">42</field>
-    #         <field boost="2.0" name="text">blah</field>
+    #         <field name="text" boost="2.0">blah</field>
     #       </doc>
     #     </add>
     def add(doc, attributes = {})
       to_xml(:add, attributes) { |add_node| _each(doc) { |hash, doc_attributes|
         add_node.doc_(doc_attributes) { |doc_node| hash.each { |key, values|
-          field_attributes = (values.is_a?(Array) && values.last.is_a?(Hash) ?
-            (values = values.dup).pop : {}).merge(name: key)
+          field_attributes = { name: key }
+
+          if values.is_a?(Array) && values.last.is_a?(Hash)
+            field_attributes.update((values = values.dup).pop)
+          end
 
           _each(values) { |value| doc_node.field_(value, field_attributes) }
         } }
@@ -261,31 +270,28 @@ module Solr4R
     def delete(hash)
       to_xml(:delete) { |delete_node| hash.each { |key, values|
         case key.to_s
-          when 'id'
-            _each(values) { |id| delete_node.id_(id) }
-          when 'query'
-            _each(values) { |query|
-              delete_node.query_(Client.query_string(query, false)) }
-          else
-            raise ArgumentError, "`id' or `query' expected, got %p" % key
+          when 'id'    then _each(values) { |value| delete_node.id_(value) }
+          when 'query' then _each(values) { |value| delete_node.query_(
+            client.query_string(value, false)) }
+          else raise ArgumentError, "`id' or `query' expected, got %p" % key
         end
       } }
     end
 
     def inspect
-      '#<%s:0x%x %p>' % [self.class, object_id, @_solr_opt]
+      '#<%s:0x%x %p>' % [self.class, object_id, @solr4r_opt]
     end
 
     private
 
     def to_xml(name, attributes = {}, &block)
-      self.parent = self.doc = @_solr_doc.dup
+      self.parent = self.doc = @solr4r_doc.dup
       method_missing(name, attributes, &block)
       replace_illegal_characters(super(&nil))
     end
 
     def replace_illegal_characters(string)
-      string.gsub(/[\x00-\x08\x0B\x0C\x0E-\x1F]/, '')
+      string.gsub(ILLEGAL_CHAR_RE, '')
     end
 
     def _each(values, &block)
