@@ -31,9 +31,9 @@ module Solr4R
 
     DEFAULT_ENDPOINTS = %w[select query export spell suggest terms debug/dump]
 
-    def initialize(client)
+    def initialize(client, options = client.options)
       @client, @endpoints = client, []
-      register(client.options.fetch(:endpoints, DEFAULT_ENDPOINTS))
+      register(options.fetch(:endpoints, DEFAULT_ENDPOINTS))
     end
 
     attr_reader :client
@@ -59,18 +59,18 @@ module Solr4R
         when Array
           path.each { |args| register(*args) }
         when Hash
-          path.each { |name, opts| register(name,
-            opts.is_a?(Hash) ? opts : { path: opts }) }
+          path.each { |_path, _options| register(_path,
+            _options.is_a?(Hash) ? _options : { path: _options }) }
         else
-          Client.send(:type_error, path, %w[String Symbol Array Hash])
+          client.class.send(:type_error, path, %w[String Symbol Array Hash])
       end
 
       self
     end
 
     def inspect
-      '#<%s:0x%x [%s]>' % [self.class, object_id, @endpoints.map { |name, path|
-        name == path ? name : "#{name}=#{path}" }.join(', ')]
+      '#<%s:0x%x [%s]>' % [self.class, object_id,
+        @endpoints.map { |ep| ep.uniq.join('=') }.join(', ')]
     end
 
     private
