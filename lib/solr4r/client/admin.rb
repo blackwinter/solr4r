@@ -64,6 +64,7 @@ module Solr4R
           params = {}, options = {}, path = DEFAULT_ANALYZE_DOCUMENT_PATH, &block)
 
         doc = builder.doc(doc) unless doc.is_a?(String)
+
         update(doc, amend_options_hash(
           options, :params, wt: :json), path, &block).result % 'analysis'
       end
