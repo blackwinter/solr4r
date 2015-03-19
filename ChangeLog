@@ -4,6 +4,14 @@
 
 == 0.0.7 [unreleased]
 
+* Renamed Solr4R::Client::Query#delete_by_id to
+  Solr4R::Client::Query#delete_id.
+* Renamed Solr4R::Client::Query#delete_by_query to
+  Solr4R::Client::Query#delete_query.
+* Renamed Solr4R::Client::Query#delete_all! to
+  Solr4R::Client::Query#delete_all.
+* Added alias Solr4R::Client::Query#clear for
+  Solr4R::Client::Query#delete_all.
 * Added Solr4R::Client#escape.
 * Added Solr4R::Client#query_string.
 * Added Solr4R::Client#local_params_string.

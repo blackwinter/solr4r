@@ -94,25 +94,27 @@ module Solr4R
       end
 
       # See #delete.
-      def delete_by_id(id,
+      def delete_id(id,
           params = {}, options = {}, &block)
 
         delete({ id: id }, params, options, &block)
       end
 
       # See #delete.
-      def delete_by_query(query,
+      def delete_query(query,
           params = {}, options = {}, &block)
 
         delete({ query: query }, params, options, &block)
       end
 
-      # See #delete_by_query.
-      def delete_all!(
+      # See #delete_query.
+      def delete_all(
           params = {}, options = {}, &block)
 
-        delete_by_query(MATCH_ALL_QUERY, params, options, &block)
+        delete_query(MATCH_ALL_QUERY, params, options, &block)
       end
+
+      alias_method :clear, :delete_all
 
     end
 
