@@ -51,8 +51,8 @@ module Solr4R
       def json_query(
           params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
 
-        json(path, params.merge(Hash[[:q, :fq].map { |key|
-          [key, query_string(params[key])] }]), options, &block)
+        json(path, params.merge(q: query_string(params[:q]), fq: Array(
+          params[:fq]).map(&method(:query_string))), options, &block)
       end
 
       def json_document(id,
