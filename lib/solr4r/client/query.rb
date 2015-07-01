@@ -34,8 +34,15 @@ module Solr4R
 
     MLT_DEFAULT_FL   = '*,score'
     MLT_DEFAULT_ROWS = 5
-    MLT_LOCAL_PARAMS = local_params_string(
-      %w[mintf mindf minwl maxwl], type: :mlt, qf: '$mlt.fl')
+    MLT_LOCAL_PARAMS = local_params_string(%w[
+      maxdf
+      maxntp
+      maxqt
+      maxwl
+      mindf
+      mintf
+      minwl
+    ], type: :mlt, qf: '$mlt.fl')
 
     module Query
 
@@ -64,14 +71,20 @@ module Solr4R
       def more_like_this_h(id, fields,
           params = {}, options = {}, path = DEFAULT_MLT_PATH, &block)
 
-        _more_like_this_query({ id: id }, fields, params, options, path, &block)
+        _more_like_this_query({ id: id },
+          fields, params, options, path, &block)
       end
 
       def more_like_this_q(id, fields,
           params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
 
-        _more_like_this_query(MLT_LOCAL_PARAMS + id, fields, amend_options_array(
-          params, :fq, '-id' => id, _: { cache: false }), options, path, &block)
+        # Drop after Solr 5.4.0 has been released?
+        # https://issues.apache.org/jira/browse/SOLR-7912
+        params = amend_options_array(
+          params, :fq, '-id' => id, _: { cache: false })
+
+        _more_like_this_query(MLT_LOCAL_PARAMS + id,
+          fields, params, options, path, &block)
       end
 
       alias_method :more_like_this, :more_like_this_q
