@@ -90,4 +90,102 @@ describe Solr4R::Client do
 
   end
 
+  describe 'requests', vcr: true do
+
+    describe '#get' do
+
+      def get(*args)
+        res = subject.get(*args)
+
+        expect(res).to be_success
+        expect(res.response_code).to eq(200)
+
+        res
+      end
+
+      it "should get /select" do
+        res = get('select')
+
+        expect(res.to_i).to eq(0)
+        expect(res.to_s).to be_a(String)
+        expect(res.result).to be_a(Solr4R::Result)
+      end
+
+      it "should get /select JSON result" do
+        res = get('select', wt: :json)
+
+        expect(res.to_i).to eq(0)
+        expect(res.to_s).to be_a(String)
+        expect(res.result).to be_a(Solr4R::Result)
+      end
+
+      it "should get /select JSON string" do
+        res = get('select', wt: 'json')
+
+        expect(res.to_i).to eq(0)
+        expect(res.to_s).to be_a(String)
+        expect(res.result).to be_a(String)
+      end
+
+      it "should get /select XML" do
+        res = get('select', wt: 'xml')
+
+        expect(res.to_i).to eq(0)
+        expect(res.to_s).to be_a(String)
+        expect(res.result).to be_a(String)
+      end
+
+      it "should get /select CSV" do
+        res, err = get('select', wt: :csv), /:csv not supported/
+
+        expect { res.to_i }.to raise_error(err)
+        expect(res.to_s).to be_a(String)
+        expect { res.result }.to raise_error(err)
+      end
+
+      it "should get /select FOO" do
+        res, err = get('select', wt: 'foo'), /"foo" not supported/
+
+        expect { res.to_i }.to raise_error(err)
+        expect(res.to_s).to be_a(String)
+        expect(res.result).to be_a(String)
+      end
+
+      it "should not get /foo" do
+        res = subject.get('foo')
+
+        expect(res).not_to be_success
+        expect(res.response_code).to eq(404)
+      end
+
+    end
+
+    describe '#json' do
+
+      def expect_json(*args)
+        res = subject.json('select', *args)
+
+        expect(res).to be_a(Solr4R::Result)
+        expect(res).to be_a(Solr4R::Result::Response)
+        expect(res.to_i).to eq(0)
+        expect(res).to be_empty
+        expect(res).not_to be_error
+      end
+
+      it "should get /select JSON" do
+        expect_json
+      end
+
+      it "should get /select JSON with wt symbol override" do
+        expect_json(wt: 'foo')
+      end
+
+      it "should get /select JSON with wt string override" do
+        expect_json('wt' => 'foo')
+      end
+
+    end
+
+  end
+
 end
