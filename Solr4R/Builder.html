@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Builder - solr4r Application documentation (v0.0.7)</title>
+<title>class Solr4R::Builder - solr4r Application documentation (v0.1.0)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -208,10 +208,10 @@
 
   <span class="ruby-ivar">@client</span> = <span class="ruby-identifier">client</span>
 
-  <span class="ruby-keyword">super</span>(
-    <span class="ruby-ivar">@solr4r_opt</span> = <span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>),
-    <span class="ruby-ivar">@solr4r_doc</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>
-  )
+  <span class="ruby-ivar">@solr4r_opt</span> = <span class="ruby-constant">DEFAULT_OPTIONS</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+  <span class="ruby-ivar">@solr4r_doc</span> = <span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>; <span class="ruby-identifier">d</span> = <span class="ruby-ivar">@solr4r_doc</span>.<span class="ruby-identifier">document</span>
+
+  <span class="ruby-keyword">super</span>(<span class="ruby-ivar">@solr4r_opt</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;#{k}=&quot;</span>) }, <span class="ruby-ivar">@solr4r_doc</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

@@ -1,14 +1,14 @@
-Fri, 14 Aug 2015 16:25:24 +0200
-README	Fri, 14 Aug 2015 16:24:14 +0200
+Fri, 14 Aug 2015 16:59:24 +0200
+README	Fri, 14 Aug 2015 16:57:51 +0200
 COPYING	Wed, 02 Apr 2014 12:50:37 +0200
-ChangeLog	Fri, 14 Aug 2015 16:24:27 +0200
+ChangeLog	Fri, 14 Aug 2015 16:57:06 +0200
 lib/solr4r.rb	Mon, 16 Mar 2015 15:55:25 +0100
 lib/solr4r/client.rb	Wed, 12 Aug 2015 13:52:54 +0200
 lib/solr4r/result.rb	Mon, 16 Mar 2015 15:55:23 +0100
-lib/solr4r/builder.rb	Wed, 12 Aug 2015 13:52:54 +0200
+lib/solr4r/builder.rb	Fri, 14 Aug 2015 16:55:46 +0200
 lib/solr4r/logging.rb	Mon, 16 Mar 2015 15:55:23 +0100
 lib/solr4r/request.rb	Thu, 19 Mar 2015 14:51:41 +0100
-lib/solr4r/version.rb	Fri, 14 Aug 2015 16:24:33 +0200
+lib/solr4r/version.rb	Fri, 14 Aug 2015 16:57:58 +0200
 lib/solr4r/document.rb	Tue, 17 Mar 2015 17:17:33 +0100
 lib/solr4r/response.rb	Wed, 12 Aug 2015 13:52:54 +0200
 lib/solr4r/endpoints.rb	Wed, 12 Aug 2015 13:52:54 +0200
