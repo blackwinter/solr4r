@@ -49,10 +49,10 @@ module Solr4R
 
       @client = client
 
-      super(
-        @solr4r_opt = DEFAULT_OPTIONS.merge(options),
-        @solr4r_doc = Document.new
-      )
+      @solr4r_opt = DEFAULT_OPTIONS.merge(options)
+      @solr4r_doc = Document.new; d = @solr4r_doc.document
+
+      super(@solr4r_opt.delete_if { |k,| !d.respond_to?("#{k}=") }, @solr4r_doc)
     end
 
     attr_reader :client

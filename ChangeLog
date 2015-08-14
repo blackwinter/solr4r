@@ -5,6 +5,8 @@
 == 0.1.0 [2015-08-14]
 
 * Require at least Ruby 2.0.
+* Fixed Solr4R::Builder#initialize to only pass supported options to
+  Nokogiri::XML::Builder.
 
 == 0.0.7 [2015-08-14]
 
