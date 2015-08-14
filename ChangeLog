@@ -4,17 +4,27 @@
 
 == 0.0.7 [unreleased]
 
-* Renamed Solr4R::Client::Query#delete_by_id to
-  Solr4R::Client::Query#delete_id.
-* Renamed Solr4R::Client::Query#delete_by_query to
-  Solr4R::Client::Query#delete_query.
-* Renamed Solr4R::Client::Query#delete_all! to
-  Solr4R::Client::Query#delete_all.
-* Added alias Solr4R::Client::Query#clear for
-  Solr4R::Client::Query#delete_all.
+* Fixed Solr4R::Client::Query#json_query for multiple +fq+ parameters.
+* Renamed Solr4R::Response#extend_hash to Solr4R::Response#result_object.
+* Renamed Solr4R::Client::Update#delete_by_id to
+  Solr4R::Client::Update#delete_id.
+* Renamed Solr4R::Client::Update#delete_by_query to
+  Solr4R::Client::Update#delete_query.
+* Renamed Solr4R::Client::Update#delete_all! to
+  Solr4R::Client::Update#delete_all.
+* Added alias Solr4R::Client::Update#clear for
+  Solr4R::Client::Update#delete_all.
 * Added Solr4R::Client#escape.
 * Added Solr4R::Client#query_string.
 * Added Solr4R::Client#local_params_string.
+* Updated Solr4R::Client::Query#more_like_this_q for Solr 5.3.0.
+  * Fixes handling of multiple field names
+    (SOLR-7143[https://issues.apache.org/jira/browse/SOLR-7143]).
+  * Adds support for other MoreLikeThisHandler options
+    (SOLR-7639[https://issues.apache.org/jira/browse/SOLR-7639]).
+* Refactored Solr4R::Endpoints#initialize to accept options hash.
+* Refactored Solr4R::Builder#delete to use Solr4R::Client#query_string for
+  query hashes.
 
 == 0.0.6 [2015-03-18]
 
