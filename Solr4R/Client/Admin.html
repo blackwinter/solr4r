@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Client::Admin - solr4r Application documentation (v0.0.6)</title>
+<title>module Solr4R::Client::Admin - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -133,6 +133,7 @@
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_ANALYZE_DOCUMENT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
   <span class="ruby-identifier">doc</span> = <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">doc</span>(<span class="ruby-identifier">doc</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+
   <span class="ruby-identifier">update</span>(<span class="ruby-identifier">doc</span>, <span class="ruby-identifier">amend_options_hash</span>(
     <span class="ruby-identifier">options</span>, <span class="ruby-value">:params</span>, <span class="ruby-identifier">wt</span><span class="ruby-operator">:</span> <span class="ruby-value">:json</span>), <span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>).<span class="ruby-identifier">result</span> <span class="ruby-operator">%</span> <span class="ruby-string">&#39;analysis&#39;</span>
 <span class="ruby-keyword">end</span></pre>
@@ -165,7 +166,7 @@
 
           
           <div class="method-source-code" id="analyze_field-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/admin.rb, line 70</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/admin.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">analyze_field</span>(<span class="ruby-identifier">analysis</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_ANALYZE_FIELD_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 

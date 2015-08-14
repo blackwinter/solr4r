@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Client::Update - solr4r Application documentation (v0.0.6)</title>
+<title>module Solr4R::Client::Update - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -67,15 +67,17 @@
     
     <li ><a href="#method-i-add_batch">#add_batch</a>
     
+    <li ><a href="#method-i-clear">#clear</a>
+    
     <li ><a href="#method-i-commit">#commit</a>
     
     <li ><a href="#method-i-delete">#delete</a>
     
-    <li ><a href="#method-i-delete_all-21">#delete_all!</a>
+    <li ><a href="#method-i-delete_all">#delete_all</a>
     
-    <li ><a href="#method-i-delete_by_id">#delete_by_id</a>
+    <li ><a href="#method-i-delete_id">#delete_id</a>
     
-    <li ><a href="#method-i-delete_by_query">#delete_by_query</a>
+    <li ><a href="#method-i-delete_query">#delete_query</a>
     
     <li ><a href="#method-i-optimize">#optimize</a>
     
@@ -195,6 +197,34 @@
       </div>
 
     
+      <div id="method-i-clear" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">clear</span><span
+            class="method-args">( params = {}, options = {}, &block)</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="Update.html#method-i-delete_all">delete_all</a>
+        </div>
+        
+      </div>
+
+    
       <div id="method-i-commit" class="method-detail ">
         
         <div class="method-heading">
@@ -265,10 +295,10 @@
       </div>
 
     
-      <div id="method-i-delete_all-21" class="method-detail ">
+      <div id="method-i-delete_all" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">delete_all!</span><span
+          <span class="method-name">delete_all</span><span
             class="method-args">( params = {}, options = {}, &block)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -278,32 +308,36 @@
 
         <div class="method-description">
           
-          <p>See <a href="Update.html#method-i-delete_by_query">delete_by_query</a>.</p>
+          <p>See <a href="Update.html#method-i-delete_query">delete_query</a>.</p>
           
           
 
           
-          <div class="method-source-code" id="delete_all-21-source">
+          <div class="method-source-code" id="delete_all-source">
             <pre><span class="ruby-comment"># File lib/solr4r/client/update.rb, line 110</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_all!</span>(
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_all</span>(
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
-  <span class="ruby-identifier">delete_by_query</span>(<span class="ruby-constant">MATCH_ALL_QUERY</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">delete_query</span>(<span class="ruby-constant">MATCH_ALL_QUERY</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
         </div>
 
         
+        <div class="aliases">
+          Also aliased as: <a href="Update.html#method-i-clear">clear</a>
+        </div>
+        
 
         
       </div>
 
     
-      <div id="method-i-delete_by_id" class="method-detail ">
+      <div id="method-i-delete_id" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">delete_by_id</span><span
+          <span class="method-name">delete_id</span><span
             class="method-args">(id, params = {}, options = {}, &block)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -318,9 +352,9 @@
           
 
           
-          <div class="method-source-code" id="delete_by_id-source">
+          <div class="method-source-code" id="delete_id-source">
             <pre><span class="ruby-comment"># File lib/solr4r/client/update.rb, line 96</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_by_id</span>(<span class="ruby-identifier">id</span>,
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_id</span>(<span class="ruby-identifier">id</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
   <span class="ruby-identifier">delete</span>({ <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">id</span> }, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -335,10 +369,10 @@
       </div>
 
     
-      <div id="method-i-delete_by_query" class="method-detail ">
+      <div id="method-i-delete_query" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">delete_by_query</span><span
+          <span class="method-name">delete_query</span><span
             class="method-args">(query, params = {}, options = {}, &block)</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -353,9 +387,9 @@
           
 
           
-          <div class="method-source-code" id="delete_by_query-source">
+          <div class="method-source-code" id="delete_query-source">
             <pre><span class="ruby-comment"># File lib/solr4r/client/update.rb, line 103</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_by_query</span>(<span class="ruby-identifier">query</span>,
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">delete_query</span>(<span class="ruby-identifier">query</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
   <span class="ruby-identifier">delete</span>({ <span class="ruby-identifier">query</span><span class="ruby-operator">:</span> <span class="ruby-identifier">query</span> }, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)

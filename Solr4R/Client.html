@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Client - solr4r Application documentation (v0.0.6)</title>
+<title>class Solr4R::Client - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -86,7 +86,18 @@
   </ul>
 </div>
 
+    <div id="extends-section" class="nav-section">
+  <h3>Extended With Modules</h3>
+
+  <ul class="link-list">
     
+  
+    <li><span class="extend">Forwardable</span>
+  
+  
+  </ul>
+</div>
+
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
   <h3>Methods</h3>
@@ -239,6 +250,11 @@
         <dd>
         
       
+        <dt id="DEFAULT_URI">DEFAULT_URI
+        
+        <dd>
+        
+      
         <dt id="MATCH_ALL_QUERY">MATCH_ALL_QUERY
         
         <dd>
@@ -377,9 +393,9 @@
 
           
           <div class="method-source-code" id="default_uri-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 40</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">default_uri</span>(<span class="ruby-identifier">options</span> = {})
-  <span class="ruby-string">&#39;http://%s:%d/%s/%s&#39;</span> <span class="ruby-operator">%</span> [
+  <span class="ruby-constant">DEFAULT_URI</span> <span class="ruby-operator">%</span> [
     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:host</span>, <span class="ruby-constant">DEFAULT_HOST</span>),
     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:port</span>, <span class="ruby-constant">DEFAULT_PORT</span>),
     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:path</span>, <span class="ruby-constant">DEFAULT_PATH</span>),
@@ -415,7 +431,7 @@
 
           
           <div class="method-source-code" id="escape-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 85</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 91</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">escape</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">escape</span> = <span class="ruby-keyword">true</span>)
   <span class="ruby-identifier">escape</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">string</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&#39;&amp;&#39;</span>, <span class="ruby-string">&#39;%26&#39;</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">string</span>
 <span class="ruby-keyword">end</span></pre>
@@ -448,9 +464,9 @@
 
           
           <div class="method-source-code" id="local_params_string-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 69</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">local_params_string</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-identifier">hash</span> = {}, <span class="ruby-identifier">escape</span> = <span class="ruby-keyword">true</span>)
-  <span class="ruby-keyword">case</span> <span class="ruby-identifier">local_params</span> = <span class="ruby-identifier">expand_local_params</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-identifier">hash</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">local_params</span> = <span class="ruby-identifier">expand_local_params</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">dup</span>)
     <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
       <span class="ruby-comment"># ignore</span>
     <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>
@@ -493,7 +509,7 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 124</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">options</span> = {})
   <span class="ruby-identifier">uri</span>, <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>, {} <span class="ruby-keyword">unless</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
 
@@ -502,12 +518,14 @@
 
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">logger</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:logger</span>)  { <span class="ruby-identifier">default_logger</span> }
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">builder</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:builder</span>) { <span class="ruby-identifier">forward_logger</span>(<span class="ruby-constant">Builder</span>.<span class="ruby-identifier">new</span>) }
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">builder</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:builder</span>) { <span class="ruby-identifier">forward_logger</span>(
+    <span class="ruby-constant">Builder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>)) }
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">request</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:request</span>) { <span class="ruby-identifier">forward_logger</span>(<span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(
-    <span class="ruby-keyword">self</span>, <span class="ruby-identifier">uri</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:uri</span>) { <span class="ruby-identifier">default_uri</span> })) }
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">request</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:request</span>) { <span class="ruby-identifier">forward_logger</span>(
+    <span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>, <span class="ruby-identifier">uri</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:uri</span>) { <span class="ruby-identifier">default_uri</span> })) }
 
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">endpoints</span> = <span class="ruby-identifier">forward_logger</span>(<span class="ruby-constant">Endpoints</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>))
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">endpoints</span> = <span class="ruby-identifier">forward_logger</span>(
+    <span class="ruby-constant">Endpoints</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -538,7 +556,7 @@
 
           
           <div class="method-source-code" id="query_string-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 55</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">query_string</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">escape</span> = <span class="ruby-keyword">true</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">query</span>
     <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
@@ -595,13 +613,13 @@
 
           
           <div class="method-source-code" id="expand_local_params-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 103</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 109</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">expand_local_params</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-identifier">hash</span>)
   <span class="ruby-keyword">case</span> <span class="ruby-identifier">type</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value">:type</span>]
     <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>
       <span class="ruby-identifier">local_params</span>
     <span class="ruby-keyword">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">Symbol</span>
-      <span class="ruby-identifier">type_error</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-value">:Array</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">local_params</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+      <span class="ruby-identifier">type_error</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-constant">Array</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">local_params</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
 
       <span class="ruby-identifier">local_params</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">param</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">param</span>] = <span class="ruby-node">&quot;$#{type}.#{param}&quot;</span> }
       <span class="ruby-identifier">hash</span>
@@ -638,7 +656,7 @@
 
           
           <div class="method-source-code" id="query_from_hash-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 91</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 97</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">query_from_hash</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">escape</span>)
   <span class="ruby-identifier">local_params</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">lp</span> = <span class="ruby-value">:_</span>) <span class="ruby-operator">&amp;&amp;</span>
     <span class="ruby-identifier">local_params_string</span>((<span class="ruby-identifier">query</span> = <span class="ruby-identifier">query</span>.<span class="ruby-identifier">dup</span>).<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">lp</span>), {}, <span class="ruby-identifier">escape</span>)
@@ -675,7 +693,7 @@
 
           
           <div class="method-source-code" id="query_with_params-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 99</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 105</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">query_with_params</span>(<span class="ruby-identifier">local_params</span>, <span class="ruby-identifier">query_string</span>)
   <span class="ruby-identifier">local_params</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">local_params</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">query_string</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">query_string</span>
 <span class="ruby-keyword">end</span></pre>
@@ -708,7 +726,7 @@
 
           
           <div class="method-source-code" id="type_error-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 117</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">type_error</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">types</span> = <span class="ruby-node">%w[String Array Hash]</span>)
   <span class="ruby-identifier">types</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">types</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39; or &#39;</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">TypeError</span>, <span class="ruby-node">&quot;#{types} expected, got #{obj.class}&quot;</span>, <span class="ruby-identifier">caller</span>(<span class="ruby-value">1</span>)
@@ -750,7 +768,7 @@
 
           
           <div class="method-source-code" id="get-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 150</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 160</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
@@ -786,7 +804,7 @@
 
           
           <div class="method-source-code" id="head-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 164</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 174</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">head</span>(<span class="ruby-identifier">path</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
@@ -822,7 +840,7 @@
 
           
           <div class="method-source-code" id="inspect-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 171</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 181</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
   <span class="ruby-string">&#39;#&lt;%s:0x%x @default_params=%p %s&gt;&#39;</span> <span class="ruby-operator">%</span> [
     <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-identifier">default_params</span>, <span class="ruby-identifier">request</span>.<span class="ruby-identifier">request_line</span>
@@ -857,7 +875,7 @@
 
           
           <div class="method-source-code" id="json-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 144</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">json</span>(<span class="ruby-identifier">path</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
@@ -892,7 +910,7 @@
 
           
           <div class="method-source-code" id="post-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 157</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 167</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">post</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">data</span> = <span class="ruby-keyword">nil</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
@@ -936,9 +954,9 @@
 
           
           <div class="method-source-code" id="amend_options_array-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 187</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 197</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">amend_options_array</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">key</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">value</span>)
-  <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">key</span>]).<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">value</span>))
+  <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">key</span>]) <span class="ruby-operator">+</span> <span class="ruby-identifier">value</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -969,7 +987,7 @@
 
           
           <div class="method-source-code" id="amend_options_hash-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 183</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 193</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">amend_options_hash</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>, {})))
 <span class="ruby-keyword">end</span></pre>
@@ -1002,7 +1020,7 @@
 
           
           <div class="method-source-code" id="default_uri-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 179</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 189</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">default_uri</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">default_uri</span>(<span class="ruby-identifier">options</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -1035,7 +1053,7 @@
 
           
           <div class="method-source-code" id="send_request-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 191</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client.rb, line 201</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">send_request</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">request</span>.<span class="ruby-identifier">execute</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">amend_options_hash</span>(
     <span class="ruby-identifier">options</span>, <span class="ruby-value">:params</span>, <span class="ruby-identifier">default_params</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)

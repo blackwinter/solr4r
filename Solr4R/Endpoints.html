@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Endpoints - solr4r Application documentation (v0.0.6)</title>
+<title>class Solr4R::Endpoints - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -162,7 +162,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(client)</span>
+            class="method-args">(client, options = client.options)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -178,9 +178,9 @@
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/solr4r/endpoints.rb, line 33</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">client</span>)
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">client</span>, <span class="ruby-identifier">options</span> = <span class="ruby-identifier">client</span>.<span class="ruby-identifier">options</span>)
   <span class="ruby-ivar">@client</span>, <span class="ruby-ivar">@endpoints</span> = <span class="ruby-identifier">client</span>, []
-  <span class="ruby-identifier">register</span>(<span class="ruby-identifier">client</span>.<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:endpoints</span>, <span class="ruby-constant">DEFAULT_ENDPOINTS</span>))
+  <span class="ruby-identifier">register</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:endpoints</span>, <span class="ruby-constant">DEFAULT_ENDPOINTS</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -221,8 +221,8 @@
           <div class="method-source-code" id="inspect-source">
             <pre><span class="ruby-comment"># File lib/solr4r/endpoints.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">inspect</span>
-  <span class="ruby-string">&#39;#&lt;%s:0x%x [%s]&gt;&#39;</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>, <span class="ruby-ivar">@endpoints</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">path</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{name}=#{path}&quot;</span> }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;, &#39;</span>)]
+  <span class="ruby-string">&#39;#&lt;%s:0x%x [%s]&gt;&#39;</span> <span class="ruby-operator">%</span> [<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>, <span class="ruby-identifier">object_id</span>,
+    <span class="ruby-ivar">@endpoints</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">ep</span><span class="ruby-operator">|</span> <span class="ruby-identifier">ep</span>.<span class="ruby-identifier">uniq</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;=&#39;</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;, &#39;</span>)]
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -275,10 +275,10 @@
     <span class="ruby-keyword">when</span> <span class="ruby-constant">Array</span>
       <span class="ruby-identifier">path</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span> <span class="ruby-identifier">register</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) }
     <span class="ruby-keyword">when</span> <span class="ruby-constant">Hash</span>
-      <span class="ruby-identifier">path</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">name</span>,
-        <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">opts</span> <span class="ruby-operator">:</span> { <span class="ruby-identifier">path</span><span class="ruby-operator">:</span> <span class="ruby-identifier">opts</span> }) }
+      <span class="ruby-identifier">path</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">_path</span>, <span class="ruby-identifier">_options</span><span class="ruby-operator">|</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">_path</span>,
+        <span class="ruby-identifier">_options</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">_options</span> <span class="ruby-operator">:</span> { <span class="ruby-identifier">path</span><span class="ruby-operator">:</span> <span class="ruby-identifier">_options</span> }) }
     <span class="ruby-keyword">else</span>
-      <span class="ruby-constant">Client</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:type_error</span>, <span class="ruby-identifier">path</span>, <span class="ruby-node">%w[String Symbol Array Hash]</span>)
+      <span class="ruby-identifier">client</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-value">:type_error</span>, <span class="ruby-identifier">path</span>, <span class="ruby-node">%w[String Symbol Array Hash]</span>)
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-keyword">self</span>

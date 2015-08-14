@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>ChangeLog - solr4r Application documentation (v0.0.6)</title>
+<title>ChangeLog - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -56,6 +56,7 @@
 
   <ul class="link-list" role="directory">
     <li><a href="#label-Revision+history+for+solr4r">Revision history for solr4r</a>
+    <li><a href="#label-0.0.7+-5B2015-08-14-5D">0.0.7 [2015-08-14]</a>
     <li><a href="#label-0.0.6+-5B2015-03-18-5D">0.0.6 [2015-03-18]</a>
     <li><a href="#label-0.0.5+-5B2015-02-11-5D">0.0.5 [2015-02-11]</a>
     <li><a href="#label-0.0.4+-5B2014-12-19-5D">0.0.4 [2014-12-19]</a>
@@ -87,6 +88,53 @@
 <main role="main" aria-label="Page ChangeLog">
 
 <h1 id="label-Revision+history+for+solr4r">Revision history for solr4r<span><a href="#label-Revision+history+for+solr4r">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<h2 id="label-0.0.7+-5B2015-08-14-5D">0.0.7 [2015-08-14]<span><a href="#label-0.0.7+-5B2015-08-14-5D">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p>Fixed <a
+href="Solr4R/Client/Query.html#method-i-json_query">Solr4R::Client::Query#json_query</a>
+for multiple <code>fq</code> parameters.</p>
+</li><li>
+<p>Renamed Solr4R::Response#extend_hash to <a
+href="Solr4R/Response.html#method-i-result_object">Solr4R::Response#result_object</a>.</p>
+</li><li>
+<p>Renamed Solr4R::Client::Update#delete_by_id to    <a
+href="Solr4R/Client/Update.html#method-i-delete_id">Solr4R::Client::Update#delete_id</a>.</p>
+</li><li>
+<p>Renamed Solr4R::Client::Update#delete_by_query to    <a
+href="Solr4R/Client/Update.html#method-i-delete_query">Solr4R::Client::Update#delete_query</a>.</p>
+</li><li>
+<p>Renamed Solr4R::Client::Update#delete_all! to    <a
+href="Solr4R/Client/Update.html#method-i-delete_all">Solr4R::Client::Update#delete_all</a>.</p>
+</li><li>
+<p>Added alias <a
+href="Solr4R/Client/Update.html#method-i-clear">Solr4R::Client::Update#clear</a>
+for    <a
+href="Solr4R/Client/Update.html#method-i-delete_all">Solr4R::Client::Update#delete_all</a>.</p>
+</li><li>
+<p>Added Solr4R::Client#escape.</p>
+</li><li>
+<p>Added Solr4R::Client#query_string.</p>
+</li><li>
+<p>Added Solr4R::Client#local_params_string.</p>
+</li><li>
+<p>Updated <a
+href="Solr4R/Client/Query.html#method-i-more_like_this_q">Solr4R::Client::Query#more_like_this_q</a>
+for Solr 5.3.0.</p>
+<ul><li>
+<p>Fixes handling of multiple field names      (<a
+href="https://issues.apache.org/jira/browse/SOLR-7143">SOLR-7143</a>).</p>
+</li><li>
+<p>Adds support for other MoreLikeThisHandler options      (<a
+href="https://issues.apache.org/jira/browse/SOLR-7639">SOLR-7639</a>).</p>
+</li></ul>
+</li><li>
+<p>Refactored Solr4R::Endpoints#initialize to accept options hash.</p>
+</li><li>
+<p>Refactored <a
+href="Solr4R/Builder.html#method-i-delete">Solr4R::Builder#delete</a> to
+use Solr4R::Client#query_string for    query hashes.</p>
+</li></ul>
 
 <h2 id="label-0.0.6+-5B2015-03-18-5D">0.0.6 [2015-03-18]<span><a href="#label-0.0.6+-5B2015-03-18-5D">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ul><li>

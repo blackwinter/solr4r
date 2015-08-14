@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>module Solr4R::Client::Query - solr4r Application documentation (v0.0.6)</title>
+<title>module Solr4R::Client::Query - solr4r Application documentation (v0.0.7)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -130,12 +130,13 @@
 
           
           <div class="method-source-code" id="count-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">count</span>(
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_SELECT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
   <span class="ruby-identifier">params</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">rows</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>)
   <span class="ruby-identifier">params</span>[<span class="ruby-value">:q</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">MATCH_ALL_QUERY</span>
+
   <span class="ruby-identifier">get</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -167,7 +168,7 @@
 
           
           <div class="method-source-code" id="json_document-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 56</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">json_document</span>(<span class="ruby-identifier">id</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_SELECT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
@@ -202,12 +203,12 @@
 
           
           <div class="method-source-code" id="json_query-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 49</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">json_query</span>(
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_SELECT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
-  <span class="ruby-identifier">json</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-constant">Hash</span>[[<span class="ruby-value">:q</span>, <span class="ruby-value">:fq</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
-    [<span class="ruby-identifier">key</span>, <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">query_string</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">key</span>])] }]), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">json</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">q</span><span class="ruby-operator">:</span> <span class="ruby-identifier">query_string</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:q</span>]), <span class="ruby-identifier">fq</span><span class="ruby-operator">:</span> <span class="ruby-constant">Array</span>(
+    <span class="ruby-identifier">params</span>[<span class="ruby-value">:fq</span>]).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">method</span>(<span class="ruby-value">:query_string</span>))), <span class="ruby-identifier">options</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -266,11 +267,12 @@
 
           
           <div class="method-source-code" id="more_like_this_h-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 62</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 70</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">more_like_this_h</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">fields</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_MLT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
-  <span class="ruby-identifier">_more_like_this_query</span>({ <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">id</span> }, <span class="ruby-identifier">fields</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">_more_like_this_query</span>({ <span class="ruby-identifier">id</span><span class="ruby-operator">:</span> <span class="ruby-identifier">id</span> },
+    <span class="ruby-identifier">fields</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -301,12 +303,17 @@
 
           
           <div class="method-source-code" id="more_like_this_q-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 68</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 77</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">more_like_this_q</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">fields</span>,
     <span class="ruby-identifier">params</span> = {}, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">path</span> = <span class="ruby-constant">DEFAULT_SELECT_PATH</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 
-  <span class="ruby-identifier">_more_like_this_query</span>(<span class="ruby-constant">MLT_LOCAL_PARAMS</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">fields</span>, <span class="ruby-identifier">amend_options_array</span>(
-    <span class="ruby-identifier">params</span>, <span class="ruby-value">:fq</span>, <span class="ruby-string">&#39;-id&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">cache</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span> }), <span class="ruby-identifier">options</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-comment"># Drop after Solr 5.4.0 has been released?</span>
+  <span class="ruby-comment"># https://issues.apache.org/jira/browse/SOLR-7912</span>
+  <span class="ruby-identifier">params</span> = <span class="ruby-identifier">amend_options_array</span>(
+    <span class="ruby-identifier">params</span>, <span class="ruby-value">:fq</span>, <span class="ruby-string">&#39;-id&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">_</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">cache</span><span class="ruby-operator">:</span> <span class="ruby-keyword">false</span> })
+
+  <span class="ruby-identifier">_more_like_this_query</span>(<span class="ruby-constant">MLT_LOCAL_PARAMS</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">id</span>,
+    <span class="ruby-identifier">fields</span>, <span class="ruby-identifier">params</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">path</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -349,7 +356,7 @@
 
           
           <div class="method-source-code" id="_more_like_this_query-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 79</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/client/query.rb, line 93</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">_more_like_this_query</span>(<span class="ruby-identifier">query</span>, <span class="ruby-identifier">fields</span>, <span class="ruby-identifier">params</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">json_query</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-string">&#39;mlt.fl&#39;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">fields</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;,&#39;</span>),
     <span class="ruby-identifier">q</span><span class="ruby-operator">:</span>    <span class="ruby-identifier">query</span>,
