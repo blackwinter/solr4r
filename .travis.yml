@@ -6,7 +6,7 @@ rvm:
   - '2.1'
   - '2.2'
   - ruby-head
-  - jruby
+  - jruby-20mode
   - jruby-head
   - rbx
 
