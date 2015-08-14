@@ -3,8 +3,8 @@ module Solr4R
   module Version
 
     MAJOR = 0
-    MINOR = 0
-    TINY  = 7
+    MINOR = 1
+    TINY  = 0
 
     class << self
 
