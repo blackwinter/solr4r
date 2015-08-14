@@ -2,7 +2,7 @@
 
 = Revision history for solr4r
 
-== 0.0.7 [unreleased]
+== 0.0.7 [2015-08-14]
 
 * Fixed Solr4R::Client::Query#json_query for multiple +fq+ parameters.
 * Renamed Solr4R::Response#extend_hash to Solr4R::Response#result_object.
