@@ -2,6 +2,10 @@
 
 = Revision history for solr4r
 
+== 0.1.0 [2015-08-14]
+
+* Require at least Ruby 2.0.
+
 == 0.0.7 [2015-08-14]
 
 * Fixed Solr4R::Client::Query#json_query for multiple +fq+ parameters.
