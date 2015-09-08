@@ -64,7 +64,9 @@ describe Solr4R::Builder do
 <add>
   <doc>
     <field name="id">42</field>
-    <field name="text" boost="2.0">blah</field>
+    #{Nokogiri.jruby? ?
+   '<field boost="2.0" name="text">blah</field>' :
+   '<field name="text" boost="2.0">blah</field>' }
   </doc>
 </add>
       EOT
@@ -76,7 +78,9 @@ describe Solr4R::Builder do
 <add commitWithin="23">
   <doc boost="10.0">
     <field name="id">42</field>
-    <field name="text" boost="2.0">blah</field>
+    #{Nokogiri.jruby? ?
+   '<field boost="2.0" name="text">blah</field>' :
+   '<field name="text" boost="2.0">blah</field>' }
   </doc>
 </add>
       EOT
