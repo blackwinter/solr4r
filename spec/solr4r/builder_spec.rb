@@ -253,7 +253,7 @@ describe Solr4R::Builder do
   end
 
   example do
-    expect{described_class.new(Solr4R::Client.new(core: 'foo'))}.not_to raise_error(NoMethodError, /core=/)
+    expect{described_class.new(Solr4R::Client.new(core: 'foo'))}.not_to raise_error#(NoMethodError, /core=/)
   end
 
 end
