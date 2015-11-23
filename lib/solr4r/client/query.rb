@@ -35,6 +35,7 @@ module Solr4R
     MLT_DEFAULT_FL   = '*,score'
     MLT_DEFAULT_ROWS = 5
     MLT_LOCAL_PARAMS = local_params_string(%w[
+      boost
       maxdf
       maxntp
       maxqt
@@ -77,11 +78,6 @@ module Solr4R
 
       def more_like_this_q(id, fields,
           params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
-
-        # Drop after Solr 5.4.0 has been released?
-        # https://issues.apache.org/jira/browse/SOLR-7912
-        params = amend_options_array(
-          params, :fq, '-id' => id, _: { cache: false })
 
         _more_like_this_query(MLT_LOCAL_PARAMS + id,
           fields, params, options, path, &block)
