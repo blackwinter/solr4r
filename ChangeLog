@@ -2,6 +2,12 @@
 
 = Revision history for solr4r
 
+== 0.2.0 [2015-12-14]
+
+* Updated Solr4R::Client::Query#more_like_this_q for Solr 5.4.0.
+  * Adds support for boost option and excludes current document from results
+    (SOLR-7912[https://issues.apache.org/jira/browse/SOLR-7912]).
+
 == 0.1.0 [2015-08-14]
 
 * Require at least Ruby 2.0.
