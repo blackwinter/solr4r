@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -24,6 +24,7 @@
 #++
 
 require 'nokogiri'
+require 'time'
 
 module Solr4R
 
@@ -42,6 +43,19 @@ module Solr4R
     DEFAULT_OPTIONS = { encoding: 'UTF-8' }
 
     ILLEGAL_CHAR_RE = /[\x00-\x08\x0B\x0C\x0E-\x1F]/
+
+    class << self
+
+      def convert_value(value)
+        case value
+          when Time     then value.getutc.xmlschema
+          when DateTime then convert_value(value.to_time)
+          when Date     then convert_value(value.to_datetime)
+          else               value
+        end
+      end
+
+    end
 
     def initialize(client, options = client.options)
       raise ArgumentError,
@@ -141,7 +155,7 @@ module Solr4R
             field_attributes.update((values = values.dup).pop)
           end
 
-          _each(values) { |value| doc_node.field_(value, field_attributes) }
+          _each_value(values) { |value| doc_node.field_(value, field_attributes) }
         } }
       } }
     end
@@ -270,8 +284,8 @@ module Solr4R
     def delete(hash)
       to_xml(:delete) { |delete_node| hash.each { |key, values|
         case key.to_s
-          when 'id'    then _each(values) { |value| delete_node.id_(value) }
-          when 'query' then _each(values) { |value| delete_node.query_(
+          when 'id'    then _each_value(values) { |value| delete_node.id_(value) }
+          when 'query' then _each_value(values) { |value| delete_node.query_(
             client.query_string(value, false)) }
           else raise ArgumentError, "`id' or `query' expected, got %p" % key
         end
@@ -295,7 +309,15 @@ module Solr4R
     end
 
     def _each(values, &block)
-      (values.is_a?(Array) ? values : [values]).each(&block)
+      (values.respond_to?(:to_ary) ? values : [values]).each(&block)
+    end
+
+    def _each_value(values)
+      _each(values) { |value| yield convert_value(value) }
+    end
+
+    def convert_value(value)
+      self.class.convert_value(value)
     end
 
   end

@@ -100,6 +100,39 @@ describe Solr4R::Builder do
       EOT
     end
 
+    example do
+      expect(subject.add(date: Date.new(1992, 03, 15))).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="date">1992-03-15T00:00:00Z</field>
+  </doc>
+</add>
+      EOT
+    end
+
+    example do
+      expect(subject.add(time: Time.new(1992, 03, 15, 16, 23, 55, 3600))).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="time">1992-03-15T15:23:55Z</field>
+  </doc>
+</add>
+      EOT
+    end
+
+    example do
+      expect(subject.add(datetime: DateTime.new(1992, 03, 15, 16, 23, 55, '+1'))).to eq(<<-EOT)
+<?xml version="1.0" encoding="UTF-8"?>
+<add>
+  <doc>
+    <field name="datetime">1992-03-15T15:23:55Z</field>
+  </doc>
+</add>
+      EOT
+    end
+
   end
 
   describe '#commit' do
