@@ -195,10 +195,6 @@ module Solr4R
       options.merge(key => value.merge(options.fetch(key, {})))
     end
 
-    def amend_options_array(options, key, *value)
-      options.merge(key => Array(options[key]) + value)
-    end
-
     def send_request(path, options, &block)
       request.execute(path, amend_options_hash(
         options, :params, default_params), &block)
