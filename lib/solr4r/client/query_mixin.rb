@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -45,7 +45,7 @@ module Solr4R
       minwl
     ], type: :mlt, qf: '$mlt.fl')
 
-    module Query
+    module QueryMixin
 
       def count(
           params = {}, options = {}, path = DEFAULT_SELECT_PATH, &block)
@@ -96,7 +96,7 @@ module Solr4R
 
     end
 
-    include Query
+    include QueryMixin
 
   end
 

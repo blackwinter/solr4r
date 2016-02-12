@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -34,7 +34,7 @@ module Solr4R
     DEFAULT_ANALYZE_DOCUMENT_PATH = 'analysis/document'
     DEFAULT_ANALYZE_FIELD_PATH    = 'analysis/field'
 
-    module Admin
+    module AdminMixin
 
       def solr_version(type = :spec,
           params = {}, options = {}, path = DEFAULT_SYSTEM_PATH, &block)
@@ -77,7 +77,7 @@ module Solr4R
 
     end
 
-    include Admin
+    include AdminMixin
 
   end
 

@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -33,7 +33,7 @@ module Solr4R
 
     DEFAULT_UPDATE_PATH = 'update'
 
-    module Update
+    module UpdateMixin
 
       def update(data,
           params = {}, options = {},
@@ -118,7 +118,7 @@ module Solr4R
 
     end
 
-    include Update
+    include UpdateMixin
 
   end
 

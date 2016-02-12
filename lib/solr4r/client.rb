@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -204,6 +204,6 @@ module Solr4R
 
 end
 
-require_relative 'client/update'
-require_relative 'client/query'
-require_relative 'client/admin'
+require_relative 'client/update_mixin'
+require_relative 'client/query_mixin'
+require_relative 'client/admin_mixin'
