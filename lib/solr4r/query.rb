@@ -75,6 +75,8 @@ module Solr4R
             convert_value(value.to_time)
           when Time
             %Q{"#{value.getutc.xmlschema}"}
+          when Range
+            %Q{[#{convert_value(value.begin)} TO #{convert_value(value.end)}]}
           else
             value.to_s
         end
