@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -42,6 +42,13 @@ module Solr4R
       case path
         when nil
           # ignore
+        when Symbol
+          register(path.to_s, options)
+        when Array
+          path.each { |args| register(*args) }
+        when Hash
+          path.each { |_path, _options| register(_path,
+            _options.is_a?(Hash) ? _options : { path: _options }) }
         when String
           name, path = File.basename(path), options.fetch(:path, path).to_s
 
@@ -54,15 +61,8 @@ module Solr4R
             client.send(:send_request, path, options.merge(_options.merge(
               params: options.fetch(:params, {}).merge(_params))), &block)
           }
-        when Symbol
-          register(path.to_s, options)
-        when Array
-          path.each { |args| register(*args) }
-        when Hash
-          path.each { |_path, _options| register(_path,
-            _options.is_a?(Hash) ? _options : { path: _options }) }
         else
-          client.class.send(:type_error, path, %w[String Symbol Array Hash])
+          raise TypeError, "unexpected type #{path.class}"
       end
 
       self
