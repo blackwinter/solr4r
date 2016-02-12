@@ -41,7 +41,7 @@ module Solr4R
               query << qs if qs
             end
 
-            query_with_params(lp, query_string(query.join(' '), escape))
+            query_with_params(lp, query_from_array(query, escape))
           when Hash
             query_with_params(*query_from_hash(query, escape))
           else
@@ -69,7 +69,22 @@ module Solr4R
         escape ? string.gsub('&', '%26') : string
       end
 
+      def convert_value(value)
+        case value
+          when DateTime
+            convert_value(value.to_time)
+          when Time
+            %Q{"#{value.getutc.xmlschema}"}
+          else
+            value.to_s
+        end
+      end
+
       private
+
+      def query_from_array(query, escape)
+        query_string(query.map { |value| convert_value(value) }.join(' '), escape)
+      end
 
       def query_from_hash(query, escape)
         local_params = query.key?(lp = :_) &&
@@ -77,7 +92,7 @@ module Solr4R
 
         [local_params, query_string(query.flat_map { |key, values|
           (values.respond_to?(:to_ary) ? values : [values])
-            .map { |value| "#{key}:#{value}" } }, escape)]
+            .map { |value| "#{key}:#{convert_value(value)}" } }, escape)]
       end
 
       def query_with_params(local_params, query_string)
