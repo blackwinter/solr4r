@@ -57,16 +57,19 @@ module Solr4R
 
     end
 
-    def initialize(client, options = client.options)
+    def initialize(client = Client, options = nil)
       raise ArgumentError,
         'block argument not supported, use options hash instead' if block_given?
 
       @client = client
 
-      @solr4r_opt = DEFAULT_OPTIONS.merge(options)
-      @solr4r_doc = Document.new; d = @solr4r_doc.document
+      @solr4r_doc = doc = Document.new
+      @solr4r_opt = opt = DEFAULT_OPTIONS.dup
 
-      super(@solr4r_opt.delete_if { |k,| !d.respond_to?("#{k}=") }, @solr4r_doc)
+      options ||= client.respond_to?(:options) ? client.options : {}
+      options.each { |k, v| opt[k.to_sym] = v if doc.respond_to?("#{k}=") }
+
+      super(@solr4r_opt, @solr4r_doc)
     end
 
     attr_reader :client
@@ -210,7 +213,7 @@ module Solr4R
 
     # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22delete.22_documents_by_ID_and_by_Query].
     #
-    # See Client.query_string for handling of query hashes.
+    # See Client#query_string for handling of query hashes.
     #
     # Examples:
     #

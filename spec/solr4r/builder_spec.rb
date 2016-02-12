@@ -1,7 +1,5 @@
 describe Solr4R::Builder do
 
-  subject { described_class.new(Solr4R::Client.new) }
-
   describe '#add' do
 
     example do
