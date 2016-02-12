@@ -53,77 +53,16 @@ module Solr4R
         ]
       end
 
-      def query_string(query, escape = true)
-        case query
-          when nil
-            # ignore
-          when String
-            escape(query, escape) unless query.empty?
-          when Array
-            if query.last.is_a?(Hash)
-              lp, qs = query_from_hash((query = query.dup).pop, escape)
-              query << qs if qs
-            end
-
-            query_with_params(lp, query_string(query.join(' '), escape))
-          when Hash
-            query_with_params(*query_from_hash(query, escape))
-          else
-            type_error(query)
-        end
+      def escape(*args)
+        Query.escape(*args)
       end
 
-      def local_params_string(local_params, hash = {}, escape = true)
-        case local_params = expand_local_params(local_params, hash.dup)
-          when nil
-            # ignore
-          when String
-            escape("{!#{local_params}}", escape) unless local_params.empty?
-          when Array
-            local_params_string(local_params.join(' '), {}, escape)
-          when Hash
-            local_params_string(local_params.map { |key, value|
-              "#{key}=#{value =~ /\s/ ? %Q{"#{value}"} : value}" }, {}, escape)
-          else
-            type_error(local_params)
-        end
+      def query_string(*args)
+        Query.new(*args).to_s
       end
 
-      def escape(string, escape = true)
-        escape ? string.gsub('&', '%26') : string
-      end
-
-      private
-
-      def query_from_hash(query, escape)
-        local_params = query.key?(lp = :_) &&
-          local_params_string((query = query.dup).delete(lp), {}, escape)
-
-        [local_params, query_string(query.flat_map { |key, values|
-          Array(values).map { |value| "#{key}:#{value}" } }, escape)]
-      end
-
-      def query_with_params(local_params, query_string)
-        local_params ? local_params + query_string : query_string
-      end
-
-      def expand_local_params(local_params, hash)
-        case type = hash[:type]
-          when nil
-            local_params
-          when String, Symbol
-            type_error(local_params, Array) unless local_params.is_a?(Array)
-
-            local_params.each { |param| hash[param] = "$#{type}.#{param}" }
-            hash
-          else
-            type_error(type, %w[String Symbol])
-        end
-      end
-
-      def type_error(obj, types = %w[String Array Hash])
-        types = Array(types).join(' or ')
-        raise TypeError, "#{types} expected, got #{obj.class}", caller(1)
+      def local_params_string(*args)
+        Query::LocalParams.new(*args).to_s
       end
 
     end
