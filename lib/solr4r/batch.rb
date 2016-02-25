@@ -25,22 +25,65 @@
 
 module Solr4R
 
-  class << self
+  class Batch
 
-    def connect(*args)
-      Client.new(*args)
+    STEP = 10
+
+    DEFAULT_SIZE = STEP ** 3
+
+    def initialize(client, attributes = {},
+        params = {}, options = {}, size = DEFAULT_SIZE, &block)
+      @client, @args, @size, @block =
+        client, [attributes, params, options], size, block
+
+      reset
+    end
+
+    attr_reader :client
+
+    attr_accessor :size
+
+    def reset
+      @batch, @failed = [], []
+    end
+
+    def clear
+      @batch.clear
+    end
+
+    def add(*docs)
+      batch(docs)
+    end
+
+    alias_method :<<, :add
+
+    def batch(docs)
+      flush unless @batch.concat(docs).size < size
+    end
+
+    def flush
+      process
+      clear
+      @failed
+    end
+
+    def inspect
+      '#<%s:0x%x @size=%p, @count=%p, @failed=%p>' % [
+        self.class, object_id, size, @batch.size, @failed.size
+      ]
+    end
+
+    private
+
+    def process(docs = @batch, size = size())
+      next_size = size.fdiv(STEP).ceil
+
+      docs.each_slice(size) { |batch|
+        client.add(batch, *@args, &@block).success? ? nil :
+          size > 1 ? process(batch, next_size) : @failed.concat(batch)
+      }
     end
 
   end
 
 end
-
-require_relative 'solr4r/version'
-require_relative 'solr4r/logging'
-require_relative 'solr4r/builder'
-require_relative 'solr4r/request'
-require_relative 'solr4r/response'
-require_relative 'solr4r/endpoints'
-require_relative 'solr4r/query'
-require_relative 'solr4r/batch'
-require_relative 'solr4r/client'

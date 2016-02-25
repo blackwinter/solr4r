@@ -51,18 +51,12 @@ module Solr4R
         update(builder.add(doc, attributes), params, options, &block)
       end
 
-      def add_batch(docs, attributes = {},
-          params = {}, options = {}, batch_size = DEFAULT_BATCH_SIZE, &block)
+      def add_batch(docs, *args, &block)
+        batch(*args, &block).batch(docs).flush
+      end
 
-        failed = []
-
-        docs.each_slice(batch_size) { |batch|
-          add(batch, attributes, params, options, &block).success? ||
-            failed.concat(batch_size == 1 ? batch : add_batch(batch,
-              attributes, params, options, batch_size / 10, &block))
-        }
-
-        failed
+      def batch(*args, &block)
+        Batch.new(self, *args, &block)
       end
 
       # See Builder#commit.
