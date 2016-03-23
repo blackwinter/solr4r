@@ -154,6 +154,14 @@ module Solr4R
 
     end
 
+    module Highlighting
+
+      def highlighting
+        fetch(__method__.to_s)
+      end
+
+    end
+
   end
 
 end
