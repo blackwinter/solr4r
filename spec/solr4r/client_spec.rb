@@ -47,17 +47,17 @@ describe Solr4R::Client do
       ['title:foo -author&:bar -author&:baz', { title: 'foo', '-author&' => %w[bar baz] }, false],
 
       ['date:1992-03-15', date: Date.new(1992, 03, 15)],
-      ['time:"1992-03-15T15:23:55Z"', time: Time.new(1992, 03, 15, 16, 23, 55, 3600)],
-      ['datetime:"1992-03-15T15:23:55Z"', datetime: DateTime.new(1992, 03, 15, 16, 23, 55, '+1')],
+      ['time:1992-03-15T15\:23\:55Z', time: Time.new(1992, 03, 15, 16, 23, 55, 3600)],
+      ['datetime:1992-03-15T15\:23\:55Z', datetime: DateTime.new(1992, 03, 15, 16, 23, 55, '+1')],
 
       ['stringrange:[a TO z]', stringrange: 'a'..'z'],
       ['integerrange:[15 TO 25]', integerrange: 15..25],
       ['floatrange:[-1.5 TO 2.5]', floatrange: -1.5..2.5],
       ['daterange:[1992-03-15 TO 1992-04-25]',
          daterange: Date.new(1992, 03, 15)..Date.new(1992, 04, 25)],
-      ['timerange:["1992-03-15T15:23:55Z" TO "1992-04-25T15:23:55Z"]',
+      ['timerange:[1992-03-15T15:23:55Z TO 1992-04-25T15:23:55Z]',
          timerange: Time.new(1992, 03, 15, 16, 23, 55, 3600)..Time.new(1992, 04, 25, 16, 23, 55, 3600)],
-      ['datetimerange:["1992-03-15T15:23:55Z" TO "1992-04-25T15:23:55Z"]',
+      ['datetimerange:[1992-03-15T15:23:55Z TO 1992-04-25T15:23:55Z]',
          datetimerange: DateTime.new(1992, 03, 15, 16, 23, 55, '+1')..DateTime.new(1992, 04, 25, 16, 23, 55, '+1')],
 
       ['{!q.op=AND}title:foo', title: 'foo', _: 'q.op=AND'],

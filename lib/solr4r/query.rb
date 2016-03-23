@@ -23,121 +23,157 @@
 ###############################################################################
 #++
 
+require 'time'
+
 module Solr4R
 
   class Query
 
+    LOCAL_PARAMS_KEY = :_
+
     class << self
 
-      def query_string(query, escape = true)
-        case query
-          when nil
-            # ignore
-          when String
-            escape(query, escape) unless query.empty?
-          when Array
-            if query.last.is_a?(Hash)
-              lp, qs = query_from_hash((query = query.dup).pop, escape)
-              query << qs if qs
-            end
-
-            query_with_params(lp, query_from_array(query, escape))
-          when Hash
-            query_with_params(*query_from_hash(query, escape))
-          else
-            type_error(query)
-        end
+      def query_string(*args)
+        new(*args).to_s
       end
 
-      def local_params_string(local_params, hash = {}, escape = true)
-        case local_params = expand_local_params(local_params, hash.dup)
-          when nil
-            # ignore
-          when String
-            escape("{!#{local_params}}", escape) unless local_params.empty?
-          when Array
-            local_params_string(local_params.join(' '), {}, escape)
-          when Hash
-            local_params_string(local_params.map { |key, value|
-              "#{key}=#{value =~ /\s/ ? %Q{"#{value}"} : value}" }, {}, escape)
-          else
-            type_error(local_params)
-        end
+      def local_params_string(*args)
+        new.local_params_string(*args)
       end
 
       def escape(string, escape = true)
         escape ? string.gsub('&', '%26') : string
       end
 
-      def convert_value(value)
+      def quote(string)
+        string =~ /\s/ ? %Q{"#{string}"} : string
+      end
+
+      def convert_value(value, escape = true)
         case value
           when DateTime
-            convert_value(value.to_time)
+            convert_value(value.to_time, escape)
           when Time
-            %Q{"#{value.getutc.xmlschema}"}
+            value.getutc.xmlschema.tap { |string|
+              string.gsub!(/:/, '\\\\\&') if escape }
           when Range
-            %Q{[#{convert_value(value.begin)} TO #{convert_value(value.end)}]}
+            '[' << [value.begin, value.end].map { |v|
+              convert_value(v, false) }.join(' TO ') << ']'
           else
             value.to_s
         end
       end
 
-      private
-
-      def query_from_array(query, escape)
-        query_string(query.map { |value| convert_value(value) }.join(' '), escape)
-      end
-
-      def query_from_hash(query, escape)
-        local_params = query.key?(lp = :_) &&
-          local_params_string((query = query.dup).delete(lp), {}, escape)
-
-        [local_params, query_string(query.flat_map { |key, values|
-          (values.respond_to?(:to_ary) ? values : [values])
-            .map { |value| "#{key}:#{convert_value(value)}" } }, escape)]
-      end
-
-      def query_with_params(local_params, query_string)
-        local_params ? local_params + query_string : query_string
-      end
-
-      def expand_local_params(local_params, hash)
-        case type = hash[:type]
-          when nil
-            local_params
-          when String, Symbol
-            type_error(local_params) unless local_params.is_a?(Array)
-            local_params.each { |param| hash[param] = "$#{type}.#{param}" }
-            hash
-          else
-            type_error(type)
-        end
-      end
-
-      def type_error(obj)
-        raise TypeError, "unexpected type #{obj.class}", caller(1)
-      end
-
     end
 
-    def initialize(*args)
-      @args = args
+    def initialize(query = '', escape = true)
+      @query, @escape = query, escape
     end
 
-    def to_s
-      self.class.query_string(*@args)
+    attr_reader :query
+
+    attr_writer :escape
+
+    def escape?
+      @escape
     end
 
-    class LocalParams
+    def escape(string, escape = escape?)
+      self.class.escape(string, escape)
+    end
 
-      def initialize(*args)
-        @args = args
+    def quote(string)
+      self.class.quote(string)
+    end
+
+    def convert_value(*args)
+      self.class.convert_value(*args)
+    end
+
+    def to_s(escape = escape?)
+      query_string(query, escape)
+    end
+
+    def query_string(query = query(), escape = escape?)
+      case query
+        when nil
+          # ignore
+        when String
+          escape(query, escape) unless query.empty?
+        when Array
+          if query.last.is_a?(Hash)
+            query = query.dup
+
+            local_params, query_string = query_from_hash(query.pop, escape)
+            query << query_string if query_string
+          end
+
+          query_with_params(local_params, query_from_array(query, escape))
+        when Hash
+          query_with_params(*query_from_hash(query, escape))
+        else
+          type_error(query)
+      end
+    end
+
+    def local_params_string(local_params, hash = {}, escape = escape?)
+      case local_params = expand_local_params(local_params, hash)
+        when nil
+          # ignore
+        when String
+          escape("{!#{local_params}}", escape) unless local_params.empty?
+        when Array
+          local_params_string(local_params.join(' '), {}, escape)
+        when Hash
+          local_params_string(local_params.map { |key, value|
+            "#{key}=#{quote(value)}" }, {}, escape)
+        else
+          type_error(local_params)
+      end
+    end
+
+    private
+
+    def query_from_array(query, escape)
+      query_string(query.map { |value| convert_value(value) }.join(' '), escape)
+    end
+
+    def query_from_hash(query, escape)
+      if query.key?(LOCAL_PARAMS_KEY)
+        query = query.dup
+
+        local_params = local_params_string(
+          query.delete(LOCAL_PARAMS_KEY), {}, escape)
       end
 
-      def to_s
-        Query.local_params_string(*@args)
-      end
+      query = query.flat_map { |key, values|
+        block = lambda { |value| "#{key}:#{convert_value(value)}" }
+        values.respond_to?(:to_ary) ? values.map(&block) : block[values] }
 
+      [local_params, query_string(query, escape)]
+    end
+
+    def query_with_params(local_params, query_string)
+      local_params ? local_params + query_string : query_string
+    end
+
+    def expand_local_params(local_params, hash)
+      case type = hash[:type]
+        when nil
+          local_params
+        when String, Symbol
+          type_error(local_params) unless local_params.is_a?(Array)
+
+          hash = hash.dup
+          local_params.each { |param| hash[param] = "$#{type}.#{param}" }
+          hash
+        else
+          type_error(type)
+      end
+    end
+
+    def type_error(obj)
+      raise TypeError, "unexpected type #{obj.class}", caller(1)
     end
 
   end
