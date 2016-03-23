@@ -16,7 +16,7 @@ begin
 
       dependencies: { nokogiri: '~> 1.6', 'nuggets' => '~> 1.4' },
 
-      development_dependencies: { vcr: '~> 2.9', webmock: '~> 1.22' },
+      development_dependencies: { vcr: '~> 3.0', webmock: '~> 1.24' },
 
       required_ruby_version: '>= 2.0'
     }

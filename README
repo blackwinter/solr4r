@@ -2,12 +2,12 @@
 
 == VERSION
 
-This documentation refers to solr4r version 0.2.0
+This documentation refers to solr4r version 0.3.0
 
 
 == DESCRIPTION
 
-TODO
+Access the {Apache Solr}[http://lucene.apache.org/solr/] search server from Ruby.
 
 
 == LINKS
@@ -25,7 +25,7 @@ Travis CI::     https://travis-ci.org/blackwinter/solr4r
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2014-2015 Jens Wille
+Copyright (C) 2014-2016 Jens Wille
 
 solr4r is free software: you can redistribute it and/or modify it
 under the terms of the GNU Affero General Public License as published by

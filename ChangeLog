@@ -2,6 +2,18 @@
 
 = Revision history for solr4r
 
+== 0.3.0 [2016-03-23]
+
+* Extended Solr4R::Result for
+  debugging[https://wiki.apache.org/solr/CommonQueryParameters#Debugging].
+* Extended Solr4R::Result for
+  highlighting[https://wiki.apache.org/solr/HighlightingParameters].
+* Extended Solr4R::Result for
+  spellchecking[https://wiki.apache.org/solr/SpellCheckComponent].
+* Added support for date-/time objects and ranges.
+* Refactored Solr4R::Client, Solr4R::Builder, Solr4R::Document,
+  Solr4R::Result.
+
 == 0.2.0 [2015-12-14]
 
 * Updated Solr4R::Client::Query#more_like_this_q for Solr 5.4.0.
