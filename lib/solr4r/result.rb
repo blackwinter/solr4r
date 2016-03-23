@@ -162,6 +162,22 @@ module Solr4R
 
     end
 
+    module Spellcheck
+
+      def spellcheck
+        fetch(__method__.to_s)
+      end
+
+      def spellcheck_collations
+        return enum_for(__method__) unless block_given?
+
+        spellcheck.fetch('collations').each_slice(2) { |_, collation|
+          yield collation.values_at('collationQuery', 'hits')
+        }
+      end
+
+    end
+
   end
 
 end

@@ -30,6 +30,7 @@ module Solr4R
     MATCH_ALL_QUERY = '*:*'
 
     DEFAULT_SELECT_PATH = 'select'
+    DEFAULT_SPELL_PATH  = 'spell'
     DEFAULT_MLT_PATH    = 'mlt'
 
     MLT_DEFAULT_FL   = '*,score'
