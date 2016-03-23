@@ -1,18 +1,20 @@
-Mon, 14 Dec 2015 15:40:42 +0100
-README	Mon, 14 Dec 2015 15:39:21 +0100
+Wed, 23 Mar 2016 14:23:08 +0100
+README	Wed, 23 Mar 2016 14:23:06 +0100
 COPYING	Wed, 02 Apr 2014 12:50:37 +0200
-ChangeLog	Mon, 14 Dec 2015 15:39:10 +0100
-lib/solr4r.rb	Mon, 16 Mar 2015 15:55:25 +0100
-lib/solr4r/client.rb	Wed, 12 Aug 2015 13:52:54 +0200
-lib/solr4r/result.rb	Mon, 16 Mar 2015 15:55:23 +0100
-lib/solr4r/builder.rb	Tue, 08 Sep 2015 12:26:59 +0200
+ChangeLog	Wed, 23 Mar 2016 14:21:29 +0100
+lib/solr4r.rb	Thu, 25 Feb 2016 14:53:07 +0100
+lib/solr4r/batch.rb	Thu, 25 Feb 2016 15:20:58 +0100
+lib/solr4r/query.rb	Wed, 23 Mar 2016 13:48:46 +0100
+lib/solr4r/client.rb	Wed, 23 Mar 2016 13:37:15 +0100
+lib/solr4r/result.rb	Wed, 23 Mar 2016 09:29:27 +0100
+lib/solr4r/builder.rb	Wed, 23 Mar 2016 14:17:47 +0100
 lib/solr4r/logging.rb	Mon, 16 Mar 2015 15:55:23 +0100
-lib/solr4r/request.rb	Thu, 19 Mar 2015 14:51:41 +0100
-lib/solr4r/version.rb	Mon, 14 Dec 2015 15:39:26 +0100
-lib/solr4r/document.rb	Tue, 17 Mar 2015 17:17:33 +0100
+lib/solr4r/request.rb	Thu, 11 Feb 2016 12:55:36 +0100
+lib/solr4r/version.rb	Wed, 23 Mar 2016 14:14:04 +0100
+lib/solr4r/document.rb	Wed, 23 Mar 2016 09:30:10 +0100
 lib/solr4r/response.rb	Wed, 12 Aug 2015 13:52:54 +0200
-lib/solr4r/endpoints.rb	Wed, 12 Aug 2015 13:52:54 +0200
-lib/solr4r/client/admin.rb	Wed, 12 Aug 2015 13:52:54 +0200
-lib/solr4r/client/query.rb	Mon, 23 Nov 2015 16:22:59 +0100
-lib/solr4r/client/update.rb	Wed, 12 Aug 2015 14:05:58 +0200
+lib/solr4r/endpoints.rb	Fri, 12 Feb 2016 16:42:15 +0100
 lib/solr4r/uri_extension.rb	Wed, 12 Aug 2015 14:05:58 +0200
+lib/solr4r/client/admin_mixin.rb	Fri, 12 Feb 2016 16:42:15 +0100
+lib/solr4r/client/query_mixin.rb	Wed, 23 Mar 2016 09:22:16 +0100
+lib/solr4r/client/update_mixin.rb	Thu, 25 Feb 2016 15:21:21 +0100

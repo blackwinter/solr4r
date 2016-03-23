@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Table of Contents - solr4r Application documentation (v0.2.0)</title>
+<title>Table of Contents - solr4r Application documentation (v0.3.0)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -20,7 +20,7 @@
 
 <body id="top" class="table-of-contents">
 <main role="main">
-<h1 class="class">Table of Contents - solr4r Application documentation (v0.2.0)</h1>
+<h1 class="class">Table of Contents - solr4r Application documentation (v0.3.0)</h1>
 
 <h2 id="pages">Pages</h2>
 <ul>
@@ -36,6 +36,7 @@
 
     <ul>
       <li><a href="ChangeLog.html#label-Revision+history+for+solr4r">Revision history for solr4r</a>
+      <li><a href="ChangeLog.html#label-0.3.0+-5B2016-03-23-5D">0.3.0 [2016-03-23]</a>
       <li><a href="ChangeLog.html#label-0.2.0+-5B2015-12-14-5D">0.2.0 [2015-12-14]</a>
       <li><a href="ChangeLog.html#label-0.1.0+-5B2015-08-14-5D">0.1.0 [2015-08-14]</a>
       <li><a href="ChangeLog.html#label-0.0.7+-5B2015-08-14-5D">0.0.7 [2015-08-14]</a>
@@ -71,6 +72,9 @@
     <a href="Solr4R/BaseUriExtension.html">Solr4R::BaseUriExtension</a>
   </li>
   <li class="class">
+    <a href="Solr4R/Batch.html">Solr4R::Batch</a>
+  </li>
+  <li class="class">
     <a href="Solr4R/Builder.html">Solr4R::Builder</a>
   </li>
   <li class="class">
@@ -80,13 +84,13 @@
     <a href="Solr4R/Client.html">Solr4R::Client</a>
   </li>
   <li class="module">
-    <a href="Solr4R/Client/Admin.html">Solr4R::Client::Admin</a>
+    <a href="Solr4R/Client/AdminMixin.html">Solr4R::Client::AdminMixin</a>
   </li>
   <li class="module">
-    <a href="Solr4R/Client/Query.html">Solr4R::Client::Query</a>
+    <a href="Solr4R/Client/QueryMixin.html">Solr4R::Client::QueryMixin</a>
   </li>
   <li class="module">
-    <a href="Solr4R/Client/Update.html">Solr4R::Client::Update</a>
+    <a href="Solr4R/Client/UpdateMixin.html">Solr4R::Client::UpdateMixin</a>
   </li>
   <li class="class">
     <a href="Solr4R/Document.html">Solr4R::Document</a>
@@ -96,6 +100,9 @@
   </li>
   <li class="module">
     <a href="Solr4R/Logging.html">Solr4R::Logging</a>
+  </li>
+  <li class="class">
+    <a href="Solr4R/Query.html">Solr4R::Query</a>
   </li>
   <li class="class">
     <a href="Solr4R/Request.html">Solr4R::Request</a>
@@ -110,13 +117,22 @@
     <a href="Solr4R/Result.html">Solr4R::Result</a>
   </li>
   <li class="module">
+    <a href="Solr4R/Result/Debug.html">Solr4R::Result::Debug</a>
+  </li>
+  <li class="module">
     <a href="Solr4R/Result/Error.html">Solr4R::Result::Error</a>
   </li>
   <li class="module">
     <a href="Solr4R/Result/FacetCounts.html">Solr4R::Result::FacetCounts</a>
   </li>
   <li class="module">
+    <a href="Solr4R/Result/Highlighting.html">Solr4R::Result::Highlighting</a>
+  </li>
+  <li class="module">
     <a href="Solr4R/Result/Response.html">Solr4R::Result::Response</a>
+  </li>
+  <li class="module">
+    <a href="Solr4R/Result/Spellcheck.html">Solr4R::Result::Spellcheck</a>
   </li>
   <li class="module">
     <a href="Solr4R/Result/Terms.html">Solr4R::Result::Terms</a>
@@ -135,19 +151,24 @@
     <span class="container">Solr4R</span>
 
   <li class="method">
+    <a href="Solr4R/Builder.html#method-c-convert_value">::convert_value</a>
+    &mdash;
+    <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-c-convert_value">::convert_value</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
     <a href="Solr4R/Client.html#method-c-default_uri">::default_uri</a>
     &mdash;
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-c-escape">::escape</a>
+    <a href="Solr4R/Query.html#method-c-escape">::escape</a>
     &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
-    <a href="Solr4R/Client.html#method-c-expand_local_params">::expand_local_params</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/BaseUriExtension.html#method-c-extended">::extended</a>
@@ -155,9 +176,14 @@
     <span class="container">Solr4R::BaseUriExtension</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-c-local_params_string">::local_params_string</a>
+    <a href="Solr4R/Query.html#method-c-local_params_string">::local_params_string</a>
     &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-c-new">::new</a>
@@ -180,6 +206,11 @@
     <span class="container">Solr4R::Endpoints</span>
 
   <li class="method">
+    <a href="Solr4R/Query.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
     <a href="Solr4R/Request.html#method-c-new">::new</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
@@ -195,19 +226,14 @@
     <span class="container">Solr4R::Result</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-c-query_from_hash">::query_from_hash</a>
+    <a href="Solr4R/Query.html#method-c-query_string">::query_string</a>
     &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-c-query_string">::query_string</a>
+    <a href="Solr4R/Query.html#method-c-quote">::quote</a>
     &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
-    <a href="Solr4R/Client.html#method-c-query_with_params">::query_with_params</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/Logging.html#method-c-set_log_level">::set_log_level</a>
@@ -225,14 +251,14 @@
     <span class="container">Solr4R::Version</span>
 
   <li class="method">
-    <a href="Solr4R/Client.html#method-c-type_error">::type_error</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
-
-  <li class="method">
-    <a href="Solr4R/Result.html#method-c-types_for">::types_for</a>
+    <a href="Solr4R/Result.html#method-c-types">::types</a>
     &mdash;
     <span class="container">Solr4R::Result</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-i-3C-3C">#&lt;&lt;</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-_each">#_each</a>
@@ -255,9 +281,19 @@
     <span class="container">Solr4R::Result::Terms</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-_more_like_this_query">#_more_like_this_query</a>
+    <a href="Solr4R/Builder.html#method-i-_each_value">#_each_value</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Builder</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/QueryMixin.html#method-i-_more_like_this_query">#_more_like_this_query</a>
+    &mdash;
+    <span class="container">Solr4R::Client::QueryMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-i-add">#add</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-add">#add</a>
@@ -265,19 +301,14 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-add">#add</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-add">#add</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-add_batch">#add_batch</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-add_batch">#add_batch</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
-
-  <li class="method">
-    <a href="Solr4R/Client.html#method-i-amend_options_array">#amend_options_array</a>
-    &mdash;
-    <span class="container">Solr4R::Client</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-amend_options_hash">#amend_options_hash</a>
@@ -285,19 +316,34 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-analyze_document">#analyze_document</a>
+    <a href="Solr4R/Client/AdminMixin.html#method-i-analyze_document">#analyze_document</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Client::AdminMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-analyze_field">#analyze_field</a>
+    <a href="Solr4R/Client/AdminMixin.html#method-i-analyze_field">#analyze_field</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Client::AdminMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-clear">#clear</a>
+    <a href="Solr4R/Batch.html#method-i-batch">#batch</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Batch</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-batch">#batch</a>
+    &mdash;
+    <span class="container">Solr4R::Client::UpdateMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-i-clear">#clear</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-clear">#clear</a>
+    &mdash;
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-commit">#commit</a>
@@ -305,19 +351,39 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-commit">#commit</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-commit">#commit</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-cores">#cores</a>
+    <a href="Solr4R/Builder.html#method-i-convert_value">#convert_value</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-count">#count</a>
+    <a href="Solr4R/Query.html#method-i-convert_value">#convert_value</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/AdminMixin.html#method-i-cores">#cores</a>
+    &mdash;
+    <span class="container">Solr4R::Client::AdminMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/QueryMixin.html#method-i-count">#count</a>
+    &mdash;
+    <span class="container">Solr4R::Client::QueryMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Debug.html#method-i-debug">#debug</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Debug</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Debug.html#method-i-debug_explain">#debug_explain</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Debug</span>
 
   <li class="method">
     <a href="Solr4R/Logging.html#method-i-default_logger">#default_logger</a>
@@ -335,24 +401,24 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-delete">#delete</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-delete">#delete</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-delete_all">#delete_all</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-delete_all">#delete_all</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-delete_id">#delete_id</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-delete_id">#delete_id</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-delete_query">#delete_query</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-delete_query">#delete_query</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-doc">#doc</a>
@@ -375,9 +441,14 @@
     <span class="container">Solr4R::Result</span>
 
   <li class="method">
-    <a href="Solr4R/Result.html#method-i-error-3F">#error?</a>
+    <a href="Solr4R/Query.html#method-i-escape">#escape</a>
     &mdash;
-    <span class="container">Solr4R::Result</span>
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-escape-3F">#escape?</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/Response.html#method-i-evaluate_count">#evaluate_count</a>
@@ -393,6 +464,11 @@
     <a href="Solr4R/Request.html#method-i-execute">#execute</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-expand_local_params">#expand_local_params</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/Response.html#method-i-extract_int">#extract_int</a>
@@ -415,14 +491,19 @@
     <span class="container">Solr4R::Result::FacetCounts</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-fields">#fields</a>
+    <a href="Solr4R/Client/AdminMixin.html#method-i-fields">#fields</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Client::AdminMixin</span>
 
   <li class="method">
     <a href="Solr4R/Request.html#method-i-finish">#finish</a>
     &mdash;
     <span class="container">Solr4R::Request</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-i-flush">#flush</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
 
   <li class="method">
     <a href="Solr4R/Logging.html#method-i-forward_logger">#forward_logger</a>
@@ -440,9 +521,19 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
+    <a href="Solr4R/Result/Highlighting.html#method-i-highlighting">#highlighting</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Highlighting</span>
+
+  <li class="method">
     <a href="Solr4R/Document.html#method-i-id">#id</a>
     &mdash;
     <span class="container">Solr4R::Document</span>
+
+  <li class="method">
+    <a href="Solr4R/Batch.html#method-i-inspect">#inspect</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
 
   <li class="method">
     <a href="Solr4R/Builder.html#method-i-inspect">#inspect</a>
@@ -480,14 +571,19 @@
     <span class="container">Solr4R::Client</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-json_document">#json_document</a>
+    <a href="Solr4R/Client/QueryMixin.html#method-i-json_document">#json_document</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Client::QueryMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-json_query">#json_query</a>
+    <a href="Solr4R/Client/QueryMixin.html#method-i-json_query">#json_query</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Client::QueryMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-local_params_string">#local_params_string</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/Request.html#method-i-make_request">#make_request</a>
@@ -505,9 +601,9 @@
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-more_like_this">#more_like_this</a>
+    <a href="Solr4R/Client/QueryMixin.html#method-i-more_like_this">#more_like_this</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Client::QueryMixin</span>
 
   <li class="method">
     <a href="Solr4R/Document.html#method-i-more_like_this_h">#more_like_this_h</a>
@@ -515,9 +611,9 @@
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-more_like_this_h">#more_like_this_h</a>
+    <a href="Solr4R/Client/QueryMixin.html#method-i-more_like_this_h">#more_like_this_h</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Client::QueryMixin</span>
 
   <li class="method">
     <a href="Solr4R/Document.html#method-i-more_like_this_q">#more_like_this_q</a>
@@ -525,9 +621,9 @@
     <span class="container">Solr4R::Document</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Query.html#method-i-more_like_this_q">#more_like_this_q</a>
+    <a href="Solr4R/Client/QueryMixin.html#method-i-more_like_this_q">#more_like_this_q</a>
     &mdash;
-    <span class="container">Solr4R::Client::Query</span>
+    <span class="container">Solr4R::Client::QueryMixin</span>
 
   <li class="method">
     <a href="Solr4R/Response.html#method-i-num_found">#num_found</a>
@@ -540,14 +636,14 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-optimize">#optimize</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-optimize">#optimize</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-ping">#ping</a>
+    <a href="Solr4R/Client/AdminMixin.html#method-i-ping">#ping</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Client::AdminMixin</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-post">#post</a>
@@ -560,9 +656,39 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
+    <a href="Solr4R/Batch.html#method-i-process">#process</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-query_from_array">#query_from_array</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-query_from_hash">#query_from_hash</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
     <a href="Solr4R/RequestUriExtension.html#method-i-query_pairs">#query_pairs</a>
     &mdash;
     <span class="container">Solr4R::RequestUriExtension</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-query_string">#query_string</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-query_with_params">#query_with_params</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Query.html#method-i-quote">#quote</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
 
   <li class="method">
     <a href="Solr4R/Endpoints.html#method-i-register">#register</a>
@@ -585,6 +711,11 @@
     <span class="container">Solr4R::Response</span>
 
   <li class="method">
+    <a href="Solr4R/Batch.html#method-i-reset">#reset</a>
+    &mdash;
+    <span class="container">Solr4R::Batch</span>
+
+  <li class="method">
     <a href="Solr4R/Response.html#method-i-result">#result</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
@@ -600,9 +731,9 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-rollback">#rollback</a>
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-rollback">#rollback</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
     <a href="Solr4R/Client.html#method-i-send_request">#send_request</a>
@@ -620,9 +751,19 @@
     <span class="container">Solr4R::Request</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Admin.html#method-i-solr_version">#solr_version</a>
+    <a href="Solr4R/Client/AdminMixin.html#method-i-solr_version">#solr_version</a>
     &mdash;
-    <span class="container">Solr4R::Client::Admin</span>
+    <span class="container">Solr4R::Client::AdminMixin</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Spellcheck.html#method-i-spellcheck">#spellcheck</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Spellcheck</span>
+
+  <li class="method">
+    <a href="Solr4R/Result/Spellcheck.html#method-i-spellcheck_collations">#spellcheck_collations</a>
+    &mdash;
+    <span class="container">Solr4R::Result::Spellcheck</span>
 
   <li class="method">
     <a href="Solr4R/Request.html#method-i-start">#start</a>
@@ -670,6 +811,11 @@
     <span class="container">Solr4R::Result::Terms</span>
 
   <li class="method">
+    <a href="Solr4R/Query.html#method-i-to_s">#to_s</a>
+    &mdash;
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
     <a href="Solr4R/Response.html#method-i-to_s">#to_s</a>
     &mdash;
     <span class="container">Solr4R::Response</span>
@@ -680,9 +826,14 @@
     <span class="container">Solr4R::Builder</span>
 
   <li class="method">
-    <a href="Solr4R/Client/Update.html#method-i-update">#update</a>
+    <a href="Solr4R/Query.html#method-i-type_error">#type_error</a>
     &mdash;
-    <span class="container">Solr4R::Client::Update</span>
+    <span class="container">Solr4R::Query</span>
+
+  <li class="method">
+    <a href="Solr4R/Client/UpdateMixin.html#method-i-update">#update</a>
+    &mdash;
+    <span class="container">Solr4R::Client::UpdateMixin</span>
 
   <li class="method">
     <a href="Solr4R/RequestUriExtension.html#method-i-with_params">#with_params</a>
@@ -694,7 +845,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

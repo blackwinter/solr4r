@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Builder::Document - solr4r Application documentation (v0.3.0)</title>
+<title>module Solr4R::Result::Debug - solr4r Application documentation (v0.3.0)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../../";
@@ -18,7 +18,7 @@
 
 
 
-<body id="top" role="document" class="class">
+<body id="top" role="document" class="module">
 <nav role="navigation">
   <div id="project-navigation">
     <div id="home-section" role="region" title="Quick navigation" class="nav-section">
@@ -54,14 +54,7 @@
 
   <div id="class-metadata">
     
-    <div id="parent-class-section" class="nav-section">
-  <h3>Parent</h3>
-
-  
-  <p class="link">Nokogiri::XML::Document
-  
-</div>
-
+    
     
     
     <!-- Method Quickref -->
@@ -70,7 +63,9 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-i-document">#document</a>
+    <li ><a href="#method-i-debug">#debug</a>
+    
+    <li ><a href="#method-i-debug_explain">#debug_explain</a>
     
   </ul>
 </div>
@@ -78,9 +73,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Solr4R::Builder::Document">
-  <h1 id="class-Solr4R::Builder::Document" class="class">
-    class Solr4R::Builder::Document
+<main role="main" aria-labelledby="module-Solr4R::Result::Debug">
+  <h1 id="module-Solr4R::Result::Debug" class="module">
+    module Solr4R::Result::Debug
   </h1>
 
   <section class="description">
@@ -106,10 +101,10 @@
        </header>
 
     
-      <div id="method-i-document" class="method-detail ">
+      <div id="method-i-debug" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">document</span><span
+          <span class="method-name">debug</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -124,10 +119,43 @@
           
 
           
-          <div class="method-source-code" id="document-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/builder.rb, line 36</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">document</span>
-  <span class="ruby-keyword">self</span>
+          <div class="method-source-code" id="debug-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug</span>
+  <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-debug_explain" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">debug_explain</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="debug_explain-source">
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">debug_explain</span>
+  <span class="ruby-identifier">debug</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&#39;explain&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

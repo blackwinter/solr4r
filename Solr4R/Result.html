@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Solr4R::Result - solr4r Application documentation (v0.2.0)</title>
+<title>class Solr4R::Result - solr4r Application documentation (v0.3.0)</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -84,6 +84,10 @@
   
   
   
+    <li><span class="extend">Nuggets::String::CamelscoreMixin</span>
+  
+  
+  
     <li><span class="extend">Nuggets::Hash::DeepFetchMixin</span>
   
   
@@ -98,15 +102,13 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-c-types_for">::types_for</a>
+    <li ><a href="#method-c-types">::types</a>
     
     <li ><a href="#method-i-_each">#_each</a>
     
     <li ><a href="#method-i-each">#each</a>
     
     <li ><a href="#method-i-empty-3F">#empty?</a>
-    
-    <li ><a href="#method-i-error-3F">#error?</a>
     
     <li ><a href="#method-i-to_hash">#to_hash</a>
     
@@ -186,10 +188,16 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 48</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">response</span>, <span class="ruby-identifier">hash</span>)
-  <span class="ruby-identifier">types</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">types_for</span>(<span class="ruby-identifier">hash</span>); <span class="ruby-identifier">extend</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">types</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">types</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-ivar">@response</span>, <span class="ruby-ivar">@hash</span> = <span class="ruby-identifier">response</span>, <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">Hash</span><span class="ruby-operator">::</span><span class="ruby-constant">DeepFetchMixin</span>)
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">types</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">mod</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">extend</span>(<span class="ruby-identifier">mod</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">val</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">key</span>)
+
+    <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">meth</span> = <span class="ruby-node">&quot;#{key}?&quot;</span>, <span class="ruby-keyword">true</span>) <span class="ruby-keyword">or</span>
+      <span class="ruby-identifier">define_singleton_method</span>(<span class="ruby-identifier">meth</span>) { <span class="ruby-identifier">val</span> }
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -201,11 +209,11 @@
       </div>
 
     
-      <div id="method-c-types_for" class="method-detail ">
+      <div id="method-c-types" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">types_for</span><span
-            class="method-args">(hash, mix = Nuggets::String::CamelscoreMixin)</span>
+          <span class="method-name">types</span><span
+            class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -219,15 +227,13 @@
           
 
           
-          <div class="method-source-code" id="types_for-source">
+          <div class="method-source-code" id="types-source">
             <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 39</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">types_for</span>(<span class="ruby-identifier">hash</span>, <span class="ruby-identifier">mix</span> = <span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">String</span><span class="ruby-operator">::</span><span class="ruby-constant">CamelscoreMixin</span>)
-  <span class="ruby-identifier">constants</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">const</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">if</span> <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">key?</span>(<span class="ruby-identifier">const</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-identifier">mix</span>).<span class="ruby-identifier">underscore!</span>)
-      <span class="ruby-identifier">mod</span> = <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">const</span>)
-      <span class="ruby-identifier">mod</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
-    <span class="ruby-keyword">end</span>
-  }.<span class="ruby-identifier">compact</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">types</span>
+  <span class="ruby-ivar">@types</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">constants</span>.<span class="ruby-identifier">each_with_object</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">const</span>, <span class="ruby-identifier">hash</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">mod</span>, <span class="ruby-identifier">key</span> = <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">const</span>), <span class="ruby-identifier">const</span>.<span class="ruby-identifier">to_s</span>; <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">mod</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Module</span>)
+    <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">Nuggets</span><span class="ruby-operator">::</span><span class="ruby-constant">String</span><span class="ruby-operator">::</span><span class="ruby-constant">CamelscoreMixin</span>).<span class="ruby-identifier">underscore!</span>] = <span class="ruby-identifier">mod</span>
+  }
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -266,7 +272,7 @@
 
           
           <div class="method-source-code" id="each-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 67</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 71</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">block</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">_each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">__method__</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -299,42 +305,9 @@
 
           
           <div class="method-source-code" id="empty-3F-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 71</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">empty?</span>
   <span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">zero?</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-i-error-3F" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">error?</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="error-3F-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 75</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">error?</span>
-  <span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Error</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -365,7 +338,7 @@
 
           
           <div class="method-source-code" id="to_hash-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 59</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 63</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_hash</span>
   <span class="ruby-ivar">@hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -398,7 +371,7 @@
 
           
           <div class="method-source-code" id="to_i-source">
-            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 63</span>
+            <pre><span class="ruby-comment"># File lib/solr4r/result.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_i</span>
   <span class="ruby-value">0</span>
 <span class="ruby-keyword">end</span></pre>
@@ -461,7 +434,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
