@@ -74,81 +74,99 @@ module Solr4R
 
     attr_reader :client
 
-    # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#add.2Freplace_documents].
+    # See Schema[https://wiki.apache.org/solr/UpdateXmlMessages#add.2Freplace_documents].
     #
-    # Examples:
+    # ==== Examples:
     #
-    #   # single document
+    # ===== Single document
+    #
     #   add(employeeId: '05991', office: 'Bridgewater', skills: %w[Perl Java])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add>
-    #       <doc>
-    #         <field name="employeeId">05991</field>
-    #         <field name="office">Bridgewater</field>
-    #         <field name="skills">Perl</field>
-    #         <field name="skills">Java</field>
-    #       </doc>
-    #     </add>
+    # Result:
     #
-    #   # multiple documents
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add>
+    #     <doc>
+    #       <field name="employeeId">05991</field>
+    #       <field name="office">Bridgewater</field>
+    #       <field name="skills">Perl</field>
+    #       <field name="skills">Java</field>
+    #     </doc>
+    #   </add>
+    #
+    # ===== Multiple documents
+    #
     #   add([{ employeeId: '05992', office: 'Blackwater' }, { employeeId: '05993', skills: 'Ruby' }])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add>
-    #       <doc>
-    #         <field name="employeeId">05992</field>
-    #         <field name="office">Blackwater</field>
-    #       </doc>
-    #       <doc>
-    #         <field name="employeeId">05993</field>
-    #         <field name="skills">Ruby</field>
-    #       </doc>
-    #     </add>
+    # Result:
     #
-    #   # add attributes
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add>
+    #     <doc>
+    #       <field name="employeeId">05992</field>
+    #       <field name="office">Blackwater</field>
+    #     </doc>
+    #     <doc>
+    #       <field name="employeeId">05993</field>
+    #       <field name="skills">Ruby</field>
+    #     </doc>
+    #   </add>
+    #
+    # ===== Add attributes
+    #
     #   add([id: 42, text: 'blah'], commitWithin: 23)
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add commitWithin="23">
-    #       <doc>
-    #         <field name="id">42</field>
-    #         <field name="text">blah</field>
-    #       </doc>
-    #     </add>
+    # Result:
     #
-    #   # document attributes
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add commitWithin="23">
+    #     <doc>
+    #       <field name="id">42</field>
+    #       <field name="text">blah</field>
+    #     </doc>
+    #   </add>
+    #
+    # ===== Document attributes
+    #
     #   add([[{ id: 42, text: 'blah' }, boost: 10.0]])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add>
-    #       <doc boost="10.0">
-    #         <field name="id">42</field>
-    #         <field name="text">blah</field>
-    #       </doc>
-    #     </add>
+    # Result:
     #
-    #   # field attributes
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add>
+    #     <doc boost="10.0">
+    #       <field name="id">42</field>
+    #       <field name="text">blah</field>
+    #     </doc>
+    #   </add>
+    #
+    # ===== Field attributes
+    #
     #   add(id: 42, text: ['blah', boost: 2.0])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add>
-    #       <doc>
-    #         <field name="id">42</field>
-    #         <field name="text" boost="2.0">blah</field>
-    #       </doc>
-    #     </add>
+    # Result:
     #
-    #   # all attributes together
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add>
+    #     <doc>
+    #       <field name="id">42</field>
+    #       <field name="text" boost="2.0">blah</field>
+    #     </doc>
+    #   </add>
+    #
+    # ===== All attributes together
+    #
     #   add([[{ id: 42, text: ['blah', boost: 2.0] }, boost: 10.0]], commitWithin: 23)
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <add commitWithin="23">
-    #       <doc boost="10.0">
-    #         <field name="id">42</field>
-    #         <field name="text" boost="2.0">blah</field>
-    #       </doc>
-    #     </add>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <add commitWithin="23">
+    #     <doc boost="10.0">
+    #       <field name="id">42</field>
+    #       <field name="text" boost="2.0">blah</field>
+    #     </doc>
+    #   </add>
     def add(doc, attributes = {})
       to_xml(:add, attributes) { |add_node| _each(doc) { |hash, doc_attributes|
         add_node.doc_(doc_attributes) { |doc_node| hash.each { |key, values|
@@ -165,125 +183,167 @@ module Solr4R
 
     alias_method :doc, :add
 
-    # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
+    # See Schema[https://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
     #
-    # Examples:
+    # ==== Examples:
+    #
+    # ===== Without options
     #
     #   commit
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <commit/>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <commit/>
+    #
+    # ===== With options
     #
     #   commit(softCommit: true)
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <commit softCommit="true"/>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <commit softCommit="true"/>
     def commit(attributes = {})
       to_xml(:commit, attributes)
     end
 
-    # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
+    # See Schema[https://wiki.apache.org/solr/UpdateXmlMessages#A.22commit.22_and_.22optimize.22].
     #
-    # Examples:
+    # ==== Examples:
+    #
+    # ===== Without options
     #
     #   optimize
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <optimize/>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <optimize/>
+    #
+    # ===== With options
     #
     #   optimize(maxSegments: 42)
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <optimize maxSegments="42"/>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <optimize maxSegments="42"/>
     def optimize(attributes = {})
       to_xml(:optimize, attributes)
     end
 
-    # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22].
+    # See Schema[https://wiki.apache.org/solr/UpdateXmlMessages#A.22rollback.22].
     #
-    # Example:
+    # ==== Example:
     #
     #   rollback
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <rollback/>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <rollback/>
     def rollback
       to_xml(:rollback)
     end
 
-    # See Schema[http://wiki.apache.org/solr/UpdateXmlMessages#A.22delete.22_documents_by_ID_and_by_Query].
+    # See Schema[https://wiki.apache.org/solr/UpdateXmlMessages#A.22delete.22_documents_by_ID_and_by_Query].
     #
-    # See Client#query_string for handling of query hashes.
+    # See Query#query_string for handling of query hashes (via +client.query_string+).
     #
-    # Examples:
+    # ==== Examples:
     #
-    #   # single ID
+    # ===== Single ID
+    #
     #   delete(id: '05991')
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <id>05991</id>
-    #     </delete>
+    # Result:
     #
-    #   # multiple IDs
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <id>05991</id>
+    #   </delete>
+    #
+    # ===== Multiple IDs
+    #
     #   delete(id: %w[05991 06000])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <id>05991</id>
-    #       <id>06000</id>
-    #     </delete>
+    # Result:
     #
-    #   # single query
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <id>05991</id>
+    #     <id>06000</id>
+    #   </delete>
+    #
+    # ===== Single query
+    #
     #   delete(query: 'office:Bridgewater')
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <query>office:Bridgewater</query>
-    #     </delete>
+    # Result:
     #
-    #   # multiple queries
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <query>office:Bridgewater</query>
+    #   </delete>
+    #
+    # ===== Multiple queries
+    #
     #   delete(query: %w[office:Bridgewater office:Osaka])
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <query>office:Bridgewater</query>
-    #       <query>office:Osaka</query>
-    #     </delete>
+    # Result:
     #
-    #   # query hash
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <query>office:Bridgewater</query>
+    #     <query>office:Osaka</query>
+    #   </delete>
+    #
+    # ===== Query hash
+    #
     #   delete(query: { office: 'Bridgewater', skills: 'Perl' })
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <query>office:Bridgewater skills:Perl</query>
-    #     </delete>
+    # Result:
     #
-    #   # query hash with array
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <query>office:Bridgewater skills:Perl</query>
+    #   </delete>
+    #
+    # ===== Query hash with array
+    #
     #   delete(query: { office: %w[Bridgewater Osaka] })
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <query>office:Bridgewater office:Osaka</query>
-    #     </delete>
+    # Result:
     #
-    #   # query hash with LocalParams
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <query>office:Bridgewater office:Osaka</query>
+    #   </delete>
+    #
+    # ===== Query hash with LocalParams[https://wiki.apache.org/solr/LocalParams]
+    #
     #   delete(query: { office: 'Bridgewater', _: { type: :edismax } })
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <query>{!type=edismax}office:Bridgewater</query>
-    #     </delete>
+    # Result:
     #
-    #   # both IDs and queries
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <query>{!type=edismax}office:Bridgewater</query>
+    #   </delete>
+    #
+    # ===== Both IDs and queries
+    #
     #   delete(id: %w[05991 06000], query: { office: %w[Bridgewater Osaka] })
     #
-    #     <?xml version="1.0" encoding="UTF-8"?>
-    #     <delete>
-    #       <id>05991</id>
-    #       <id>06000</id>
-    #       <query>office:Bridgewater office:Osaka</query>
-    #     </delete>
+    # Result:
+    #
+    #   <?xml version="1.0" encoding="UTF-8"?>
+    #   <delete>
+    #     <id>05991</id>
+    #     <id>06000</id>
+    #     <query>office:Bridgewater office:Osaka</query>
+    #   </delete>
     def delete(hash)
       to_xml(:delete) { |delete_node| hash.each { |key, values|
         case key.to_s
