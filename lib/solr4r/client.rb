@@ -44,6 +44,10 @@ module Solr4R
 
     class << self
 
+      extend Forwardable
+
+      def_delegators Query, :escape, :query_string, :local_params_string
+
       def default_uri(options = {})
         DEFAULT_URI % [
           options.fetch(:host, DEFAULT_HOST),
@@ -52,18 +56,6 @@ module Solr4R
           options.fetch(:collection) {
           options.fetch(:core, DEFAULT_CORE) }
         ]
-      end
-
-      def escape(*args)
-        Query.escape(*args)
-      end
-
-      def query_string(*args)
-        Query.new(*args).to_s
-      end
-
-      def local_params_string(*args)
-        Query::LocalParams.new(*args).to_s
       end
 
     end
