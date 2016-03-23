@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -37,18 +37,22 @@ module Solr4R
 
     extend Forwardable
 
-    def self.types_for(hash, mix = Nuggets::String::CamelscoreMixin)
-      constants.map { |const|
-        if hash.key?(const.to_s.extend(mix).underscore!)
-          mod = const_get(const)
-          mod if mod.is_a?(Module)
-        end
-      }.compact
+    def self.types
+      @types ||= constants.each_with_object({}) { |const, hash|
+        mod, key = const_get(const), const.to_s; next unless mod.is_a?(Module)
+        hash[key.extend(Nuggets::String::CamelscoreMixin).underscore!] = mod
+      }
     end
 
     def initialize(response, hash)
-      types = self.class.types_for(hash); extend(*types) unless types.empty?
       @response, @hash = response, hash.extend(Nuggets::Hash::DeepFetchMixin)
+
+      self.class.types.each { |key, mod|
+        extend(mod) if val = hash.key?(key)
+
+        respond_to?(meth = "#{key}?", true) or
+          define_singleton_method(meth) { val }
+      }
     end
 
     attr_reader :response
@@ -71,10 +75,6 @@ module Solr4R
 
     def empty?
       to_i.zero?
-    end
-
-    def error?
-      is_a?(Error)
     end
 
     private
