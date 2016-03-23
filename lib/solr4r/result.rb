@@ -102,6 +102,18 @@ module Solr4R
 
     end
 
+    module Debug
+
+      def debug
+        fetch(__method__.to_s)
+      end
+
+      def debug_explain
+        debug.fetch('explain')
+      end
+
+    end
+
     module Terms
 
       def to_i
