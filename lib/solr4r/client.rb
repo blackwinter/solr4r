@@ -92,6 +92,8 @@ module Solr4R
 
     def_delegators 'self.class', :query_string, :local_params_string, :escape
 
+    def_delegators :request, :request_line, :execute
+
     def json(path,
         params = {}, options = {}, &block)
 
@@ -121,7 +123,7 @@ module Solr4R
 
     def inspect
       '#<%s:0x%x @default_params=%p %s>' % [
-        self.class, object_id, default_params, request.request_line
+        self.class, object_id, default_params, request_line
       ]
     end
 
@@ -131,13 +133,13 @@ module Solr4R
       self.class.default_uri(options)
     end
 
-    def amend_options_hash(options, key, value)
-      options.merge(key => value.merge(options.fetch(key, {})))
+    def send_request(path, options, &block)
+      execute(path, amend_options_hash(
+        options, :params, default_params), &block)
     end
 
-    def send_request(path, options, &block)
-      request.execute(path, amend_options_hash(
-        options, :params, default_params), &block)
+    def amend_options_hash(options, key, value)
+      options.merge(key => value.merge(options.fetch(key, {})))
     end
 
   end
