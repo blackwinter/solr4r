@@ -49,7 +49,8 @@ module Solr4R
           options.fetch(:host, DEFAULT_HOST),
           options.fetch(:port, DEFAULT_PORT),
           options.fetch(:path, DEFAULT_PATH),
-          options.fetch(:core, DEFAULT_CORE)
+          options.fetch(:collection) {
+          options.fetch(:core, DEFAULT_CORE) }
         ]
       end
 
