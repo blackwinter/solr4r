@@ -5,7 +5,7 @@
 #                                                                             #
 # solr4r -- A Ruby client for Apache Solr                                     #
 #                                                                             #
-# Copyright (C) 2014-2015 Jens Wille                                          #
+# Copyright (C) 2014-2016 Jens Wille                                          #
 #                                                                             #
 # solr4r is free software: you can redistribute it and/or modify it under the #
 # terms of the GNU Affero General Public License as published by the Free     #
@@ -33,6 +33,9 @@ module Solr4R
 
     def initialize(result, hash)
       @result, @hash = result, hash
+
+      hash.each { |key, val|
+        define_singleton_method(key) { val } unless respond_to?(key, true) }
     end
 
     attr_reader :result
