@@ -2,6 +2,10 @@
 
 = Revision history for solr4r
 
+== 0.3.1 [2016-06-06]
+
+* Added +limit+ parameter to Solr4R::Result#spellcheck_collations.
+
 == 0.3.0 [2016-03-23]
 
 * Extended Solr4R::Result for
