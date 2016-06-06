@@ -168,11 +168,16 @@ module Solr4R
         fetch(__method__.to_s)
       end
 
-      def spellcheck_collations
-        return enum_for(__method__) unless block_given?
+      def spellcheck_collations(limit = 0)
+        return enum_for(__method__, limit) unless block_given?
+
+        keys, prev = %w[collationQuery hits], 0
 
         spellcheck.fetch('collations').each_slice(2) { |_, collation|
-          yield collation.values_at('collationQuery', 'hits')
+          query, hits = collation.values_at(*keys)
+
+          limit ? hits >= limit ? yield(query, hits) : nil :
+            hits >= prev ? yield(query, prev = hits) : break
         }
       end
 
