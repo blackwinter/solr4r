@@ -45,8 +45,8 @@ module Solr4R
         escape ? string.gsub('&', '%26') : string
       end
 
-      def quote(string)
-        string =~ /\s/ ? %Q{"#{string}"} : string
+      def quote(string, quote = string =~ /\s/)
+        quote ? %Q{"#{string}"} : string
       end
 
       def convert_value(value, escape = true)
@@ -54,11 +54,11 @@ module Solr4R
           when DateTime
             convert_value(value.to_time, escape)
           when Time
-            value.getutc.xmlschema.tap { |string|
-              string.gsub!(/:/, '\\\\\&') if escape }
+            value.getutc.xmlschema.tap { |val|
+              val.gsub!(/:/, '\\\\\&') if escape }
           when Range
-            '[' << [value.begin, value.end].map { |v|
-              convert_value(v, false) }.join(' TO ') << ']'
+            "[#{[value.begin, value.end].map { |val|
+              convert_value(val, false) }.join(' TO ')}]"
           else
             value.to_s
         end
@@ -82,8 +82,8 @@ module Solr4R
       self.class.escape(string, escape)
     end
 
-    def quote(string)
-      self.class.quote(string)
+    def quote(*args)
+      self.class.quote(*args)
     end
 
     def convert_value(*args)
@@ -135,7 +135,8 @@ module Solr4R
     private
 
     def query_from_array(query, escape)
-      query_string(query.map { |value| convert_value(value) }.join(' '), escape)
+      query_string(query.map { |value|
+        convert_value(value) }.join(' '), escape)
     end
 
     def query_from_hash(query, escape)
